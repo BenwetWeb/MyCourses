@@ -6,8 +6,8 @@
     <title>BenWenWeb Курси Мовні</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Soft Mint, Soft Blue, Soft Grey, White/Stone -->
-    <!-- Application Structure Plan: The application features a fixed top header and a main content area displaying a responsive grid of course cards. Each card represents either a paid or a trial course. For paid courses, clicking the button reveals a contact/code access section, and upon valid code entry, a download link appears within the card. For trial courses, clicking the button reveals an email submission form, and upon valid email entry, the user is redirected to a separate, dedicated HTML page for the trial lesson. This update ensures that activated trial courses display a "Перейти" button, allowing easy re-access. -->
-    <!-- Visualization & Content Choices: Report Info: Multiple language courses, including trial access now on separate pages. -> Goal: Inform, Organize, Engage, Facilitate Download Access, Offer Trial, Improve Re-access. -> Viz/Presentation Method: Interactive cards (HTML/Tailwind) with collapsible sections for paid courses. Trial courses use an email input form that triggers page redirection. -> Interaction: Buttons toggle visibility of access sections. Code/Email input and validation. Download link appears or page redirection occurs. The 'Buy/Try' button on the card hides after paid activation, but changes to "Перейти" for activated trial courses. Persistent access via localStorage. -> Justification: This design maintains a clean, modern aesthetic. The "Перейти" button for trial courses significantly improves user experience by providing clear re-entry to content they've already accessed, aligning with intuitive web navigation patterns. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change), Tailwind CSS for all styling and responsiveness. No charts or complex visualizations are used. -->
+    <!-- Application Structure Plan: The application features a fixed top header. A prominent "About Director" section is added below the main welcome message. The main content area is now divided into two distinct sections: a grid for paid courses and a separate, visually distinct section for the trial course. Each course card uses a placeholder image for visual appeal. Interactive elements (contact forms, code access, download links, and trial lesson redirection) are maintained. This structure aims to provide a professional, visually engaging, and clearly organized user experience, separating paid and trial offerings while highlighting the director's presence. -->
+    <!-- Visualization & Content Choices: Report Info: Personal branding, placeholder image-based course representation, distinct trial course. -> Goal: Inform, Organize, Engage, Brand, Facilitate Access. -> Viz/Presentation Method: Dedicated HTML section for director's info (placeholder image, text). Course cards use placeholder background images with overlays for text readability. Trial course card is in a separate, styled section. -> Interaction: Maintained interactive forms/buttons for access. Button text changes for activated trial courses. -> Justification: This design maintains a clean, modern aesthetic. The director's section adds a personal touch. Placeholder images allow the user to easily replace them with their own. Separating trial courses improves clarity and user flow. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change), Tailwind CSS for all styling and responsiveness. Placeholder image URLs are used. No charts or complex visualizations are used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -64,6 +64,46 @@
             border-color: #34d399;
             box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.3);
         }
+        /* Стиль для фонових зображень карток */
+        .course-card-image {
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            height: 150px; /* Висота для зображення */
+            width: 100%;
+            border-radius: 0.75rem 0.75rem 0 0; /* Заокруглення тільки зверху */
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end; /* Вирівнювання тексту знизу */
+            justify-content: center;
+            padding-bottom: 1rem; /* Відступ для тексту */
+        }
+        .course-card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%); /* Градієнт для читабельності тексту */
+            z-index: 1;
+        }
+        .course-card-image .card-image-text {
+            position: relative;
+            z-index: 2;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+        /* Стиль для пробного курсу */
+        .trial-course-card {
+            background-color: #e6fffa; /* Світло-м'ятний фон для пробного курсу */
+            border: 2px solid #4fd1c5; /* Обведення */
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
     </style>
 </head>
 <body class="bg-stone-50">
@@ -81,21 +121,66 @@
             </p>
         </section>
 
-        <main id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Картки курсів будуть додані за допомогою JavaScript -->
+        <!-- Секція "Про директора" -->
+        <section id="director-section" class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 flex flex-col md:flex-row items-center md:items-start gap-6">
+            <div class="flex-shrink-0">
+                <img src="https://placehold.co/150x150/cbd5e1/475569?text=Ваше+Фото" alt="Фото директора Веніаміна Марценюка" class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-emerald-200 shadow-md">
+            </div>
+            <div class="text-center md:text-left flex-grow">
+                <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-2">Веніамін Марценюк</h3>
+                <p class="text-xl text-stone-700 mb-4">Директор BenWenWeb</p>
+                <p class="text-stone-600 leading-relaxed">
+                    Ласкаво просимо до BenWenWeb! Я, Веніамін Марценюк, радий представити вам курси, створені з пристрастю до мов та бажанням зробити навчання доступним та ефективним для кожного. Моя мета – надати вам не просто знання, а ключ до нових можливостей та культур. Приєднуйтесь до нашої спільноти та відкрийте для себе світ мов!
+                </p>
+            </div>
+        </section>
+
+        <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6 text-center">Наші повні курси:</h3>
+        <main id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Картки платних курсів будуть додані за допомогою JavaScript -->
         </main>
+
+        <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6 text-center">Спробуйте безкоштовно:</h3>
+        <!-- Секція для пробного курсу -->
+        <section id="trial-course-section" class="flex justify-center mb-12">
+            <!-- Картка пробного курсу буде додана за допомогою JavaScript -->
+        </section>
     </div>
 
     <script>
         const coursesData = [
             {
                 id: 'german-paid',
-                name: 'Німецька мова (повний курс)',
+                name: 'Німецька мова',
                 description: 'Почніть свою подорож у світ німецької з нуля або вдоскональте свої навички. Детальні пояснення вимови та граматики.',
                 color: '#90cdf4', // М'який блакитний
                 accessCode: '84NDISJDNNNKX', // Ваш код для німецької
                 downloadUrl: 'https://example.com/your_german_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
-                isTrial: false
+                isTrial: false,
+                imageUrl: 'https://placehold.co/600x400/90cdf4/ffffff?text=Німецька+мова', // ЗАМІНІТЬ НА ВАШЕ ЗОБРАЖЕННЯ (наприклад, IMG_7778.jpg)
+                imageAlt: 'Бранденбурзькі ворота'
+            },
+            {
+                id: 'english-paid',
+                name: 'Англійська мова',
+                description: 'Відкрийте для себе світ англійської! Курс для початківців з акцентом на розмовні фрази та базову граматику.',
+                color: '#d1d5db', // М'який сірий
+                accessCode: 'ENGLISH2025',
+                downloadUrl: 'https://example.com/your_english_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
+                isTrial: false,
+                imageUrl: 'https://placehold.co/600x400/d1d5db/ffffff?text=Англійська+мова', // ЗАМІНІТЬ НА ВАШЕ ЗОБРАЖЕННЯ (наприклад, IMG_7782.jpg)
+                imageAlt: 'Біг Бен та лондонський автобус'
+            },
+            {
+                id: 'polish-paid',
+                name: 'Польська мова',
+                description: 'Опануйте основи польської мови для подорожей та спілкування. Легкі уроки для швидкого старту.',
+                color: '#90cdf4', // М'який блакитний (зроблено схожим на німецький для консистентності)
+                accessCode: 'POLSKI2025',
+                downloadUrl: 'https://example.com/your_polish_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
+                isTrial: false,
+                imageUrl: 'https://placehold.co/600x400/90cdf4/ffffff?text=Польська+мова', // ЗАМІНІТЬ НА ВАШЕ ЗОБРАЖЕННЯ (наприклад, IMG_7780.jpg)
+                imageAlt: 'Архітектура Гданська'
             },
             {
                 id: 'german-trial',
@@ -104,50 +189,41 @@
                 color: '#a7f3d0', // М'який зелений для пробного
                 isTrial: true,
                 lessonPageUrl: 'german_trial_lesson.html' // Посилання на окрему сторінку пробного уроку
-            },
-            {
-                id: 'english-paid',
-                name: 'Англійська мова (повний курс)',
-                description: 'Відкрийте для себе світ англійської! Курс для початківців з акцентом на розмовні фрази та базову граматику.',
-                color: '#d1d5db', // М'який сірий
-                accessCode: 'ENGLISH2025',
-                downloadUrl: 'https://example.com/your_english_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
-                isTrial: false
-            },
-            {
-                id: 'polish-paid',
-                name: 'Польська мова (повний курс)',
-                description: 'Опануйте основи польської мови для подорожей та спілкування. Легкі уроки для швидкого старту.',
-                color: '#90cdf4', // М'який блакитний
-                accessCode: 'POLSKI2025',
-                downloadUrl: 'https://example.com/your_polish_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
-                isTrial: false
             }
         ];
 
-        const coursesGrid = document.getElementById('courses-grid');
+        const directorPhotoUrl = 'https://placehold.co/150x150/cbd5e1/475569?text=Ваше+Фото'; // ЗАМІНІТЬ НА ПОСИЛАННЯ НА ВАШЕ ФОТО (IMG_7781.jpg)
+        const directorName = 'Веніамін Марценюк';
 
+        const coursesGrid = document.getElementById('courses-grid');
+        const trialCourseSection = document.getElementById('trial-course-section');
+
+        // Створення карток курсів
         coursesData.forEach(course => {
             const card = document.createElement('div');
-            card.className = `bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
+            card.className = `bg-white rounded-xl shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
             
             const buttonText = course.isTrial ? 'Спробувати безкоштовно' : 'Придбати курс / Зв\'язатися';
             const buttonClass = course.isTrial ? 'toggle-trial-btn' : 'toggle-contact-btn';
 
-            card.innerHTML = `
-                <div class="w-24 h-24 rounded-full flex items-center justify-center mb-4" style="background-color: ${course.color};">
-                    <span class="text-4xl text-white">${course.name.charAt(0)}</span>
-                </div>
-                <h3 class="text-2xl font-bold text-emerald-800 mb-2">${course.name}</h3>
-                <p class="text-stone-600 mb-6 flex-grow">${course.description}</p>
-                
-                <button class="button-primary w-full mb-4 ${buttonClass}" data-course-id="${course.id}">
-                    ${buttonText}
-                </button>
+            let cardContent = '';
 
-                <!-- Секція для контакту / введення коду (для платних) або введення email (для пробних) -->
-                <div id="access-section-${course.id}" class="card-section w-full text-left">
-                    ${course.isTrial ? `
+            if (course.isTrial) {
+                // Окрема стилізація та розміщення для пробного курсу
+                card.className = `trial-course-card w-full max-w-md mx-auto flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
+                cardContent = `
+                    <div class="w-24 h-24 rounded-full flex items-center justify-center mb-4" style="background-color: ${course.color};">
+                        <span class="text-4xl text-white">${course.name.charAt(0)}</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-emerald-800 mb-2">${course.name}</h3>
+                    <p class="text-stone-600 mb-6 flex-grow">${course.description}</p>
+                    
+                    <button class="button-primary w-full mb-4 ${buttonClass}" data-course-id="${course.id}">
+                        ${buttonText}
+                    </button>
+
+                    <!-- Секція для введення email (для пробних) -->
+                    <div id="access-section-${course.id}" class="card-section w-full text-left">
                         <p class="text-sm text-stone-700 mb-3">
                             Введіть ваш email, щоб отримати доступ до пробного уроку та інформацію про повні курси:
                         </p>
@@ -158,38 +234,57 @@
                             </button>
                         </div>
                         <p id="email-message-${course.id}" class="text-sm mt-2 text-red-500"></p>
-                    ` : `
-                        <p class="text-sm text-stone-700 mb-3">
-                            Щоб придбати курс, зв'яжіться з нами:
-                        </p>
-                        <a href="mailto:your.email@example.com?subject=Запит щодо курсу ${course.name}" class="block button-secondary w-full mb-3 text-center">
-                            Написати на email
-                        </a>
-                        <a href="https://t.me/your_telegram_username" target="_blank" class="block button-secondary w-full mb-4 text-center">
-                            Написати в Telegram
-                        </a>
-                        <p class="text-sm text-stone-700 mb-2">
-                            Якщо у вас є код доступу, введіть його тут:
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <input type="text" id="access-code-input-${course.id}" placeholder="Введіть код" class="flex-grow">
-                            <button class="button-primary activate-code-btn" data-course-id="${course.id}">
-                                Активувати
-                            </button>
-                        </div>
-                        <p id="code-message-${course.id}" class="text-sm mt-2 text-red-500"></p>
-                    `}
-                </div>
+                    </div>
+                `;
+                trialCourseSection.appendChild(card); // Додаємо пробний курс в окрему секцію
+            } else {
+                // Стилізація для платних курсів з фоновим зображенням
+                cardContent = `
+                    <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
+                        <span class="card-image-text">${course.name}</span>
+                    </div>
+                    <div class="p-6 w-full flex flex-col items-center text-center">
+                        <p class="text-stone-600 mb-6 flex-grow">${course.description}</p>
+                        
+                        <button class="button-primary w-full mb-4 ${buttonClass}" data-course-id="${course.id}">
+                            ${buttonText}
+                        </button>
 
-                <!-- Секція для завантаження курсу (для платних), показується після активації -->
-                <div id="download-section-${course.id}" class="card-section download-section w-full text-center mt-4">
-                    <p class="text-lg text-green-700 mb-4 text-center">Курс активовано!</p>
-                    <a id="download-link-${course.id}" href="${course.downloadUrl}" download class="button-primary w-full inline-block text-center">
-                        Завантажити курс
-                    </a>
-                </div>
-            `;
-            coursesGrid.appendChild(card);
+                        <!-- Секція для контакту / введення коду (для платних) -->
+                        <div id="access-section-${course.id}" class="card-section w-full text-left">
+                            <p class="text-sm text-stone-700 mb-3">
+                                Щоб придбати курс, зв'яжіться з нами:
+                            </p>
+                            <a href="mailto:your.email@example.com?subject=Запит щодо курсу ${course.name}" class="block button-secondary w-full mb-3 text-center">
+                                Написати на email
+                            </a>
+                            <a href="https://t.me/your_telegram_username" target="_blank" class="block button-secondary w-full mb-4 text-center">
+                                Написати в Telegram
+                            </a>
+                            <p class="text-sm text-stone-700 mb-2">
+                                Якщо у вас є код доступу, введіть його тут:
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <input type="text" id="access-code-input-${course.id}" placeholder="Введіть код" class="flex-grow">
+                                <button class="button-primary activate-code-btn" data-course-id="${course.id}">
+                                    Активувати
+                                </button>
+                            </div>
+                            <p id="code-message-${course.id}" class="text-sm mt-2 text-red-500"></p>
+                        </div>
+
+                        <!-- Секція для завантаження курсу (для платних), показується після активації -->
+                        <div id="download-section-${course.id}" class="card-section download-section w-full text-center mt-4">
+                            <p class="text-lg text-green-700 mb-4 text-center">Курс активовано!</p>
+                            <a id="download-link-${course.id}" href="${course.downloadUrl}" download class="button-primary w-full inline-block text-center">
+                                Завантажити курс
+                            </a>
+                        </div>
+                    </div>
+                `;
+                coursesGrid.appendChild(card); // Додаємо платні курси в основну сітку
+            }
+            card.innerHTML = cardContent; // Вставляємо згенерований контент
         });
 
         // JavaScript для інтерактивності
@@ -277,6 +372,12 @@
 
         // Перевіряємо localStorage при завантаженні сторінки
         window.addEventListener('load', () => {
+            // Оновлюємо URL фото директора
+            const directorImg = document.querySelector('#director-section img');
+            if (directorImg) {
+                directorImg.src = directorPhotoUrl;
+            }
+
             coursesData.forEach(course => {
                 const toggleButton = document.querySelector(`[data-course-id="${course.id}"]`);
                 if (localStorage.getItem(`course_${course.id}_activated`) === 'true') {
