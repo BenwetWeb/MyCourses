@@ -1,3 +1,4 @@
+
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -5,8 +6,8 @@
     <title>BenWenWeb Курси Мовні</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Soft Mint, Soft Blue, Soft Grey, White/Stone -->
-    <!-- Application Structure Plan: The application features a fixed top header with navigation to "About Us". A prominent "About Director" section is added below the main welcome message. The main content area is now divided into three distinct sections: a grid for paid courses (with updated pricing display), a separate visually distinct section for the trial course, and a new dedicated section for detailed payment and access information. Each course card uses a user-provided background image for visual appeal. Interactive elements (contact forms, code access, download links, and trial lesson redirection) are maintained. The background is a clean, static color. A footer with contact information is included. Paid courses for English and Polish are marked as "coming soon". -->
-    <!-- Visualization & Content Choices: Report Info: Personal branding, user's images for courses, distinct trial course, detailed payment info, clean background, full contact footer, "coming soon" status for some courses, and navigation to "About Us". -> Goal: Inform, Organize, Engage, Brand, Facilitate Access, Enhance Clarity, Provide Contact, Expand Information. -> Viz/Presentation Method: Dedicated HTML section for director's info (user's photo, text). Course cards use user's background images with overlays. Trial course card is in a separate, styled section. A new, well-designed section for payment details is added. Footer for comprehensive contact info. Navigation link in header. -> Interaction: Maintained interactive forms/buttons. Button text changes for activated trial courses. Custom error message for incorrect codes. "Coming soon" courses have disabled buttons. -> Justification: This design provides a professional, visually appealing, and user-friendly website. The dedicated payment section improves information clarity. Clear contact info and course status messages improve transparency and user experience. Adding "About Us" expands site content. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change), Tailwind CSS for all styling and responsiveness. User-provided image URLs are directly embedded. No charts or complex visualizations are used. -->
+    <!-- Application Structure Plan: The application features a fixed top header with extensive navigation. A prominent "About Director" section is added below the main welcome message. The main content area is now divided into three distinct sections: a grid for paid courses (with updated pricing display), a separate visually distinct section for the trial course, and a new dedicated section for detailed payment and access information. Each course card uses a user-provided background image for visual appeal. Interactive elements (contact forms, code access, download links, and trial lesson redirection) are maintained. The background is a clean, static color. A comprehensive footer with contact information and legal links is included. Paid courses for English and Polish are marked as "coming soon". -->
+    <!-- Visualization & Content Choices: Report Info: Personal branding, user's images for courses, distinct trial course, detailed payment info, clean background, full contact footer, "coming soon" status for some courses, and expanded navigation. -> Goal: Inform, Organize, Engage, Brand, Facilitate Access, Enhance Clarity, Provide Contact, Expand Information, Legal Compliance. -> Viz/Presentation Method: Dedicated HTML section for director's info (user's photo, text). Course cards use user's background images with overlays. Trial course card is in a separate, styled section. A new, well-designed section for payment details is added. Footer for comprehensive contact info and legal links. Expanded navigation links in header. -> Interaction: Maintained interactive forms/buttons. Button text changes for activated trial courses. Custom error message for incorrect codes. "Coming soon" courses have disabled buttons. -> Justification: This design provides a professional, visually appealing, and user-friendly website. The dedicated payment section improves information clarity. Clear contact info and course status messages improve transparency and user experience. Expanded navigation and legal links enhance site completeness. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change), Tailwind CSS for all styling and responsiveness. User-provided image URLs are directly embedded. No charts or complex visualizations are used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -116,7 +117,10 @@
             <ul class="flex space-x-4 mr-4">
                 <li><a href="index.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Головна</a></li>
                 <li><a href="about_us.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Про нас</a></li>
-                <!-- Додаткові посилання можуть бути тут: FAQ, Контакти тощо -->
+                <li><a href="faq.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Часті питання</a></li>
+                <li><a href="contact_form.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Зв'язок</a></li>
+                <li><a href="privacy_policy.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Політика конфіденційності</a></li>
+                <li><a href="terms_of_use.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Умови використання</a></li>
             </ul>
         </nav>
     </header>
@@ -132,13 +136,13 @@
         <!-- Секція "Про директора" -->
         <section id="director-section" class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 flex flex-col md:flex-row items-center md:items-start gap-6">
             <div class="flex-shrink-0">
-                <img src="https://github.com/BenwetWeb/MyCourses/blob/main/photo_2025-07-14_17-26-00.jpg?raw=true" alt="Фото директора Веніаміна Марценюка" class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-emerald-200 shadow-md">
+                <img src="https://github.com/BenwetWeb/MyCourses/blob/main/photo_2025-07-14_17-26-00.jpg?raw=true" alt="Фото директора Веніямин Марценюк" class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-emerald-200 shadow-md">
             </div>
             <div class="text-center md:text-left flex-grow">
-                <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-2">Веніамін Марценюк</h3>
+                <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-2">Веніямин Марценюк</h3>
                 <p class="text-xl text-stone-700 mb-4">Директор BenWenWeb</p>
                 <p class="text-stone-600 leading-relaxed">
-                    Ласкаво просимо до BenWenWeb! Я, Веніамін Марценюк, радий представити вам курси, створені з пристрастю до мов та бажанням зробити навчання доступним та ефективним для кожного. Моя мета – надати вам не просто знання, а ключ до нових можливостей та культур. Приєднуйтесь до нашої спільноти та відкрийте для себе світ мов!
+                    Ласкаво просимо до BenWenWeb! Я, Веніямин Марценюк, радий представити вам курси, створені з пристрастю до мов та бажанням зробити навчання доступним та ефективним для кожного. Моя мета – надати вам не просто знання, а ключ до нових можливостей та культур. Приєднуйтесь до нашої спільноти та відкрийте для себе світ мов!
                 </p>
             </div>
         </section>
@@ -180,6 +184,10 @@
             <p class="mb-2">Зв'яжіться з нами:</p>
             <p class="mb-1">Email: <a href="mailto:veniam2007@gmail.com" class="underline hover:text-emerald-900">veniam2007@gmail.com</a></p>
             <p class="mb-4">Telegram: <a href="https://t.me/Mausing99" target="_blank" class="underline hover:text-emerald-900">@Mausing99</a></p>
+            <div class="flex justify-center space-x-4 text-sm mb-2">
+                <a href="privacy_policy.html" class="underline hover:text-emerald-900">Політика конфіденційності</a>
+                <a href="terms_of_use.html" class="underline hover:text-emerald-900">Умови використання</a>
+            </div>
             <p class="text-sm text-emerald-700">&copy; 2025 BenWenWeb. Всі права захищені.</p>
         </div>
     </footer>
@@ -237,7 +245,7 @@
         ];
 
         const directorPhotoUrl = 'https://github.com/BenwetWeb/MyCourses/blob/main/photo_2025-07-14_17-26-00.jpg?raw=true'; // Ваше фото директора
-        const directorName = 'Веніамін Марценюк';
+        const directorName = 'Веніямин Марценюк'; // Виправлено ім'я
 
         const coursesGrid = document.getElementById('courses-grid');
         const trialCourseSection = document.getElementById('trial-course-section');
