@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -6,16 +5,17 @@
     <title>BenWenWeb Курси Мовні</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Soft Mint, Soft Blue, Soft Grey, White/Stone -->
-    <!-- Application Structure Plan: The application features a fixed top header. A prominent "About Director" section is added below the main welcome message. The main content area is now divided into two distinct sections: a grid for paid courses and a separate, visually distinct section for the trial course. Each course card uses a user-provided background image for visual appeal. Interactive elements (contact forms, code access, download links, and trial lesson redirection) are maintained. A new visual feature is added: a subtle, animated falling leaves effect originating from a CSS-drawn, more stylized tree on the side of the screen, enhancing the aesthetic appeal. -->
-    <!-- Visualization & Content Choices: Report Info: Personal branding, user's images for courses, distinct trial course, and improved tree with falling leaves animation. -> Goal: Inform, Organize, Engage, Brand, Facilitate Access, Enhance Aesthetics. -> Viz/Presentation Method: Dedicated HTML section for director's info (user's photo, text). Course cards use user's background images with overlays. Trial course card is in a separate, styled section. Falling leaves animation uses CSS keyframes and dynamically created elements, originating from a more complex CSS-drawn tree with varied leaf colors and shapes. -> Interaction: Maintained interactive forms/buttons. Button text changes for activated trial courses. Leaves fall randomly from the tree. -> Justification: Direct integration of user's images and a more realistic, subtle animation provides authentic branding and visual appeal, enhancing the overall professional look and feel of the website without distracting from content. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change, leaf creation), Tailwind CSS for all styling and responsiveness. User-provided image URLs are directly embedded. CSS keyframes for animation. No charts or complex visualizations are used. -->
+    <!-- Application Structure Plan: The application features a fixed top header with navigation to "About Us". A prominent "About Director" section is added below the main welcome message. The main content area is now divided into three distinct sections: a grid for paid courses (with updated pricing display), a separate visually distinct section for the trial course, and a new dedicated section for detailed payment and access information. Each course card uses a user-provided background image for visual appeal. Interactive elements (contact forms, code access, download links, and trial lesson redirection) are maintained. The background is a clean, static color. A footer with contact information is included. Paid courses for English and Polish are marked as "coming soon". -->
+    <!-- Visualization & Content Choices: Report Info: Personal branding, user's images for courses, distinct trial course, detailed payment info, clean background, full contact footer, "coming soon" status for some courses, and navigation to "About Us". -> Goal: Inform, Organize, Engage, Brand, Facilitate Access, Enhance Clarity, Provide Contact, Expand Information. -> Viz/Presentation Method: Dedicated HTML section for director's info (user's photo, text). Course cards use user's background images with overlays. Trial course card is in a separate, styled section. A new, well-designed section for payment details is added. Footer for comprehensive contact info. Navigation link in header. -> Interaction: Maintained interactive forms/buttons. Button text changes for activated trial courses. Custom error message for incorrect codes. "Coming soon" courses have disabled buttons. -> Justification: This design provides a professional, visually appealing, and user-friendly website. The dedicated payment section improves information clarity. Clear contact info and course status messages improve transparency and user experience. Adding "About Us" expands site content. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change), Tailwind CSS for all styling and responsiveness. User-provided image URLs are directly embedded. No charts or complex visualizations are used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Дуже м'який сіро-білий фон */
             color: #334155; /* Темно-сірий текст */
-            overflow-x: hidden; /* Запобігаємо горизонтальному скролу через анімацію */
+            overflow-x: hidden; /* Запобігаємо горизонтальному скролу */
+            background-color: #f8fafc; /* Чистий, м'який сіро-білий фон */
         }
+
         .card-section {
             max-height: 0;
             overflow: hidden;
@@ -105,129 +105,20 @@
             border-radius: 1.5rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-
-        /* Стилі для дерева */
-        .tree-container {
-            position: fixed;
-            bottom: 0;
-            left: -50px; /* Розміщуємо дерево зліва, трохи висунуте за екран */
-            width: 200px; /* Ширина дерева */
-            height: 400px; /* Висота дерева */
-            z-index: -1;
-            pointer-events: none;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-end;
-        }
-
-        .tree-trunk {
-            width: 50px;
-            height: 200px;
-            background-color: #8B4513; /* Коричневий стовбур */
-            border-radius: 25px 25px 0 0;
-            position: relative;
-            z-index: 0;
-            box-shadow: inset 5px 0 10px rgba(0,0,0,0.3); /* Легка тінь для об'єму */
-        }
-
-        .tree-foliage-cluster {
-            position: absolute;
-            top: 0; /* Починається від верху tree-container */
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px; /* Максимальна ширина крони */
-            height: 200px; /* Максимальна висота крони */
-            overflow: hidden; /* Для обрізання країв */
-        }
-
-        .foliage-main, .foliage-left, .foliage-right {
-            position: absolute;
-            background-color: #4CAF50; /* Зелена крона */
-            border-radius: 50%;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.3), 0 0 15px rgba(0,0,0,0.2); /* Тіні для об'єму */
-        }
-
-        .foliage-main {
-            width: 180px;
-            height: 180px;
-            top: 0px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #4CAF50; /* Основний зелений */
-        }
-        .foliage-left {
-            width: 120px;
-            height: 120px;
-            top: 100px;
-            left: -50px;
-            background-color: #5cb85c; /* Трохи інший відтінок зеленого */
-        }
-        .foliage-right {
-            width: 100px;
-            height: 100px;
-            top: 70px;
-            left: 100px;
-            background-color: #6bc56b; /* Ще один відтінок зеленого */
-        }
-
-        /* Стилі для падаючого листя */
-        .falling-leaves-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none; /* Дозволяє клікати крізь контейнер */
-            overflow: hidden;
-            z-index: -1; /* Щоб було позаду основного контенту */
-        }
-
-        .leaf {
-            position: absolute;
-            width: 18px; /* Розмір листка */
-            height: 18px;
-            border-radius: 40% 0 40% 0; /* Листкоподібна форма */
-            transform-origin: 50% 50%; /* Центр обертання */
-            opacity: 0;
-            animation: fall linear infinite;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.2); /* Легка тінь для глибини */
-        }
-
-        /* Анімація падіння листка */
-        @keyframes fall {
-            0% {
-                transform: translate(var(--start-x), var(--start-y)) rotate(var(--start-rot));
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translate(var(--end-x), 110vh) rotate(var(--end-rot));
-                opacity: 0;
-            }
-        }
     </style>
 </head>
 <body class="bg-stone-50">
 
-    <!-- Контейнер для дерева -->
-    <div class="tree-container">
-        <div class="tree-foliage-cluster">
-            <div class="foliage-main"></div>
-            <div class="foliage-left"></div>
-            <div class="foliage-right"></div>
-        </div>
-        <div class="tree-trunk"></div>
-    </div>
-
-    <!-- Контейнер для падаючого листя -->
-    <div class="falling-leaves-container" id="leaves-container"></div>
-
     <!-- Верхня горизонтальна смужка -->
     <header class="bg-emerald-200 p-4 shadow-md flex justify-between items-center h-16">
         <h1 class="text-xl md:text-2xl font-bold text-emerald-800 ml-4">BenWenWeb курси мовні</h1>
+        <nav>
+            <ul class="flex space-x-4 mr-4">
+                <li><a href="index.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Головна</a></li>
+                <li><a href="about_us.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Про нас</a></li>
+                <!-- Додаткові посилання можуть бути тут: FAQ, Контакти тощо -->
+            </ul>
+        </nav>
     </header>
 
     <div class="container mx-auto p-4 md:p-8">
@@ -262,7 +153,36 @@
         <section id="trial-course-section" class="flex justify-center mb-12">
             <!-- Картка пробного курсу буде додана за допомогою JavaScript -->
         </section>
+
+        <!-- Нова секція з інформацією про оплату та доступ -->
+        <section class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-emerald-300">
+            <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-4 text-center">Як працює оплата та доступ до курсів?</h3>
+            <div class="text-stone-600 space-y-4">
+                <p>
+                    Ми пропонуємо гнучкі умови оплати для наших повних курсів. Наприклад, повний курс **Німецької мови** коштує <span class="font-bold text-emerald-700">1900 грн</span>.
+                </p>
+                <p>
+                    Ви можете оплатити курс одразу або розбити оплату на **5 частин по 380 грн кожна**. Це дозволяє вам навчатися у власному темпі, не відчуваючи фінансового тиску.
+                </p>
+                <p>
+                    <span class="font-bold text-emerald-700">Принцип доступу:</span> Ви купуєте курс, ми надаємо вам **унікальний код доступу**. Цей код ви вводите на сторінці відповідного курсу. Після введення коду ви отримуєте повний доступ до всіх матеріалів курсу або до відповідної частини, якщо ви обрали розбиття оплати.
+                </p>
+                <p class="p-3 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-md">
+                    <span class="font-semibold">Важливо:</span> Ваші гроші не пересилаються нікуди інше, всі платежі безпечні та захищені. Ми гарантуємо прозорість та надійність кожної транзакції.
+                </p>
+            </div>
+        </section>
+
     </div>
+
+    <footer class="bg-emerald-200 p-6 shadow-inner mt-12 text-center text-emerald-800">
+        <div class="container mx-auto">
+            <p class="mb-2">Зв'яжіться з нами:</p>
+            <p class="mb-1">Email: <a href="mailto:veniam2007@gmail.com" class="underline hover:text-emerald-900">veniam2007@gmail.com</a></p>
+            <p class="mb-4">Telegram: <a href="https://t.me/Mausing99" target="_blank" class="underline hover:text-emerald-900">@Mausing99</a></p>
+            <p class="text-sm text-emerald-700">&copy; 2025 BenWenWeb. Всі права захищені.</p>
+        </div>
+    </footer>
 
     <script>
         const coursesData = [
@@ -274,8 +194,12 @@
                 accessCode: '84NDISJDNNNKX', // Ваш код для німецької
                 downloadUrl: 'https://example.com/your_german_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
                 isTrial: false,
+                isComingSoon: false,
                 imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9.png?raw=true', // Посилання на ваше фото для німецької
-                imageAlt: 'Бранденбурзькі ворота'
+                imageAlt: 'Бранденбурзькі ворота',
+                fullPrice: '1900 грн', // New
+                partPrice: '380 грн', // New
+                partsCount: 5 // New
             },
             {
                 id: 'english-paid',
@@ -285,6 +209,7 @@
                 accessCode: 'ENGLISH2025',
                 downloadUrl: 'https://example.com/your_english_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
                 isTrial: false,
+                isComingSoon: true, // Mark as coming soon
                 imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(1).png?raw=true', // Посилання на ваше фото для англійської
                 imageAlt: 'Біг Бен та лондонський автобус'
             },
@@ -296,6 +221,7 @@
                 accessCode: 'POLSKI2025',
                 downloadUrl: 'https://example.com/your_polish_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
                 isTrial: false,
+                isComingSoon: true, // Mark as coming soon
                 imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(2).png?raw=true', // Посилання на ваше фото для польської
                 imageAlt: 'Архітектура Гданська'
             },
@@ -305,6 +231,7 @@
                 description: 'Спробуйте перший урок німецької абсолютно безкоштовно! Дізнайтеся основи вимови та привітань.',
                 color: '#a7f3d0', // М'який зелений для пробного
                 isTrial: true,
+                isComingSoon: false, // Пробний курс завжди доступний
                 lessonPageUrl: 'german_trial_lesson.html' // Посилання на окрему сторінку пробного уроку
             }
         ];
@@ -314,61 +241,6 @@
 
         const coursesGrid = document.getElementById('courses-grid');
         const trialCourseSection = document.getElementById('trial-course-section');
-        const leavesContainer = document.getElementById('leaves-container');
-
-
-        // Функція для створення листка
-        function createLeaf() {
-            const leaf = document.createElement('div');
-            leaf.className = 'leaf';
-            
-            // Випадковий вибір кольору листка
-            const leafColors = ['#f6e05e', '#a7f3d0', '#fbd38d', '#fc8181']; // Жовтий, світло-зелений, світло-оранжевий, червонувато-оранжевий
-            leaf.style.backgroundColor = leafColors[Math.floor(Math.random() * leafColors.length)];
-
-            // Отримуємо позицію крони дерева для спавну листя
-            const treeFoliageCluster = document.querySelector('.tree-foliage-cluster');
-            const treeFoliageRect = treeFoliageCluster.getBoundingClientRect();
-
-            // Випадкова початкова позиція в межах крони дерева
-            const startX = treeFoliageRect.left + (Math.random() * treeFoliageRect.width);
-            const startY = treeFoliageRect.top + (Math.random() * treeFoliageRect.height);
-            
-            const size = 15 + Math.random() * 10; // Розмір від 15px до 25px
-            const duration = 8 + Math.random() * 7; // Тривалість анімації від 8 до 15 секунд
-            const delay = Math.random() * 5; // Затримка перед початком анімації від 0 до 5 секунд
-            const randXEnd = (Math.random() - 0.5) * 200; // Випадкове горизонтальне зміщення під час падіння
-            const randRotEnd = (Math.random() - 0.5) * 720; // Випадковий поворот
-
-            leaf.style.left = `${startX}px`;
-            leaf.style.top = `${startY}px`;
-            leaf.style.width = `${size}px`;
-            leaf.style.height = `${size}px`;
-            leaf.style.animationDuration = `${duration}s`;
-            leaf.style.animationDelay = `${delay}s`;
-            leaf.style.setProperty('--start-x', `0px`); // Ці змінні тепер відносні до початкової позиції листка
-            leaf.style.setProperty('--start-y', `0px`);
-            leaf.style.setProperty('--start-rot', `${Math.random() * 360}deg`);
-            leaf.style.setProperty('--end-x', `${randXEnd}px`);
-            leaf.style.setProperty('--end-rot', `${randRotEnd}deg`);
-
-            leavesContainer.appendChild(leaf);
-
-            // Видаляємо листок після завершення анімації, щоб уникнути накопичення елементів
-            leaf.addEventListener('animationend', () => {
-                leaf.remove();
-                // Створюємо новий листок, щоб анімація була нескінченною
-                createLeaf(); 
-            });
-        }
-
-        // Створюємо початкову кількість листків
-        // Запускаємо створення листків після того, як DOM буде готовий і дерево буде на екрані
-        window.addEventListener('DOMContentLoaded', () => {
-            for (let i = 0; i < 20; i++) { // 20 листків одночасно
-                createLeaf();
-            }
-        });
 
 
         // Створення карток курсів
@@ -376,12 +248,13 @@
             const card = document.createElement('div');
             card.className = `bg-white rounded-xl shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
             
-            const buttonText = course.isTrial ? 'Спробувати безкоштовно' : 'Придбати курс / Зв\'язатися';
-            const buttonClass = course.isTrial ? 'toggle-trial-btn' : 'toggle-contact-btn';
-
+            let buttonText = '';
+            let buttonClass = '';
             let cardContent = '';
 
             if (course.isTrial) {
+                buttonText = 'Спробувати безкоштовно';
+                buttonClass = 'toggle-trial-btn';
                 // Окрема стилізація та розміщення для пробного курсу
                 card.className = `trial-course-card w-full max-w-md mx-auto flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
                 cardContent = `
@@ -410,15 +283,38 @@
                     </div>
                 `;
                 trialCourseSection.appendChild(card); // Додаємо пробний курс в окрему секцію
-            } else {
-                // Стилізація для платних курсів з фоновим зображенням
+            } else if (course.isComingSoon) {
+                buttonText = 'Курс ще додається';
+                buttonClass = 'button-secondary'; // Використовуємо вторинний стиль для недоступних курсів
                 cardContent = `
                     <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
                         <span class="card-image-text">${course.name}</span>
                     </div>
                     <div class="p-6 w-full flex flex-col items-center text-center">
                         <p class="text-stone-600 mb-6 flex-grow">${course.description}</p>
+                        <button class="${buttonClass} w-full mb-4" disabled>
+                            ${buttonText}
+                        </button>
+                        <p class="text-sm text-stone-500">Слідкуйте за оновленнями!</p>
+                    </div>
+                `;
+                coursesGrid.appendChild(card); // Додаємо платні курси в основну сітку
+            } 
+            else { // Платні, доступні курси
+                buttonText = 'Придбати курс / Зв\'язатися';
+                buttonClass = 'toggle-contact-btn';
+                cardContent = `
+                    <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
+                        <span class="card-image-text">${course.name}</span>
+                    </div>
+                    <div class="p-6 w-full flex flex-col items-center text-center">
+                        <p class="text-stone-600 mb-4 flex-grow">${course.description}</p>
                         
+                        <!-- Pricing Information -->
+                        <div class="mb-4 text-lg">
+                            <p class="font-bold text-emerald-700">Ціна: ${course.fullPrice}</p>
+                        </div>
+
                         <button class="button-primary w-full mb-4 ${buttonClass}" data-course-id="${course.id}">
                             ${buttonText}
                         </button>
@@ -428,10 +324,10 @@
                             <p class="text-sm text-stone-700 mb-3">
                                 Щоб придбати курс, зв'яжіться з нами:
                             </p>
-                            <a href="mailto:your.email@example.com?subject=Запит щодо курсу ${course.name}" class="block button-secondary w-full mb-3 text-center">
+                            <a href="mailto:veniam2007@gmail.com" class="block button-secondary w-full mb-3 text-center">
                                 Написати на email
                             </a>
-                            <a href="https://t.me/your_telegram_username" target="_blank" class="block button-secondary w-full mb-4 text-center">
+                            <a href="https://t.me/Mausing99" target="_blank" class="block button-secondary w-full mb-4 text-center">
                                 Написати в Telegram
                             </a>
                             <p class="text-sm text-stone-700 mb-2">
@@ -489,22 +385,22 @@
                 const input = document.getElementById(`access-code-input-${courseId}`);
                 const message = document.getElementById(`code-message-${courseId}`);
                 const accessSection = document.getElementById(`access-section-${courseId}`);
-                const downloadSection = document.getElementById(`download-section-${course.id}`);
-                const toggleButton = document.querySelector(`[data-course-id="${course.id}"]`);
+                const downloadSection = document.getElementById(`download-section-${courseId}`);
+                const toggleButton = document.querySelector(`[data-course-id="${courseId}"]`);
                 const course = coursesData.find(c => c.id === courseId);
 
                 if (input.value.trim().toUpperCase() === course.accessCode.toUpperCase()) {
                     message.textContent = 'Код прийнято! Курс активовано.';
                     message.className = 'text-sm mt-2 text-green-600';
                     
-                    localStorage.setItem(`course_${course.id}_activated`, 'true');
+                    localStorage.setItem(`course_${courseId}_activated`, 'true');
                     
                     accessSection.classList.remove('active'); // Приховуємо секцію доступу
                     downloadSection.classList.add('active'); // Показуємо секцію завантаження
                     if (toggleButton) toggleButton.style.display = 'none'; // Приховуємо кнопку "Придбати/Спробувати"
                     
                 } else {
-                    message.textContent = 'Невірний код. Спробуйте ще раз.';
+                    message.textContent = 'Ах ти думаєш безплатно можна? Невірний код. Спробуйте ще раз.';
                     message.className = 'text-sm mt-2 text-red-500';
                     downloadSection.classList.remove('active'); // Приховуємо секцію завантаження
                 }
@@ -518,7 +414,7 @@
                 const input = document.getElementById(`email-input-${courseId}`);
                 const message = document.getElementById(`email-message-${courseId}`);
                 const accessSection = document.getElementById(`access-section-${courseId}`);
-                const toggleButton = document.querySelector(`[data-course-id="${course.id}"]`);
+                const toggleButton = document.querySelector(`[data-course-id="${courseId}"]`);
                 const course = coursesData.find(c => c.id === courseId);
 
                 if (input.value.trim() && input.value.includes('@')) { // Проста перевірка email
@@ -545,12 +441,6 @@
 
         // Перевіряємо localStorage при завантаженні сторінки
         window.addEventListener('load', () => {
-            // Оновлюємо URL фото директора
-            const directorImg = document.querySelector('#director-section img');
-            if (directorImg) {
-                directorImg.src = directorPhotoUrl;
-            }
-
             coursesData.forEach(course => {
                 const toggleButton = document.querySelector(`[data-course-id="${course.id}"]`);
                 if (localStorage.getItem(`course_${course.id}_activated`) === 'true') {
