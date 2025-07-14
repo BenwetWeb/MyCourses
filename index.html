@@ -1,3 +1,4 @@
+
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -5,8 +6,8 @@
     <title>BenWenWeb Курси Мовні</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Soft Mint, Soft Blue, Soft Grey, White/Stone -->
-    <!-- Application Structure Plan: The application maintains a fixed top header for branding. The main content area uses a responsive grid to display individual course cards, now differentiating between paid and trial courses. Each card acts as an expandable module: clicking a 'Details' button reveals either a contact/code access section (for paid courses) or an email submission section (for trial courses). Upon successful code entry or email submission for trial courses, the user is redirected to a dedicated full-screen lesson page. For paid courses, content (download link) is revealed within the card. This structure prioritizes clarity, modularity, and a guided user flow, enabling users to explore courses and access content directly or via a new page for trials. -->
-    <!-- Visualization & Content Choices: Report Info: Multiple language courses, including new trial access with page redirection. -> Goal: Inform, Organize, Engage, Facilitate Download Access, Offer Trial. -> Viz/Presentation Method: Interactive cards (HTML/Tailwind) with collapsible sections. Trial courses have an email input form and now redirect. -> Interaction: Buttons toggle visibility. Code/Email input and validation. Download link appears or page redirection occurs. The 'Buy/Contact' button hides after activation. Persistent access via localStorage. -> Justification: This design is clean and modern. It clearly separates trial from paid content, offering a low-barrier entry point (email) for trials and providing a 'true' new page experience as requested. Client-side logic simplifies initial setup. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection), Tailwind CSS for all styling and responsiveness. No charts or complex visualizations are used, as the primary goal is content delivery and access management. -->
+    <!-- Application Structure Plan: The application features a fixed top header and a main content area displaying a responsive grid of course cards. Each card represents either a paid or a trial course. For paid courses, clicking the button reveals a contact/code access section, and upon valid code entry, a download link appears within the card. For trial courses, clicking the button reveals an email submission form, and upon valid email entry, the user is redirected to a separate, dedicated HTML page for the trial lesson. This structure clearly separates the main course overview from detailed lesson content, providing a traditional multi-page website feel for trials. -->
+    <!-- Visualization & Content Choices: Report Info: Multiple language courses, including trial access now on separate pages. -> Goal: Inform, Organize, Engage, Facilitate Download Access, Offer Trial. -> Viz/Presentation Method: Interactive cards (HTML/Tailwind) with collapsible sections for paid courses. Trial courses use an email input form that triggers page redirection. -> Interaction: Buttons toggle visibility of access sections. Code/Email input and validation. Download link appears or page redirection occurs. The 'Buy/Try' button on the card hides after activation. Persistent access via localStorage. -> Justification: This design maintains a clean, modern aesthetic. It provides a clear path for users to learn about, inquire about, and access courses. The redirection for trial lessons gives the user the requested "new page" experience, making the trial feel more substantial. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection), Tailwind CSS for all styling and responsiveness. No charts or complex visualizations are used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -130,7 +131,6 @@
             const card = document.createElement('div');
             card.className = `bg-white rounded-xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
             
-            // Визначаємо текст кнопки та її клас залежно від типу курсу
             const buttonText = course.isTrial ? 'Спробувати безкоштовно' : 'Придбати курс / Зв\'язатися';
             const buttonClass = course.isTrial ? 'toggle-trial-btn' : 'toggle-contact-btn';
 
@@ -181,8 +181,8 @@
                     `}
                 </div>
 
-                <!-- Секція для завантаження курсу (для платних) -->
-                <div id="content-section-${course.id}" class="card-section download-section w-full text-center mt-4">
+                <!-- Секція для завантаження курсу (для платних), показується після активації -->
+                <div id="download-section-${course.id}" class="card-section download-section w-full text-center mt-4">
                     <p class="text-lg text-green-700 mb-4 text-center">Курс активовано!</p>
                     <a id="download-link-${course.id}" href="${course.downloadUrl}" download class="button-primary w-full inline-block text-center">
                         Завантажити курс
@@ -193,17 +193,25 @@
         });
 
         // JavaScript для інтерактивності
-        function handleAccessToggle(event) {
-            const courseId = event.target.dataset.courseId;
-            const accessSection = document.getElementById(`access-section-${courseId}`);
-            const contentSection = document.getElementById(`content-section-${courseId}`);
-            
-            accessSection.classList.toggle('active');
-            contentSection.classList.remove('active'); // Завжди закриваємо контент при перемиканні доступу
-        }
-
         document.querySelectorAll('.toggle-contact-btn, .toggle-trial-btn').forEach(button => {
-            button.addEventListener('click', handleAccessToggle);
+            button.addEventListener('click', (event) => {
+                const courseId = event.target.dataset.courseId;
+                const accessSection = document.getElementById(`access-section-${courseId}`);
+                const downloadSection = document.getElementById(`download-section-${courseId}`); // Для платних
+
+                // Закриваємо всі інші відкриті секції доступу
+                document.querySelectorAll('.card-section.active').forEach(section => {
+                    if (section.id !== accessSection.id) {
+                        section.classList.remove('active');
+                    }
+                });
+                
+                accessSection.classList.toggle('active');
+                // Приховуємо секцію завантаження, якщо вона була відкрита, коли відкриваємо форму
+                if (downloadSection) { // Перевірка на існування downloadSection
+                    downloadSection.classList.remove('active'); 
+                }
+            });
         });
 
         // Логіка для активації платного курсу за кодом
@@ -213,23 +221,24 @@
                 const input = document.getElementById(`access-code-input-${courseId}`);
                 const message = document.getElementById(`code-message-${courseId}`);
                 const accessSection = document.getElementById(`access-section-${courseId}`);
-                const contentSection = document.getElementById(`content-section-${courseId}`);
-                const toggleButton = document.querySelector(`[data-course-id="${courseId}"]`); // Отримуємо кнопку "Придбати/Спробувати"
+                const downloadSection = document.getElementById(`download-section-${courseId}`);
+                const toggleButton = document.querySelector(`[data-course-id="${courseId}"]`);
                 const course = coursesData.find(c => c.id === courseId);
 
                 if (input.value.trim().toUpperCase() === course.accessCode.toUpperCase()) {
                     message.textContent = 'Код прийнято! Курс активовано.';
                     message.className = 'text-sm mt-2 text-green-600';
-                    contentSection.classList.add('active'); // Показуємо секцію завантаження
                     
                     localStorage.setItem(`course_${courseId}_activated`, 'true');
                     
                     accessSection.classList.remove('active'); // Приховуємо секцію доступу
+                    downloadSection.classList.add('active'); // Показуємо секцію завантаження
                     if (toggleButton) toggleButton.style.display = 'none'; // Приховуємо кнопку "Придбати/Спробувати"
+                    
                 } else {
                     message.textContent = 'Невірний код. Спробуйте ще раз.';
                     message.className = 'text-sm mt-2 text-red-500';
-                    contentSection.classList.remove('active'); // Приховуємо секцію завантаження
+                    downloadSection.classList.remove('active'); // Приховуємо секцію завантаження
                 }
             });
         });
@@ -241,7 +250,7 @@
                 const input = document.getElementById(`email-input-${courseId}`);
                 const message = document.getElementById(`email-message-${courseId}`);
                 const accessSection = document.getElementById(`access-section-${courseId}`);
-                const toggleButton = document.querySelector(`[data-course-id="${courseId}"]`); // Отримуємо кнопку "Придбати/Спробувати"
+                const toggleButton = document.querySelector(`[data-course-id="${courseId}"]`);
                 const course = coursesData.find(c => c.id === courseId);
 
                 if (input.value.trim() && input.value.includes('@')) { // Проста перевірка email
@@ -253,8 +262,7 @@
                     accessSection.classList.remove('active'); // Приховуємо секцію доступу
                     if (toggleButton) toggleButton.style.display = 'none'; // Приховуємо кнопку "Спробувати"
 
-                    // Перенаправлення на окрему сторінку уроку
-                    window.location.href = course.lessonPageUrl;
+                    window.location.href = course.lessonPageUrl; // Перенаправлення на окрему сторінку уроку
 
                     // Тут мала б бути логіка відправки email на ваш сервер
                     console.log(`Email для пробного курсу ${courseId}: ${input.value.trim()}`);
@@ -266,7 +274,7 @@
             });
         });
 
-        // Перевіряємо localStorage при завантаженні сторінки, щоб автоматично приховати кнопки
+        // Перевіряємо localStorage при завантаженні сторінки
         window.addEventListener('load', () => {
             coursesData.forEach(course => {
                 if (localStorage.getItem(`course_${course.id}_activated`) === 'true') {
@@ -276,7 +284,7 @@
                     }
                     // Для платних курсів також показуємо секцію завантаження, якщо вона була активована
                     if (!course.isTrial) {
-                        const downloadSection = document.getElementById(`content-section-${course.id}`);
+                        const downloadSection = document.getElementById(`download-section-${course.id}`);
                         if (downloadSection) {
                             downloadSection.classList.add('active');
                             const messageElement = document.getElementById(`code-message-${course.id}`);
@@ -286,6 +294,8 @@
                             }
                         }
                     }
+                    // Для пробних курсів, якщо вони активовані, просто приховуємо кнопку,
+                    // перенаправлення відбудеться при наступному кліку або вручну.
                 }
             });
         });
