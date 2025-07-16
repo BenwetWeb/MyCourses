@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ваші курси - BenWenWeb Курси Мовні</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155;
+            background-color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .button-back {
+            background-color: #cbd5e1;
+            color: #475569;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .button-back:hover {
+            background-color: #94a3b8;
+        }
+        .course-card-my-courses {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s ease-in-out;
+        }
+        .course-card-my-courses:hover {
+            transform: translateY(-5px);
+        }
+        .button-access {
+            background-color: #34d399;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .button-access:hover {
+            background-color: #10b981;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: #e0f2fe;
+            border-radius: 1rem;
+            border: 1px dashed #90cdf4;
+            color: #2c5282;
+        }
+    </style>
+</head>
+<body class="bg-stone-50">
+
+    <header class="bg-emerald-200 p-4 shadow-md flex justify-between items-center h-16">
+        <h1 class="text-xl md:text-2xl font-bold text-emerald-800 ml-4">BenWenWeb курси мовні</h1>
+        <nav>
+            <ul class="flex space-x-4 mr-4">
+                <li><a href="index.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Головна</a></li>
+                <li><a href="about_us.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Про нас</a></li>
+                <li><a href="faq.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Часті питання</a></li>
+                <li><a href="contact_form.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Зв'язок</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container mx-auto p-4 md:p-8">
+        <section class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-800 mb-4">Ваші курси</h2>
+            <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto">
+                Тут ви знайдете всі курси, до яких ви отримали доступ.
+            </p>
+        </section>
+
+        <div id="activated-courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <!-- Активовані курси будуть завантажені сюди за допомогою JavaScript -->
+        </div>
+
+        <div id="empty-courses-message" class="empty-state hidden">
+            <p class="text-xl font-semibold mb-4">У вас поки що немає активованих курсів.</p>
+            <p class="text-md">
+                Перейдіть на <a href="index.html" class="underline text-blue-700 hover:text-blue-900">головну сторінку</a>, щоб ознайомитися з нашими пропозиціями та активувати пробний урок або придбати повний курс!
+            </p>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="index.html" class="button-back inline-block">
+                &#x2190; Повернутися на головну
+            </a>
+        </div>
+    </div>
+
+    <footer class="bg-emerald-200 p-6 shadow-inner mt-12 text-center text-emerald-800">
+        <div class="container mx-auto">
+            <p class="mb-2">Зв'яжіться з нами:</p>
+            <p class="mb-1">Email: <a href="mailto:veniam2007@gmail.com" class="underline hover:text-emerald-900">veniam2007@gmail.com</a></p>
+            <p class="mb-4">Telegram: <a href="https://t.me/Mausing99" target="_blank" class="underline hover:text-emerald-900">@Mausing99</a></p>
+            <div class="flex justify-center space-x-4 text-sm mb-2">
+                <a href="privacy_policy.html" class="underline hover:text-emerald-900">Політика конфіденційності</a>
+                <a href="terms_of_use.html" class="underline hover:text-emerald-900">Умови використання</a>
+            </div>
+            <p class="text-sm text-emerald-700">&copy; 2025 BenWenWeb. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Цей масив має бути ідентичним масиву coursesData на index.html
+        const coursesData = [
+            {
+                id: 'german-paid',
+                name: 'Німецька мова',
+                description: 'Почніть свою подорож у світ німецької з нуля або вдоскональте свої навички. Детальні пояснення вимови та граматики.',
+                color: '#90cdf4',
+                accessCode: '84NDISJDNNNKX',
+                downloadUrl: 'https://example.com/your_german_course.pdf', // ЗАМІНІТЬ НА РЕАЛЬНЕ ПОСИЛАННЯ НА ВАШ ФАЙЛ КУРСУ
+                isTrial: false,
+                isComingSoon: false,
+                imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9.png?raw=true',
+                imageAlt: 'Бранденбурзькі ворота',
+                fullPrice: '1900 грн',
+                partPrice: '380 грн',
+                partsCount: 5,
+                accessType: 'download', // Тип доступу: завантаження
+                accessLink: 'https://example.com/your_german_course.pdf' // Посилання для завантаження
+            },
+            {
+                id: 'english-paid',
+                name: 'Англійська мова',
+                description: 'Відкрийте для себе світ англійської! Курс для початківців з акцентом на розмовні фрази та базову граматику.',
+                color: '#d1d5db',
+                accessCode: 'ENGLISH2025',
+                downloadUrl: 'https://example.com/your_english_course.pdf',
+                isTrial: false,
+                isComingSoon: true,
+                imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(1).png?raw=true',
+                imageAlt: 'Біг Бен та лондонський автобус',
+                accessType: 'info', // Тип доступу: інформація (недоступний)
+                accessLink: ''
+            },
+            {
+                id: 'polish-paid',
+                name: 'Польська мова',
+                description: 'Опануйте основи польської мови для подорожей та спілкування. Легкі уроки для швидкого старту.',
+                color: '#90cdf4',
+                accessCode: 'POLSKI2025',
+                downloadUrl: 'https://example.com/your_polish_course.pdf',
+                isTrial: false,
+                isComingSoon: true,
+                imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(2).png?raw=true',
+                imageAlt: 'Архітектура Гданська',
+                accessType: 'info', // Тип доступу: інформація (недоступний)
+                accessLink: ''
+            },
+            {
+                id: 'german-trial',
+                name: 'Німецька мова (пробний урок)',
+                description: 'Спробуйте перший урок німецької абсолютно безкоштовно! Дізнайтеся основи вимови та привітань.',
+                color: '#a7f3d0',
+                isTrial: true,
+                isComingSoon: false,
+                lessonPageUrl: 'german_trial_lesson.html',
+                accessType: 'online', // Тип доступу: онлайн-урок
+                accessLink: 'german_trial_lesson.html'
+            }
+        ];
+
+        const activatedCoursesGrid = document.getElementById('activated-courses-grid');
+        const emptyCoursesMessage = document.getElementById('empty-courses-message');
+        let hasActivatedCourses = false;
+
+        // Функція для відображення активованих курсів
+        function displayActivatedCourses() {
+            activatedCoursesGrid.innerHTML = ''; // Очищаємо попередній вміст
+
+            coursesData.forEach(course => {
+                // Перевіряємо, чи курс активований в localStorage
+                if (localStorage.getItem(`course_${course.id}_activated`) === 'true') {
+                    hasActivatedCourses = true;
+                    const card = document.createElement('div');
+                    card.className = `course-card-my-courses`;
+
+                    let accessButtonHTML = '';
+                    if (course.accessType === 'download') {
+                        accessButtonHTML = `
+                            <a href="${course.accessLink}" download class="button-access mt-4">
+                                Завантажити курс
+                            </a>
+                        `;
+                    } else if (course.accessType === 'online') {
+                        accessButtonHTML = `
+                            <a href="${course.accessLink}" class="button-access mt-4">
+                                Перейти до уроку
+                            </a>
+                        `;
+                    }
+                    // Для 'info' (coming soon) курси не відображаються тут, якщо вони не активовані.
+                    // Якщо вони були б активовані (що неможливо для coming soon), то їх accessType був би іншим.
+
+                    card.innerHTML = `
+                        <h3 class="text-2xl font-bold text-emerald-800 mb-2">${course.name}</h3>
+                        <p class="text-stone-600 mb-4">${course.description}</p>
+                        ${accessButtonHTML}
+                    `;
+                    activatedCoursesGrid.appendChild(card);
+                }
+            });
+
+            // Показуємо повідомлення, якщо немає активованих курсів
+            if (!hasActivatedCourses) {
+                emptyCoursesMessage.classList.remove('hidden');
+            } else {
+                emptyCoursesMessage.classList.add('hidden');
+            }
+        }
+
+        // Завантажуємо активовані курси при завантаженні сторінки
+        window.addEventListener('load', displayActivatedCourses);
+    </script>
+</body>
+</html>
