@@ -554,7 +554,7 @@
                             ${buttonText}
                         </button>
 
-                        <div id="access-section-${course.id}" class="card-section w-full text-left ${isCourseActivated ? 'hidden' : ''}">
+                        <div id="access-section-${course.id}" class="card-section w-full text-left hidden">
                             <p class="text-sm text-stone-700 mb-3">
                                 Введіть ваш email, щоб отримати доступ до пробного уроку та інформацію про повні курси:
                             </p>
@@ -617,7 +617,7 @@
                             <button class="${buttonClass} w-full mb-4" data-course-id="${course.id}" ${buttonAttributes}>
                                 ${buttonText}
                             </button>
-                            <div id="access-section-${course.id}" class="card-section w-full text-left ${isCourseActivated || course.isComingSoon ? 'hidden' : ''}">
+                            <div id="access-section-${course.id}" class="card-section w-full text-left hidden">
                                 <p class="text-sm text-stone-700 mb-3">
                                     Щоб придбати курс, зв'яжіться з нами:
                                 </p>
@@ -653,21 +653,29 @@
             }
 
             // Додаємо обробники подій для кнопок "Придбати/Спробувати"
-            document.querySelectorAll('.toggle-contact-btn').forEach(button => {
+            document.querySelectorAll('.toggle-contact-btn, .toggle-trial-btn').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const courseId = event.target.dataset.courseId;
                     const accessSection = document.getElementById(`access-section-${courseId}`);
                     
-                    // Закриваємо всі інші відкриті секції доступу
+                    // Close all other active sections
                     document.querySelectorAll('.card-section.active').forEach(section => {
                         if (section.id !== accessSection.id) {
                             section.classList.remove('active');
-                            section.classList.add('hidden');
+                            section.classList.add('hidden'); 
                         }
                     });
                     
-                    accessSection.classList.toggle('hidden');
-                    accessSection.classList.toggle('active');
+                    // Toggle the current section
+                    if (accessSection.classList.contains('active')) {
+                        // If currently active, hide it
+                        accessSection.classList.remove('active');
+                        accessSection.classList.add('hidden'); 
+                    } else {
+                        // If currently hidden, show it
+                        accessSection.classList.remove('hidden'); 
+                        accessSection.classList.add('active');
+                    }
                 });
             });
 
