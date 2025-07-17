@@ -33,6 +33,16 @@
             font-size: 1.125rem;
             color: #475569; /* Stone-600 */
         }
+        .lesson-section {
+            margin-bottom: 2.5rem; /* Додаємо більше відступу між секціями */
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #e2e8f0; /* Light grey border */
+        }
+        .lesson-section:last-of-type {
+            border-bottom: none; /* Без межі для останньої секції */
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
         .lesson-section h2 {
             font-size: 1.75rem;
             font-weight: bold;
@@ -54,29 +64,38 @@
             padding-left: 0;
         }
         .vocabulary-list li, .examples-list li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem; /* Збільшуємо відступ */
             display: flex;
-            align-items: baseline;
+            flex-wrap: wrap; /* Дозволяємо перенос на новий рядок для мобільних */
+            align-items: center; /* Вирівнювання по центру */
+            background-color: #f0f9ff; /* Light blue background for items */
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
         .vocabulary-list li strong {
             color: #059669; /* Emerald-600 */
             min-width: 120px; /* Для вирівнювання */
             text-align: right;
             padding-right: 10px;
+            font-size: 1.1rem; /* Трохи більший шрифт */
         }
         .vocabulary-list li span:first-of-type {
             color: #64748b; /* Slate-500 */
             font-style: italic;
             min-width: 150px; /* Для вирівнювання транскрипції */
+            padding-right: 10px;
         }
         .vocabulary-list li span:last-of-type {
             flex-grow: 1;
             color: #334155;
+            font-weight: 500;
         }
         .examples-list li span:first-of-type {
             font-weight: 500;
             color: #10b981; /* Emerald-500 */
             min-width: 250px; /* Для вирівнювання німецького тексту */
+            padding-right: 10px;
         }
         .examples-list li span:last-of-type {
             flex-grow: 1;
@@ -104,6 +123,82 @@
         .button-back:hover {
             background-color: #94a3b8;
         }
+        .audio-button {
+            background-color: #a7f3d0; /* Light mint */
+            color: #065f46; /* Dark emerald */
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-left: 10px;
+            flex-shrink: 0;
+            transition: background-color 0.3s ease;
+        }
+        .audio-button:hover {
+            background-color: #6ee7b7; /* Darker mint */
+        }
+        .audio-button svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Стилі для інтерактивної вправи */
+        .interactive-exercise {
+            background-color: #ecfdf5; /* Very light green */
+            border: 2px solid #34d399; /* Mint border */
+            padding: 2rem;
+            border-radius: 1rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+        .interactive-exercise h3 {
+            color: #065f46;
+            margin-bottom: 1.5rem;
+        }
+        .exercise-word {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #047857;
+            margin-bottom: 1.5rem;
+        }
+        .exercise-input {
+            border: 2px solid #a7f3d0;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.25rem;
+            width: 100%;
+            max-width: 300px;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .exercise-button {
+            background-color: #34d399;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+        }
+        .exercise-button:hover {
+            background-color: #10b981;
+        }
+        .exercise-feedback {
+            margin-top: 1rem;
+            font-weight: 600;
+            min-height: 1.5rem; /* Щоб уникнути CLS */
+        }
+        .feedback-correct {
+            color: #059669; /* Green */
+        }
+        .feedback-incorrect {
+            color: #ef4444; /* Red */
+        }
+
         @media (max-width: 768px) {
             .vocabulary-list li, .examples-list li {
                 flex-direction: column;
@@ -114,6 +209,10 @@
                 min-width: unset;
                 text-align: left;
                 padding-right: 0;
+            }
+            .audio-button {
+                margin-left: 0;
+                margin-top: 0.5rem;
             }
         }
     </style>
@@ -151,31 +250,102 @@
             <h2>Урок 1. Частина перша</h2>
             <h3>Нові слова. Слухайте, повторюйте, запам'ятовуйте:</h3>
             <ul class="vocabulary-list">
-                <li><strong>der Bleistift</strong> <span>[де́а бляйштифт]</span> <span>-> олівець</span></li>
-                <li><strong>das Brot</strong> <span>[дас брот]</span> <span>-> хліб</span></li>
-                <li><strong>das Buch</strong> <span>[дас бух]</span> <span>-> книга</span></li>
-                <li><strong>das Heft</strong> <span>[дас хефт]</span> <span>-> зошит</span></li>
-                <li><strong>der Kuli</strong> <span>[де́а кулі]</span> <span>-> ручка</span></li>
-                <li><strong>die Kartoffeln</strong> <span>[ді картофельн]</span> <span>-> картопля (мн.)</span></li>
-                <li><strong>die Suppe</strong> <span>[ді зуппе]</span> <span>-> суп</span></li>
-                <li><strong>die Tasche</strong> <span>[ді таше]</span> <span>-> сумка, кишеня</span></li>
-                <li><strong>die Wurst</strong> <span>[ді вурст]</span> <span>-> ковбаса</span></li>
-                <li><strong>die Tafel</strong> <span>[ді тафель]</span> <span>-> дошка</span></li>
+                <li>
+                    <strong>der Bleistift</strong> <span>[де́а бляйштифт]</span> <span>-> олівець</span>
+                    <button class="audio-button" data-audio-text="der Bleistift" data-audio-src="PLACEHOLDER_AUDIO_URL_BLEISTIFT" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>das Brot</strong> <span>[дас брот]</span> <span>-> хліб</span>
+                    <button class="audio-button" data-audio-text="das Brot" data-audio-src="PLACEHOLDER_AUDIO_URL_BROT" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>das Buch</strong> <span>[дас бух]</span> <span>-> книга</span>
+                    <button class="audio-button" data-audio-text="das Buch" data-audio-src="PLACEHOLDER_AUDIO_URL_BUCH" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>das Heft</strong> <span>[дас хефт]</span> <span>-> зошит</span>
+                    <button class="audio-button" data-audio-text="das Heft" data-audio-src="PLACEHOLDER_AUDIO_URL_HEFT" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>der Kuli</strong> <span>[де́а кулі]</span> <span>-> ручка</span>
+                    <button class="audio-button" data-audio-text="der Kuli" data-audio-src="PLACEHOLDER_AUDIO_URL_KULI" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>die Kartoffeln</strong> <span>[ді картофельн]</span> <span>-> картопля (мн.)</span>
+                    <button class="audio-button" data-audio-text="die Kartoffeln" data-audio-src="PLACEHOLDER_AUDIO_URL_KARTOFFELN" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>die Suppe</strong> <span>[ді зуппе]</span> <span>-> суп</span>
+                    <button class="audio-button" data-audio-text="die Suppe" data-audio-src="PLACEHOLDER_AUDIO_URL_SUPPE" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>die Tasche</strong> <span>[ді таше]</span> <span>-> сумка, кишеня</span>
+                    <button class="audio-button" data-audio-text="die Tasche" data-audio-src="PLACEHOLDER_AUDIO_URL_TASCHE" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>die Wurst</strong> <span>[ді вурст]</span> <span>-> ковбаса</span>
+                    <button class="audio-button" data-audio-text="die Wurst" data-audio-src="PLACEHOLDER_AUDIO_URL_WURST" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
+                <li>
+                    <strong>die Tafel</strong> <span>[ді тафель]</span> <span>-> дошка</span>
+                    <button class="audio-button" data-audio-text="die Tafel" data-audio-src="PLACEHOLDER_AUDIO_URL_TAFEL" aria-label="Відтворити звук">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
+                        </svg>
+                    </button>
+                </li>
             </ul>
+        </section>
 
-            <h3>А тепер і інша послідовність (для кращого запам'ятовування):</h3>
-            <ul class="vocabulary-list">
-                <li><strong>das Buch</strong> <span>[дас бух]</span> <span>-> книга</span></li>
-                <li><strong>das Heft</strong> <span>[дас хефт]</span> <span>-> зошит</span></li>
-                <li><strong>der Kuli</strong> <span>[де́а кулі]</span> <span>-> ручка</span></li>
-                <li><strong>der Bleistift</strong> <span>[де́а бляйштифт]</span> <span>-> олівець</span></li>
-                <li><strong>die Tasche</strong> <span>[ді таше]</span> <span>-> сумка, кишеня</span></li>
-                <li><strong>die Suppe</strong> <span>[ді зуппе]</span> <span>-> суп</span></li>
-                <li><strong>die Kartoffeln</strong> <span>[ді картофельн]</span> <span>-> картопля (мн.)</span></li>
-                <li><strong>die Wurst</strong> <span>[ді вурст]</span> <span>-> ковбаса</span></li>
-                <li><strong>die Tafel</strong> <span>[ді тафель]</span> <span>-> дошка</span></li>
-            </ul>
+        <section class="lesson-section">
+            <h2>Інтерактивна вправа: Перевір свою пам'ять!</h2>
+            <div class="interactive-exercise">
+                <h3>Перекладіть слово на німецьку:</h3>
+                <p id="exercise-ukrainian-word" class="exercise-word"></p>
+                <input type="text" id="exercise-input" class="exercise-input" placeholder="Введіть німецький переклад">
+                <button id="exercise-check-btn" class="exercise-button">Перевірити</button>
+                <p id="exercise-feedback" class="exercise-feedback"></p>
+            </div>
+        </section>
 
+        <section class="lesson-section">
+            <h2>Урок 1. Частина перша (продовження)</h2>
             <h3>Використання нових слів з артиклем та дієсловом "бути" (`ist`):</h3>
             <p>Прочитайте вголос німецькі речення та зверніть увагу на український переклад:</p>
             <ul class="examples-list">
@@ -316,5 +486,87 @@
         </div>
     </div>
 
+    <script>
+        // Дані для інтерактивної вправи "Перевір свою пам'ять"
+        const exerciseVocabulary = [
+            { ukr: 'олівець', ger: 'Bleistift' },
+            { ukr: 'хліб', ger: 'Brot' },
+            { ukr: 'книга', ger: 'Buch' },
+            { ukr: 'зошит', ger: 'Heft' },
+            { ukr: 'ручка', ger: 'Kuli' },
+            { ukr: 'картопля', ger: 'Kartoffeln' },
+            { ukr: 'суп', ger: 'Suppe' },
+            { ukr: 'сумка', ger: 'Tasche' },
+            { ukr: 'ковбаса', ger: 'Wurst' },
+            { ukr: 'дошка', ger: 'Tafel' }
+        ];
+
+        let currentExerciseWordIndex = 0;
+
+        const exerciseUkrainianWord = document.getElementById('exercise-ukrainian-word');
+        const exerciseInput = document.getElementById('exercise-input');
+        const exerciseCheckBtn = document.getElementById('exercise-check-btn');
+        const exerciseFeedback = document.getElementById('exercise-feedback');
+
+        // Функція для завантаження нового слова в вправу
+        function loadNewExerciseWord() {
+            currentExerciseWordIndex = Math.floor(Math.random() * exerciseVocabulary.length);
+            exerciseUkrainianWord.textContent = exerciseVocabulary[currentExerciseWordIndex].ukr;
+            exerciseInput.value = '';
+            exerciseFeedback.textContent = '';
+            exerciseFeedback.classList.remove('feedback-correct', 'feedback-incorrect');
+            exerciseInput.focus();
+        }
+
+        // Обробник перевірки слова
+        exerciseCheckBtn.addEventListener('click', () => {
+            const userAnswer = exerciseInput.value.trim();
+            const correctAnswer = exerciseVocabulary[currentExerciseWordIndex].ger;
+
+            if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+                exerciseFeedback.textContent = 'Правильно!';
+                exerciseFeedback.classList.remove('feedback-incorrect');
+                exerciseFeedback.classList.add('feedback-correct');
+                setTimeout(loadNewExerciseWord, 1500); // Завантажити нове слово через 1.5 секунди
+            } else {
+                exerciseFeedback.textContent = `Неправильно. Правильна відповідь: ${correctAnswer}`;
+                exerciseFeedback.classList.remove('feedback-correct');
+                exerciseFeedback.classList.add('feedback-incorrect');
+            }
+        });
+
+        // Завантажуємо перше слово при завантаженні сторінки
+        window.addEventListener('load', loadNewExerciseWord);
+
+        // Функція для відтворення синтезованого голосу
+        function speakText(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE'; // Встановлюємо мову на німецьку
+                speechSynthesis.speak(utterance);
+            } else {
+                alert('Ваш браузер не підтримує синтез мовлення.');
+            }
+        }
+
+        // Обробник для кнопок аудіо
+        document.querySelectorAll('.audio-button').forEach(button => {
+            button.addEventListener('click', (event) => {
+                const audioSrc = event.currentTarget.dataset.audioSrc;
+                const audioText = event.currentTarget.dataset.audioText; // Текст для синтезу
+
+                if (audioSrc && audioSrc.startsWith('http')) { // Якщо є реальне посилання на аудіофайл
+                    const audio = new Audio(audioSrc);
+                    audio.play().catch(e => console.error("Error playing audio from URL:", e));
+                    console.log(`Відтворення аудіо з URL: ${audioSrc}`);
+                } else if (audioText) { // Якщо немає реального посилання, використовуємо синтез
+                    speakText(audioText);
+                    console.log(`Відтворення синтезованого аудіо для: ${audioText}`);
+                } else {
+                    alert('Немає аудіо для відтворення. Будь ласка, додайте реальні посилання на аудіофайли.');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
