@@ -477,6 +477,7 @@
                         toggleButton.classList.remove('button-primary');
                         toggleButton.classList.add('button-secondary');
                         toggleButton.onclick = () => { window.location.href = 'my_courses.html'; };
+                        toggleButton.style.display = ''; // Переконаємось, що кнопка видима
                     }
                     
                     // Перенаправляємо на сторінку "Мої курси"
@@ -516,6 +517,7 @@
                         toggleButton.classList.remove('button-primary');
                         toggleButton.classList.add('button-secondary');
                         toggleButton.onclick = () => { window.location.href = course.lessonPageUrl; };
+                        toggleButton.style.display = ''; // Переконаємось, що кнопка видима
                     }
 
                     window.location.href = course.lessonPageUrl; // Перенаправлення на окрему сторінку уроку
@@ -541,6 +543,7 @@
             }
 
             acceptCookiesBtn.addEventListener('click', () => {
+                console.log('Accept cookies button clicked!'); // Debug log
                 localStorage.setItem('cookieConsentAccepted', 'true');
                 cookieConsentBanner.classList.add('hidden');
             });
@@ -552,7 +555,7 @@
             }
 
             coursesData.forEach(course => {
-                const toggleButton = document.querySelector(`[data-course-id="${course.id}"]`);
+                const toggleButton = document.querySelector(`button[data-course-id="${course.id}"]`);
                 if (localStorage.getItem(`course_${course.id}_activated`) === 'true') {
                     if (course.isTrial) {
                         // Для активованих пробних курсів, змінюємо текст кнопки на "Перейти"
