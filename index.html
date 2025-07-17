@@ -6,8 +6,8 @@
     <title>BenWenWeb Курси Мовні</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chosen Palette: Soft Mint, Soft Blue, Soft Grey, White/Stone -->
-    <!-- Application Structure Plan: The application features a fixed top header with essential navigation. A prominent "About Director" section is added below the main welcome message. The main content area is now divided into three distinct sections: a grid for paid courses (with updated pricing display), a separate visually distinct section for the trial course, and a new dedicated section for detailed payment and access information. Each course card uses a user-provided background image for visual appeal. Interactive elements (contact forms, code access, download links, and trial lesson redirection) are maintained. The background is a clean, static color. A comprehensive footer with contact information and legal links is included. Paid courses for English and Polish are marked as "coming soon". A new cookie consent banner appears on first visit. After a paid course is activated, the user remains on the main page, and a new "Your Courses" section appears at the bottom with a horizontal carousel of lesson blocks. -->
-    <!-- Visualization & Content Choices: Report Info: Personal branding, user's images for courses, distinct trial course, detailed payment info, clean background, full contact footer, "coming soon" status for some courses, streamlined navigation with cookie consent, and dynamic display of lesson blocks on the main page. -> Goal: Inform, Organize, Engage, Brand, Facilitate Access, Enhance Clarity, Provide Contact, Expand Information, Legal Compliance, Streamline Access. -> Viz/Presentation Method: Dedicated HTML section for director's info (user's photo, text). Course cards use user's background images with overlays. Trial course card is in a separate, styled section. A new, well-designed section for payment details is added. Footer for comprehensive contact info and legal links. Streamlined navigation links in header. Cookie consent banner as a fixed element. New "Your Courses" section with a horizontal slider for lesson blocks. Lesson content displayed in a modal. -> Interaction: Maintained interactive forms/buttons. Button text changes for activated trial courses/paid courses. Custom error message for incorrect codes. "Coming soon" courses have disabled buttons. Cookie banner disappears on acceptance and uses localStorage. Successful paid course activation reveals "Your Courses" section and hides its card from the main grid. Slider navigation for lesson blocks. Modal for lesson content. -> Justification: This design provides a professional, visually appealing, and user-friendly website. The dedicated payment section improves information clarity. Clear contact info and course status messages improve transparency and user experience. The cookie banner addresses legal requirements without cluttering the main navigation. The "Your Courses" section with integrated lessons improves user flow and content access directly on the main page. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change, slider logic, modal handling), Tailwind CSS for all styling and responsiveness. User-provided image URLs are directly embedded. No charts or complex visualizations are used. -->
+    <!-- Application Structure Plan: The application features a fixed top header with essential navigation. A prominent "About Director" section is added below the main welcome message. The main content area is now divided into three distinct sections: a grid for paid courses (with updated pricing display), a separate visually distinct section for the trial course, and a new dedicated section for detailed payment and access information. Each course card uses a user-provided background image for visual appeal. Interactive elements (contact forms, code access, lesson content display in modal, and trial lesson redirection) are maintained. The background is a clean, static color. A comprehensive footer with contact information and legal links is included. Paid courses for English and Polish are marked as "coming soon". A new cookie consent banner appears on first visit. After a paid course is activated, its card remains visible with a "Куплено" button, and a new "Your Courses" section appears above payment info with a horizontal carousel of lesson blocks. -->
+    <!-- Visualization & Content Choices: Report Info: Personal branding, user's images for courses, distinct trial course, detailed payment info, clean background, full contact footer, "coming soon" status for some courses, streamlined navigation with cookie consent, and dynamic display of lesson blocks on the main page. -> Goal: Inform, Organize, Engage, Brand, Facilitate Access, Enhance Clarity, Provide Contact, Expand Information, Legal Compliance, Streamline Access. -> Viz/Presentation Method: Dedicated HTML section for director's info (user's photo, text). Course cards use user's background images with overlays. Trial course card is in a separate, styled section. A new, well-designed section for payment details is added. Footer for comprehensive contact info and legal links. Streamlined navigation links in header. Cookie consent banner as a fixed element. New "Your Courses" section with a horizontal slider for lesson blocks. Lesson content displayed in a modal. -> Interaction: Maintained interactive forms/buttons. Button text changes for activated trial courses/paid courses (to "Куплено"). Custom error message for incorrect codes. "Coming soon" courses have disabled buttons. Cookie banner disappears on acceptance and uses localStorage. Successful paid course activation reveals "Your Courses" section and updates its card in the main grid. Slider navigation for lesson blocks. Modal for lesson content. -> Justification: This design provides a professional, visually appealing, and user-friendly website. The dedicated payment section improves information clarity. Clear contact info and course status messages improve transparency and user experience. The cookie banner addresses legal requirements without cluttering the main navigation. The "Your Courses" section with integrated lessons improves user flow and content access directly on the main page. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change, slider logic, modal handling), Tailwind CSS for all styling and responsiveness. User-provided image URLs are directly embedded. No charts or complex visualizations are used. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
@@ -311,6 +311,18 @@
             <!-- Картка пробного курсу буде додана за допомогою JavaScript -->
         </section>
 
+        <!-- Нова секція "Ваші активовані курси" -->
+        <section id="your-courses-section" class="hidden bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-blue-300">
+            <h3 class="text-2xl md:text-3xl font-bold text-blue-800 mb-6 text-center">Ваші активовані курси:</h3>
+            <div class="lesson-carousel-container">
+                <div id="lesson-carousel-inner" class="lesson-carousel-inner">
+                    <!-- Картки уроків будуть завантажені сюди за допомогою JavaScript -->
+                </div>
+                <button id="carousel-left-btn" class="carousel-button left hidden">&#10094;</button>
+                <button id="carousel-right-btn" class="carousel-button right hidden">&#10095;</button>
+            </div>
+        </section>
+
         <!-- Нова секція з інформацією про оплату та доступ -->
         <section class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-emerald-300">
             <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-4 text-center">Як працює оплата та доступ до курсів?</h3>
@@ -322,23 +334,11 @@
                     Ви можете оплатити курс одразу або розбити оплату на **5 частин по 380 грн кожна**. Це дозволяє вам навчатися у власному темпі, не відчуваючи фінансового тиску.
                 </p>
                 <p>
-                    <span class="font-bold text-emerald-700">Принцип доступу:</span> Ви купуєте курс, ми надаємо вам **унікальний код доступу**. Цей код ви вводите на сторінці відповідного курсу. Після введення коду ви отримуєте повний доступ до всіх матеріалів курсу або до відповідної частини, якщо ви обрали розбиття оплати.
+                    <span class="font-bold text-emerald-700">Принцип доступу:</span> Ви купуєте курс, ми надаємо вам **унікальний код доступу**. Цей код ви вводите на сторінці відповідного курсу. Після введення коду ви отримуєте повний доступ до всіх матеріалів курсу, які стають доступними безпосередньо на сайті в розділі **"Ваші активовані курси"**.
                 </p>
                 <p class="p-3 bg-blue-100 border-l-4 border-blue-500 text-blue-800 rounded-md">
                     <span class="font-semibold">Важливо:</span> Ваші гроші не пересилаються нікуди інше, всі платежі безпечні та захищені. Ми гарантуємо прозорість та надійність кожної транзакції.
                 </p>
-            </div>
-        </section>
-
-        <!-- Нова секція "Ваші курси" -->
-        <section id="your-courses-section" class="hidden bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-blue-300">
-            <h3 class="text-2xl md:text-3xl font-bold text-blue-800 mb-6 text-center">Ваші активовані курси:</h3>
-            <div class="lesson-carousel-container">
-                <div id="lesson-carousel-inner" class="lesson-carousel-inner">
-                    <!-- Картки уроків будуть завантажені сюди за допомогою JavaScript -->
-                </div>
-                <button id="carousel-left-btn" class="carousel-button left hidden">&#10094;</button>
-                <button id="carousel-right-btn" class="carousel-button right hidden">&#10095;</button>
             </div>
         </section>
 
@@ -374,7 +374,7 @@
                 name: 'Німецька мова',
                 description: 'Почніть свою подорож у світ німецької з нуля або вдоскональте свої навички. Детальні пояснення вимови та граматики.',
                 color: '#90cdf4', // М'який блакитний
-                accessCode: '84NDISJDNNNKX', // Ваш код для німецької
+                accessCode: '84NDISJDNNNKX', // Код для активації всього курсу німецької
                 isTrial: false,
                 isComingSoon: false,
                 imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9.png?raw=true', // Посилання на ваше фото для німецької
@@ -383,11 +383,11 @@
                 partPrice: '380 грн',
                 partsCount: 5,
                 lessonBlocks: [ // Нова структура для уроків
-                    { title: 'Урок 1-2', url: 'german_lesson_1-2.html' },
-                    { title: 'Урок 3-4', url: 'german_lesson_3-4.html' },
-                    { title: 'Урок 5-6', url: 'german_lesson_5-6.html' },
-                    { title: 'Урок 7-8', url: 'german_lesson_7-8.html' },
-                    { title: 'Урок 9-10', url: 'german_lesson_9-10.html' }
+                    { title: 'Урок 1-2', url: 'german_lesson_1-2.html' /*, accessCode: 'L12GERMAN'*/ }, // Приклад індивідуального коду (не використовується зараз)
+                    { title: 'Урок 3-4', url: 'german_lesson_3-4.html' /*, accessCode: 'L34GERMAN'*/ },
+                    { title: 'Урок 5-6', url: 'german_lesson_5-6.html' /*, accessCode: 'L56GERMAN'*/ },
+                    { title: 'Урок 7-8', url: 'german_lesson_7-8.html' /*, accessCode: 'L78GERMAN'*/ },
+                    { title: 'Урок 9-10', url: 'german_lesson_9-10.html' /*, accessCode: 'L910GERMAN'*/ }
                 ]
             },
             {
@@ -487,7 +487,12 @@
             }
             
             // Визначаємо кількість видимих елементів
-            const itemWidth = lessonCarouselInner.children[0].offsetWidth + 24; // Ширина картки + gap
+            // Залежить від CSS flex-basis та gap
+            let itemWidth = 0;
+            if (lessonCarouselInner.children.length > 0) {
+                itemWidth = lessonCarouselInner.children[0].offsetWidth + 24; // Ширина картки + gap (1.5rem = 24px)
+            }
+            
             const containerWidth = lessonCarouselInner.offsetWidth;
             const visibleItems = Math.floor(containerWidth / itemWidth);
 
@@ -524,6 +529,7 @@
             coursesGrid.innerHTML = ''; // Очищаємо основну сітку курсів
             trialCourseSection.innerHTML = ''; // Очищаємо секцію пробного курсу
             lessonCarouselInner.innerHTML = ''; // Очищаємо карусель уроків
+            currentCarouselIndex = 0; // Скидаємо індекс каруселі при перерендері
 
             let hasActivatedPaidCourse = false;
 
@@ -563,51 +569,23 @@
                     `;
                     trialCourseSection.appendChild(card);
                 } else { // Платні курси
-                    if (!isCourseActivated) { // Показуємо картку лише якщо курс НЕ активований
-                        const card = document.createElement('div');
-                        card.className = `bg-white rounded-xl shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
-                        
-                        const buttonText = course.isComingSoon ? 'Курс ще додається' : 'Придбати курс / Зв\'язатися';
-                        const buttonClass = course.isComingSoon ? 'button-secondary' : 'button-primary toggle-contact-btn';
+                    const card = document.createElement('div');
+                    card.className = `bg-white rounded-xl shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
+                    
+                    let buttonText = '';
+                    let buttonClass = '';
+                    let buttonAttributes = '';
 
-                        card.innerHTML = `
-                            <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
-                                <span class="card-image-text">${course.name}</span>
-                            </div>
-                            <div class="p-6 w-full flex flex-col items-center text-center">
-                                <p class="text-stone-600 mb-4 flex-grow">${course.description}</p>
-                                <div class="mb-4 text-lg">
-                                    <p class="font-bold text-emerald-700">Ціна: ${course.fullPrice}</p>
-                                </div>
-                                <button class="${buttonClass} w-full mb-4" data-course-id="${course.id}" ${course.isComingSoon ? 'disabled' : ''}>
-                                    ${buttonText}
-                                </button>
-                                <div id="access-section-${course.id}" class="card-section w-full text-left hidden">
-                                    <p class="text-sm text-stone-700 mb-3">
-                                        Щоб придбати курс, зв'яжіться з нами:
-                                    </p>
-                                    <a href="mailto:veniam2007@gmail.com" class="block button-secondary w-full mb-3 text-center">
-                                        Написати на email
-                                    </a>
-                                    <a href="https://t.me/Mausing99" target="_blank" class="block button-secondary w-full mb-4 text-center">
-                                        Написати в Telegram
-                                    </a>
-                                    <p class="text-sm text-stone-700 mb-2">
-                                        Якщо у вас є код доступу, введіть його тут:
-                                    </p>
-                                    <div class="flex flex-col sm:flex-row gap-2">
-                                        <input type="text" id="access-code-input-${course.id}" placeholder="Введіть код" class="flex-grow">
-                                        <button class="button-primary activate-code-btn" data-course-id="${course.id}">
-                                            Активувати
-                                        </button>
-                                    </div>
-                                    <p id="code-message-${course.id}" class="text-sm mt-2 text-red-500"></p>
-                                </div>
-                            </div>
-                        `;
-                        coursesGrid.appendChild(card);
-                    } else { // Курс активований, додаємо його в секцію "Ваші курси"
-                        hasActivatedPaidCourse = true;
+                    if (course.isComingSoon) {
+                        buttonText = 'Курс ще додається';
+                        buttonClass = 'button-secondary';
+                        buttonAttributes = 'disabled';
+                    } else if (isCourseActivated) {
+                        buttonText = 'Куплено';
+                        buttonClass = 'button-secondary';
+                        buttonAttributes = 'disabled'; // Кнопка неактивна
+                        hasActivatedPaidCourse = true; // Позначаємо, що є активований платний курс
+                        // Додаємо уроки до каруселі
                         if (course.lessonBlocks) {
                             course.lessonBlocks.forEach(lesson => {
                                 const lessonCard = document.createElement('div');
@@ -622,11 +600,51 @@
                                 lessonCarouselInner.appendChild(lessonCard);
                             });
                         }
+                    } else {
+                        buttonText = 'Придбати курс / Зв\'язатися';
+                        buttonClass = 'button-primary toggle-contact-btn';
                     }
+
+                    card.innerHTML = `
+                        <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
+                            <span class="card-image-text">${course.name}</span>
+                        </div>
+                        <div class="p-6 w-full flex flex-col items-center text-center">
+                            <p class="text-stone-600 mb-4 flex-grow">${course.description}</p>
+                            <div class="mb-4 text-lg">
+                                <p class="font-bold text-emerald-700">Ціна: ${course.fullPrice}</p>
+                            </div>
+                            <button class="${buttonClass} w-full mb-4" data-course-id="${course.id}" ${buttonAttributes}>
+                                ${buttonText}
+                            </button>
+                            <div id="access-section-${course.id}" class="card-section w-full text-left ${isCourseActivated || course.isComingSoon ? 'hidden' : ''}">
+                                <p class="text-sm text-stone-700 mb-3">
+                                    Щоб придбати курс, зв'яжіться з нами:
+                                </p>
+                                <a href="mailto:veniam2007@gmail.com" class="block button-secondary w-full mb-3 text-center">
+                                    Написати на email
+                                </a>
+                                <a href="https://t.me/Mausing99" target="_blank" class="block button-secondary w-full mb-4 text-center">
+                                    Написати в Telegram
+                                </a>
+                                <p class="text-sm text-stone-700 mb-2">
+                                    Якщо у вас є код доступу, введіть його тут:
+                                </p>
+                                <div class="flex flex-col sm:flex-row gap-2">
+                                    <input type="text" id="access-code-input-${course.id}" placeholder="Введіть код" class="flex-grow">
+                                    <button class="button-primary activate-code-btn" data-course-id="${course.id}">
+                                        Активувати
+                                    </button>
+                                </div>
+                                <p id="code-message-${course.id}" class="text-sm mt-2 text-red-500"></p>
+                            </div>
+                        </div>
+                    `;
+                    coursesGrid.appendChild(card);
                 }
             });
 
-            // Показуємо/приховуємо секцію "Ваші курси"
+            // Показуємо/приховуємо секцію "Ваші активовані курси"
             if (hasActivatedPaidCourse) {
                 yourCoursesSection.classList.remove('hidden');
                 updateCarouselButtons(); // Оновлюємо кнопки каруселі після завантаження уроків
@@ -635,17 +653,16 @@
             }
 
             // Додаємо обробники подій для кнопок "Придбати/Спробувати"
-            document.querySelectorAll('.toggle-contact-btn, .toggle-trial-btn').forEach(button => {
+            document.querySelectorAll('.toggle-contact-btn').forEach(button => {
                 button.addEventListener('click', (event) => {
                     const courseId = event.target.dataset.courseId;
                     const accessSection = document.getElementById(`access-section-${courseId}`);
                     
-                    if (event.target.onclick) return; // Якщо кнопка вже перенаправляє, не відкриваємо секцію
-
+                    // Закриваємо всі інші відкриті секції доступу
                     document.querySelectorAll('.card-section.active').forEach(section => {
                         if (section.id !== accessSection.id) {
                             section.classList.remove('active');
-                            section.classList.add('hidden'); // Приховуємо інші секції
+                            section.classList.add('hidden');
                         }
                     });
                     
@@ -704,7 +721,7 @@
                         setTimeout(() => {
                             renderCourses();
                             window.location.href = course.lessonPageUrl; // Перенаправлення на окрему сторінку уроку
-                        }, 1000); // Затримка для відображення повідомлення
+                        }, 1000); // Затримка для відображення відображення повідомлення
 
                         console.log(`Email для пробного курсу ${courseId}: ${input.value.trim()}`);
                     } else {
