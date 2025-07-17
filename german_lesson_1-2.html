@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Німецька мова: Урок 1-2 - BenWenWeb</title>
+    <title>Німецька мова: Урок 1 - BenWenWeb</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -13,7 +13,7 @@
             line-height: 1.6;
         }
         .lesson-container {
-            max-width: 800px;
+            max-width: 900px; /* Збільшена максимальна ширина */
             margin: 2rem auto;
             background-color: #ffffff;
             border-radius: 1rem;
@@ -22,79 +22,136 @@
         }
         .lesson-header {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
         }
         .lesson-header h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem; /* Трохи більший заголовок */
             font-weight: bold;
             color: #047857; /* Emerald-800 */
         }
         .lesson-header p {
-            font-size: 1.125rem;
+            font-size: 1.25rem; /* Збільшений текст */
             color: #475569; /* Stone-600 */
         }
         .lesson-section {
-            margin-bottom: 2.5rem; /* Додаємо більше відступу між секціями */
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #e2e8f0; /* Light grey border */
+            margin-bottom: 3rem; /* Збільшений відступ між секціями */
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #e2e8f0;
         }
         .lesson-section:last-of-type {
-            border-bottom: none; /* Без межі для останньої секції */
+            border-bottom: none;
             margin-bottom: 0;
             padding-bottom: 0;
         }
         .lesson-section h2 {
-            font-size: 1.75rem;
+            font-size: 2.2rem; /* Більший заголовок секції */
             font-weight: bold;
             color: #065f46; /* Emerald-700 */
             margin-top: 1.5rem;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #a7f3d0; /* Light emerald */
-            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem; /* Збільшений відступ */
+            border-bottom: 2px solid #a7f3d0;
+            padding-bottom: 0.75rem;
+            text-align: center; /* Центруємо заголовки секцій */
         }
         .lesson-section h3 {
-            font-size: 1.375rem;
+            font-size: 1.6rem; /* Більший підзаголовок */
             font-weight: 600;
-            color: #065f46; /* Emerald-700 */
-            margin-top: 1rem;
-            margin-bottom: 0.75rem;
+            color: #065f46;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            text-align: center; /* Центруємо підзаголовки */
         }
-        .vocabulary-list, .examples-list {
+
+        /* Стилі для словникових карток */
+        .vocabulary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Адаптивна сітка */
+            gap: 1.25rem; /* Відступ між картками */
+            list-style: none; /* Прибираємо маркери списку */
+            padding: 0;
+        }
+        .vocabulary-card {
+            background-color: #f0f9ff; /* Light blue background */
+            padding: 1.25rem;
+            border-radius: 0.75rem; /* Більш округлі кути */
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* М'якша тінь */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start; /* Вирівнювання тексту зліва */
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .vocabulary-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+        .vocabulary-card-content {
+            width: 100%;
+        }
+        .vocabulary-card strong {
+            font-size: 1.3rem; /* Більший шрифт для німецького слова */
+            font-weight: 700;
+            color: #059669; /* Emerald-600 */
+            display: block; /* Щоб займало весь рядок */
+            margin-bottom: 0.25rem;
+        }
+        .vocabulary-card .transcription {
+            font-size: 0.95rem;
+            color: #64748b; /* Slate-500 */
+            font-style: italic;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        .vocabulary-card .translation {
+            font-size: 1.1rem;
+            color: #334155;
+            font-weight: 500;
+            display: block;
+            margin-bottom: 1rem; /* Відступ перед кнопкою */
+        }
+        .audio-button {
+            background-color: #a7f3d0;
+            color: #065f46;
+            border: none;
+            border-radius: 50%;
+            width: 44px; /* Більший розмір кнопки */
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            align-self: flex-end; /* Вирівнюємо кнопку внизу справа картки */
+        }
+        .audio-button:hover {
+            background-color: #6ee7b7;
+            transform: scale(1.05);
+        }
+        .audio-button svg {
+            width: 24px; /* Більша іконка */
+            height: 24px;
+        }
+
+        /* Стилі для списків прикладів */
+        .examples-list {
             list-style: none;
             padding-left: 0;
         }
-        .vocabulary-list li, .examples-list li {
-            margin-bottom: 0.75rem; /* Збільшуємо відступ */
+        .examples-list li {
+            margin-bottom: 0.75rem;
             display: flex;
-            flex-wrap: wrap; /* Дозволяємо перенос на новий рядок для мобільних */
-            align-items: center; /* Вирівнювання по центру */
-            background-color: #f0f9ff; /* Light blue background for items */
+            flex-wrap: wrap;
+            align-items: center;
+            background-color: #f0f9ff;
             padding: 0.75rem 1rem;
             border-radius: 0.5rem;
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-        .vocabulary-list li strong {
-            color: #059669; /* Emerald-600 */
-            min-width: 120px; /* Для вирівнювання */
-            text-align: right;
-            padding-right: 10px;
-            font-size: 1.1rem; /* Трохи більший шрифт */
-        }
-        .vocabulary-list li span:first-of-type {
-            color: #64748b; /* Slate-500 */
-            font-style: italic;
-            min-width: 150px; /* Для вирівнювання транскрипції */
-            padding-right: 10px;
-        }
-        .vocabulary-list li span:last-of-type {
-            flex-grow: 1;
-            color: #334155;
-            font-weight: 500;
-        }
         .examples-list li span:first-of-type {
             font-weight: 500;
             color: #10b981; /* Emerald-500 */
-            min-width: 250px; /* Для вирівнювання німецького тексту */
+            min-width: 250px;
             padding-right: 10px;
         }
         .examples-list li span:last-of-type {
@@ -103,12 +160,12 @@
             font-style: italic;
         }
         .note {
-            background-color: #e0f2fe; /* Light blue */
-            border-left: 4px solid #38b2ac; /* Teal-500 */
+            background-color: #e0f2fe;
+            border-left: 4px solid #38b2ac;
             padding: 1rem;
             border-radius: 0.5rem;
             margin-top: 1.5rem;
-            color: #2c5282; /* Dark blue */
+            color: #2c5282;
         }
         .button-back {
             background-color: #cbd5e1;
@@ -119,143 +176,142 @@
             transition: background-color 0.3s ease-in-out;
             display: inline-block;
             margin-top: 2rem;
+            text-decoration: none; /* Прибираємо підкреслення */
         }
         .button-back:hover {
             background-color: #94a3b8;
         }
-        .audio-button {
-            background-color: #a7f3d0; /* Light mint */
-            color: #065f46; /* Dark emerald */
-            border: none;
-            border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            margin-left: 10px;
-            flex-shrink: 0;
-            transition: background-color 0.3s ease;
-        }
-        .audio-button:hover {
-            background-color: #6ee7b7; /* Darker mint */
-        }
-        .audio-button svg {
-            width: 20px;
-            height: 20px;
-        }
 
         /* Стилі для інтерактивної вправи */
         .interactive-exercise {
-            background-color: #ecfdf5; /* Very light green */
-            border: 2px solid #34d399; /* Mint border */
-            padding: 2rem;
+            background-color: #ecfdf5;
+            border: 2px solid #34d399;
+            padding: 2.5rem; /* Збільшений відступ */
             border-radius: 1rem;
             margin-top: 3rem;
             text-align: center;
+            box-shadow: 0 4px 10px rgba(52, 211, 153, 0.2);
         }
         .interactive-exercise h3 {
+            font-size: 1.8rem; /* Більший заголовок */
             color: #065f46;
             margin-bottom: 1.5rem;
         }
         .exercise-word {
-            font-size: 1.8rem;
+            font-size: 2.2rem; /* Дуже великий шрифт для слова */
             font-weight: bold;
             color: #047857;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem; /* Збільшений відступ */
         }
         .exercise-input {
             border: 2px solid #a7f3d0;
             border-radius: 0.75rem;
-            padding: 0.75rem 1.25rem;
+            padding: 1rem 1.5rem; /* Збільшений відступ */
             width: 100%;
-            max-width: 300px;
-            font-size: 1.1rem;
+            max-width: 350px; /* Трохи ширше поле */
+            font-size: 1.25rem; /* Більший шрифт */
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .exercise-input:focus {
+            border-color: #34d399;
+            box-shadow: 0 0 0 4px rgba(52, 211, 153, 0.3);
         }
         .exercise-button {
             background-color: #34d399;
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 1rem 2.5rem; /* Більший розмір кнопки */
             border-radius: 0.75rem;
             font-weight: 600;
-            transition: background-color 0.3s ease;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.1s ease;
             cursor: pointer;
+            box-shadow: 0 3px 6px rgba(52, 211, 153, 0.2);
         }
         .exercise-button:hover {
             background-color: #10b981;
+            transform: translateY(-2px);
         }
         .exercise-feedback {
-            margin-top: 1rem;
-            font-weight: 600;
-            min-height: 1.5rem; /* Щоб уникнути CLS */
-        }
-        .feedback-correct {
-            color: #059669; /* Green */
-        }
-        .feedback-incorrect {
-            color: #ef4444; /* Red */
-        }
-
-        /* Стилі для множинного вибору */
-        .multiple-choice-exercise {
-            background-color: #fffbeb; /* Light yellow */
-            border: 2px solid #f59e0b; /* Amber border */
-            padding: 2rem;
-            border-radius: 1rem;
-            margin-top: 3rem;
-            text-align: center;
-        }
-        .multiple-choice-exercise h3 {
-            color: #d97706; /* Amber-700 */
-            margin-bottom: 1.5rem;
-        }
-        .question-text {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #b45309; /* Amber-800 */
-            margin-bottom: 1rem;
-        }
-        .options-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-        .option-button {
-            background-color: #fcd34d; /* Yellow-300 */
-            color: #78350f; /* Orange-900 */
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-        }
-        .option-button:hover {
-            background-color: #fbbf24; /* Yellow-400 */
-        }
-        .option-button.selected {
-            background-color: #f59e0b; /* Amber-500 */
-            color: white;
-        }
-        .option-button.correct {
-            background-color: #10b981; /* Emerald-500 */
-            color: white;
-        }
-        .option-button.incorrect {
-            background-color: #ef4444; /* Red-500 */
-            color: white;
-        }
-        .multiple-choice-feedback {
-            margin-top: 1rem;
-            font-weight: 600;
+            margin-top: 1.5rem; /* Збільшений відступ */
+            font-weight: 700;
+            font-size: 1.2rem; /* Більший шрифт */
             min-height: 1.5rem;
         }
-        @media (min-width: 640px) {
-            .options-grid {
-                grid-template-columns: 1fr 1fr;
+        .feedback-correct {
+            color: #059669;
+        }
+        .feedback-incorrect {
+            color: #ef4444;
+        }
+
+        /* Адаптивність */
+        @media (max-width: 768px) {
+            .lesson-container {
+                margin: 1rem auto;
+                padding: 1rem;
+            }
+            .lesson-header h1 {
+                font-size: 2rem;
+            }
+            .lesson-header p {
+                font-size: 1rem;
+            }
+            .lesson-section h2 {
+                font-size: 1.8rem;
+            }
+            .lesson-section h3 {
+                font-size: 1.4rem;
+            }
+            .vocabulary-grid {
+                grid-template-columns: 1fr; /* Одна колонка на мобільних */
+            }
+            .vocabulary-card {
+                padding: 1rem;
+            }
+            .vocabulary-card strong {
+                font-size: 1.15rem;
+            }
+            .vocabulary-card .transcription {
+                font-size: 0.85rem;
+            }
+            .vocabulary-card .translation {
+                font-size: 1rem;
+            }
+            .audio-button {
+                width: 38px;
+                height: 38px;
+            }
+            .audio-button svg {
+                width: 20px;
+                height: 20px;
+            }
+            .examples-list li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .examples-list li span:first-of-type {
+                min-width: unset;
+                padding-right: 0;
+                margin-bottom: 0.25rem;
+            }
+            .interactive-exercise {
+                padding: 1.5rem;
+            }
+            .exercise-word {
+                font-size: 1.8rem;
+            }
+            .exercise-input {
+                padding: 0.75rem 1rem;
+                font-size: 1rem;
+            }
+            .exercise-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+            .exercise-feedback {
+                font-size: 1rem;
             }
         }
     </style>
@@ -265,7 +321,7 @@
     <div class="lesson-container">
         <div class="lesson-header">
             <h1>Німецька мова для початківців</h1>
-            <p>Урок 1-2: Перші кроки та основи</p>
+            <p>Урок 1: Перші кроки та основи</p>
         </div>
 
         <section class="lesson-section">
@@ -292,164 +348,240 @@
         <section class="lesson-section">
             <h2>Урок 1. Частина перша: Знайомство зі словами та артиклями</h2>
             <h3>Нові слова. Слухайте, повторюйте, запам'ятовуйте:</h3>
-            <ul class="vocabulary-list">
-                <li>
-                    <strong>der Bleistift</strong> <span>[де́а бляйштифт]</span> <span>-> олівець</span>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>der Bleistift</strong>
+                        <span class="transcription">[де́а бляйштифт]</span>
+                        <span class="translation">-> олівець</span>
+                    </div>
                     <button class="audio-button" data-audio-text="der Bleistift" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>das Brot</strong> <span>[дас брот]</span> <span>-> хліб</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>das Brot</strong>
+                        <span class="transcription">[дас брот]</span>
+                        <span class="translation">-> хліб</span>
+                    </div>
                     <button class="audio-button" data-audio-text="das Brot" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>das Buch</strong> <span>[дас бух]</span> <span>-> книга</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>das Buch</strong>
+                        <span class="transcription">[дас бух]</span>
+                        <span class="translation">-> книга</span>
+                    </div>
                     <button class="audio-button" data-audio-text="das Buch" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>das Heft</strong> <span>[дас хефт]</span> <span>-> зошит</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>das Heft</strong>
+                        <span class="transcription">[дас хефт]</span>
+                        <span class="translation">-> зошит</span>
+                    </div>
                     <button class="audio-button" data-audio-text="das Heft" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>der Kuli</strong> <span>[де́а кулі]</span> <span>-> ручка</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>der Kuli</strong>
+                        <span class="transcription">[де́а кулі]</span>
+                        <span class="translation">-> ручка</span>
+                    </div>
                     <button class="audio-button" data-audio-text="der Kuli" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Kartoffeln</strong> <span>[ді картофельн]</span> <span>-> картопля (мн.)</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Kartoffeln</strong>
+                        <span class="transcription">[ді картофельн]</span>
+                        <span class="translation">-> картопля (мн.)</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Kartoffeln" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Suppe</strong> <span>[ді зуппе]</span> <span>-> суп</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Suppe</strong>
+                        <span class="transcription">[ді зуппе]</span>
+                        <span class="translation">-> суп</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Suppe" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Tasche</strong> <span>[ді таше]</span> <span>-> сумка, кишеня</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Tasche</strong>
+                        <span class="transcription">[ді таше]</span>
+                        <span class="translation">-> сумка, кишеня</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Tasche" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Wurst</strong> <span>[ді вурст]</span> <span>-> ковбаса</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Wurst</strong>
+                        <span class="transcription">[ді вурст]</span>
+                        <span class="translation">-> ковбаса</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Wurst" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Tafel</strong> <span>[ді тафель]</span> <span>-> дошка</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Tafel</strong>
+                        <span class="transcription">[ді тафель]</span>
+                        <span class="translation">-> дошка</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Tafel" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-            </ul>
+                </div>
+            </div>
 
-            <h3>А тепер і інша послідовність (для кращого запам'ятовування):</h3>
-            <ul class="vocabulary-list">
-                <li>
-                    <strong>das Buch</strong> <span>[дас бух]</span> <span>-> книга</span>
+            <h3 class="mt-8">А тепер і інша послідовність (для кращого запам'ятовування):</h3>
+            <div class="vocabulary-grid">
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>das Buch</strong>
+                        <span class="transcription">[дас бух]</span>
+                        <span class="translation">-> книга</span>
+                    </div>
                     <button class="audio-button" data-audio-text="das Buch" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>das Heft</strong> <span>[дас хефт]</span> <span>-> зошит</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>das Heft</strong>
+                        <span class="transcription">[дас хефт]</span>
+                        <span class="translation">-> зошит</span>
+                    </div>
                     <button class="audio-button" data-audio-text="das Heft" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>der Kuli</strong> <span>[де́а кулі]</span> <span>-> ручка</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>der Kuli</strong>
+                        <span class="transcription">[де́а кулі]</span>
+                        <span class="translation">-> ручка</span>
+                    </div>
                     <button class="audio-button" data-audio-text="der Kuli" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>der Bleistift</strong> <span>[де́а бляйштифт]</span> <span>-> олівець</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>der Bleistift</strong>
+                        <span class="transcription">[де́а бляйштифт]</span>
+                        <span class="translation">-> олівець</span>
+                    </div>
                     <button class="audio-button" data-audio-text="der Bleistift" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Tasche</strong> <span>[ді таше]</span> <span>-> сумка, кишеня</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Tasche</strong>
+                        <span class="transcription">[ді таше]</span>
+                        <span class="translation">-> сумка, кишеня</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Tasche" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Suppe</strong> <span>[ді зуппе]</span> <span>-> суп</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Suppe</strong>
+                        <span class="transcription">[ді зуппе]</span>
+                        <span class="translation">-> суп</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Suppe" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Kartoffeln</strong> <span>[ді картофельн]</span> <span>-> картопля (мн.)</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Kartoffeln</strong>
+                        <span class="transcription">[ді картофельн]</span>
+                        <span class="translation">-> картопля (мн.)</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Kartoffeln" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Wurst</strong> <span>[ді вурст]</span> <span>-> ковбаса</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Wurst</strong>
+                        <span class="transcription">[ді вурст]</span>
+                        <span class="translation">-> ковбаса</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Wurst" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-                <li>
-                    <strong>die Tafel</strong> <span>[ді тафель]</span> <span>-> дошка</span>
+                </div>
+                <div class="vocabulary-card">
+                    <div class="vocabulary-card-content">
+                        <strong>die Tafel</strong>
+                        <span class="transcription">[ді тафель]</span>
+                        <span class="translation">-> дошка</span>
+                    </div>
                     <button class="audio-button" data-audio-text="die Tafel" aria-label="Відтворити звук">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                             <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
                         </svg>
                     </button>
-                </li>
-            </ul>
+                </div>
+            </div>
         </section>
 
         <section class="lesson-section">
@@ -477,610 +609,6 @@
             </ul>
         </section>
 
-        <section class="lesson-section">
-            <h2>Урок 2. Продовження</h2>
-            <h3>Повторюємо дієслова та вживаємо їх у реченнях:</h3>
-            <p>Прочитайте вголос німецькі речення та зверніть увагу на український переклад:</p>
-            <ul class="examples-list">
-                <li><span>Sie isst hier.</span> <span>-> Вона їсть тут.</span></li>
-                <li><span>Das ist ein Buch.</span> <span>-> Це є книга.</span></li>
-                <li><span>Sie isst dort.</span> <span>-> Вона їсть там.</span></li>
-                <li><span>Das ist ein Heft.</span> <span>-> Це є зошит.</span></li>
-                <li><span>Er isst hier.</span> <span>-> Він їсть тут.</span></li>
-                <li><span>Das ist ein Brot.</span> <span>-> Це є хліб.</span></li>
-                <li><span>Er isst dort.</span> <span>-> Він їсть там.</span></li>
-                <li><span>Das ist eine Wurst.</span> <span>-> Це є ковбаса.</span></li>
-                <li><span>Das ist ein Bleistift.</span> <span>-> Це є олівець.</span></li>
-                <li><span>Das ist eine Tafel.</span> <span>-> Це є дошка.</span></li>
-                <li><span>Das ist ein Kuli.</span> <span>-> Це є ручка.</span></li>
-                <li><span>Das ist eine Tasche.</span> <span>-> Це є сумка.</span></li>
-            </ul>
-
-            <div class="note">
-                <p class="font-semibold">Важливо:</p>
-                <p>З попереднього уроку ми вже знаємо, що слова, які позначають іменники, пишуться з великої літери. В німецькій мові іменники мають рід (чоловічий, жіночий, середній), який позначається артиклем.</p>
-            </div>
-
-            <h3>Вживання дієслова "брати/приносити" (`holt`) та неозначеного артикля:</h3>
-            <ul class="examples-list">
-                <li><span>Bitte, holt die Suppe!</span> <span>-> Будь ласка, принесіть суп!</span></li>
-                <li><span>Bitte, holt den Bleistift!</span> <span>-> Будь ласка, принесіть олівець!</span></li>
-                <li><span>Bitte, holt das Brot!</span> <span>-> Будь ласка, принесіть хліб!</span></li>
-                <li><span>Bitte, holt die Suppe!</span> <span>-> Будь ласка, принесіть суп!</span></li>
-                <li><span>Bitte, holt die Wurst!</span> <span>-> Будь ласка, принесіть ковбасу!</span></li>
-                <li><span>Bitte, holt die Kartoffeln!</span> <span>-> Будь ласка, принесіть картоплю!</span></li>
-            </ul>
-
-            <h3>Перекладіть на українську мову, вживаючи неозначений артикль:</h3>
-            <ul class="examples-list">
-                <li><span>Покажіть, одну порцію хліба.</span> <span>-> Bitte, ein Brot.</span></li>
-                <li><span>Покажіть, стакан.</span> <span>-> Bitte, ein Glas.</span></li>
-                <li><span>Покажіть, пляшку.</span> <span>-> Bitte, eine Flasche.</span></li>
-                <li><span>Покажіть, сигарети.</span> <span>-> Bitte, Zigaretten.</span></li>
-                <li><span>Покажіть, картоплю.</span> <span>-> Bitte, Kartoffeln.</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина друга: Дієслова та прислівники</h2>
-            <h3>Повторюємо дієслова та прислівники. Читайте німецькі речення та звертайте увагу на український переклад:</h3>
-            <ul class="examples-list">
-                <li><span>Sie trinken Bier.</span> <span>-> Вони п'ють пиво.</span></li>
-                <li><span>Er trinkt Milch.</span> <span>-> Він п'є молоко.</span></li>
-                <li><span>Sie trinkt Tee.</span> <span>-> Вона п'є чай.</span></li>
-                <li><span>Wir trinken Tee.</span> <span>-> Ми п'ємо чай.</span></li>
-                <li><span>Was trinkst du?</span> <span>-> Що ти п'єш?</span></li>
-                <li><span>Herr und Fräulein Huber stehen hier.</span> <span>-> Пан і пані Хубер стоять тут.</span></li>
-                <li><span>Das Buch und das Heft liegen dort.</span> <span>-> Книга і зошит лежать там.</span></li>
-                <li><span>Sie stehen hier links.</span> <span>-> Вони стоять тут ліворуч.</span></li>
-                <li><span>Ich trinke ein Glas Bier.</span> <span>-> Я п'ю склянку пива.</span></li>
-                <li><span>Wir essen Suppe und Kartoffeln.</span> <span>-> Ми їмо суп і картоплю.</span></li>
-                <li><span>Die Schule und der Bahnhof liegen dort rechts.</span> <span>-> Школа і вокзал лежать там праворуч.</span></li>
-            </ul>
-
-            <div class="note">
-                <p class="font-semibold">Зверніть увагу:</p>
-                <p>Дієслово `liegen` (лежати, знаходитися) змінюється залежно від місця.</p>
-            </div>
-
-            <h3>Прочитайте вголос німецькі речення, звертаючи увагу на переклад:</h3>
-            <ul class="examples-list">
-                <li><span>Ich trinke Milch.</span> <span>-> Я п'ю молоко.</span></li>
-                <li><span>Ich trinke ein Glas Milch.</span> <span>-> Я п'ю склянку молока.</span></li>
-                <li><span>Du trinkst Tee.</span> <span>-> Ти п'єш чай.</span></li>
-                <li><span>Du trinkst eine Flasche Bier.</span> <span>-> Ти п'єш пляшку пива.</span></li>
-                <li><span>Er trinkt Wasser.</span> <span>-> Він п'є воду.</span></li>
-                <li><span>Er trinkt ein Glas Wasser.</span> <span>-> Він п'є склянку води.</span></li>
-                <li><span>Sie trinkt Kaffee.</span> <span>-> Вона п'є каву.</span></li>
-                <li><span>Sie trinkt eine Tasse Kaffee.</span> <span>-> Вона п'є чашку кави.</span></li>
-                <li><span>Wir essen Brot.</span> <span>-> Ми їмо хліб.</span></li>
-                <li><span>Wir essen Wurst.</span> <span>-> Ми їмо ковбасу.</span></li>
-                <li><span>Wir essen Suppe.</span> <span>-> Ми їмо суп.</span></li>
-                <li><span>Wir essen Kartoffeln.</span> <span>-> Ми їмо картоплю.</span></li>
-                <li><span>Wo ist die Tafel?</span> <span>-> Де дошка?</span></li>
-                <li><span>Wo ist der Kuli?</span> <span>-> Де ручка?</span></li>
-                <li><span>Wo liegt der Bleistift?</span> <span>-> Де лежить олівець?</span></li>
-                <li><span>Wo sind die Kartoffeln?</span> <span>-> Де картопля?</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина третя: Займенники та іменники</h2>
-            <h3>Займенники та іменники. Прочитайте вголос німецькі речення, звертаючи увагу на переклад:</h3>
-            <ul class="examples-list">
-                <li><span>Ich esse Suppe.</span> <span>-> Я їм суп.</span></li>
-                <li><span>Wir essen Kartoffeln.</span> <span>-> Ми їмо картоплю.</span></li>
-                <li><span>Sie trinken dort.</span> <span>-> Вони п'ють там.</span></li>
-                <li><span>Der Kuli und der Bleistift liegen hier.</span> <span>-> Ручка і олівець лежать тут.</span></li>
-                <li><span>Wo steht die Frau?</span> <span>-> Де стоїть жінка?</span></li>
-                <li><span>Dort stehen sie nicht.</span> <span>-> Вони там не стоять.</span></li>
-                <li><span>Wo liegt die Tasche?</span> <span>-> Де лежить сумка?</span></li>
-                <li><span>Er trinkt Kaffee.</span> <span>-> Він п'є каву.</span></li>
-                <li><span>Das ist mein Buch.</span> <span>-> Це моя книга.</span></li>
-                <li><span>Das ist mein Kuli.</span> <span>-> Це моя ручка.</span></li>
-            </ul>
-
-            <h3>Перекладіть на українську мову:</h3>
-            <ul class="examples-list">
-                <li><span>Я їм хліб.</span> <span>-> Ich esse Brot.</span></li>
-                <li><span>Ти п'єш пиво.</span> <span>-> Du trinkst Bier.</span></li>
-                <li><span>Він п'є молоко.</span> <span>-> Er trinkt Milch.</span></li>
-                <li><span>Вона п'є воду.</span> <span>-> Sie trinkt Wasser.</span></li>
-                <li><span>Ми їмо ковбасу.</span> <span>-> Wir essen Wurst.</span></li>
-                <li><span>Вони їдять суп.</span> <span>-> Sie essen Suppe.</span></li>
-                <li><span>Де книга?</span> <span>-> Wo ist das Buch?</span></li>
-                <li><span>Де зошит?</span> <span>-> Wo ist das Heft?</span></li>
-                <li><span>Де ручка?</span> <span>-> Wo ist der Kuli?</span></li>
-                <li><span>Де олівець?</span> <span>-> Wo ist der Bleistift?</span></li>
-                <li><span>Де сумка?</span> <span>-> Wo ist die Tasche?</span></li>
-                <li><span>Де ковбаса?</span> <span>-> Wo ist die Wurst?</span></li>
-                <li><span>Де картопля?</span> <span>-> Wo sind die Kartoffeln?</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина четверта: Професії та походження</h2>
-            <h3>Нові слова: Професії</h3>
-            <ul class="vocabulary-list">
-                <li>
-                    <strong>der Diplomat</strong> <span>[де́а дипломат]</span> <span>-> дипломат</span>
-                    <button class="audio-button" data-audio-text="der Diplomat" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>die Hausfrau</strong> <span>[ді хаусфрау]</span> <span>-> домогосподарка</span>
-                    <button class="audio-button" data-audio-text="die Hausfrau" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>der Lehrer</strong> <span>[де́а ле́рер]</span> <span>-> вчитель</span>
-                    <button class="audio-button" data-audio-text="der Lehrer" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>der Physiker</strong> <span>[де́а фізікер]</span> <span>-> фізик</span>
-                    <button class="audio-button" data-audio-text="der Physiker" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>der Schüler</strong> <span>[де́а шю́ле́р]</span> <span>-> учень</span>
-                    <button class="audio-button" data-audio-text="der Schüler" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>die Schülerin</strong> <span>[ді шю́ле́рін]</span> <span>-> учениця</span>
-                    <button class="audio-button" data-audio-text="die Schülerin" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>die Verkäuferin</strong> <span>[ді ферко́йферін]</span> <span>-> продавщиця</span>
-                    <button class="audio-button" data-audio-text="die Verkäuferin" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-
-            <div class="note">
-                <p class="font-semibold">Важливо:</p>
-                <p>Якщо дієслово `sein` (бути) вживається з іменником, що позначає професію, то артикль перед ним не ставиться.</p>
-                <ul class="examples-list mt-2">
-                    <li><span>Er ist Lehrer.</span> <span>-> Він вчитель.</span></li>
-                    <li><span>Sie ist Schülerin.</span> <span>-> Вона учениця.</span></li>
-                </ul>
-            </div>
-
-            <h3>Приклади речень:</h3>
-            <ul class="examples-list">
-                <li><span>Herr Schwarz ist Physiker. Er kommt aus Kiel.</span> <span>-> Пан Шварц – фізик. Він родом з Кіля.</span></li>
-                <li><span>Kommen Sie aus Hamburg?</span> <span>-> Ви родом з Гамбурга?</span></li>
-                <li><span>Nein, ich komme nicht aus Hamburg.</span> <span>-> Ні, я не родом з Гамбурга.</span></li>
-                <li><span>Frau Schmidt ist Verkäuferin. Sie kommt aus Berlin.</span> <span>-> Пані Шмідт – продавщиця. Вона родом з Берліна.</span></li>
-                <li><span>Fräulein Rohde ist Schülerin. Sie kommt aus Halle.</span> <span>-> Панна Роде – учениця. Вона родом з Галле.</span></li>
-                <li><span>Herr Kurp ist Hausfrau. Sie kommt aus Krakau.</span> <span>-> Пан Курп – домогосподарка. Вона родом з Кракова.</span></li>
-                <li><span>Herr Schwarz ist Physiker. Er kommt aus Kiel.</span> <span>-> Пан Шварц – фізик. Він родом з Кіля.</span></li>
-                <li><span>Ich bin Schülerin. Ich komme aus Russland.</span> <span>-> Я учениця. Я родом з Росії.</span></li>
-                <li><span>Er ist Schüler. Er kommt aus Deutschland.</span> <span>-> Він учень. Він родом з Німеччини.</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Інтерактивна вправа: Вибери правильний переклад</h2>
-            <div class="multiple-choice-exercise">
-                <p id="mc-question-text" class="question-text"></p>
-                <div id="mc-options-grid" class="options-grid">
-                    <!-- Options will be loaded here -->
-                </div>
-                <p id="mc-feedback" class="multiple-choice-feedback"></p>
-                <button id="mc-next-btn" class="exercise-button hidden">Наступне питання</button>
-            </div>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина п'ята: Місцезнаходження та дієслова</h2>
-            <h3>Прийменник `in` (в, у) у поєднанні з іменником:</h3>
-            <ul class="examples-list">
-                <li><span>die Schule</span> <span>-> в школі</span></li>
-                <li><span>im Geschäft</span> <span>-> в магазині</span></li>
-                <li><span>in der Botschaft</span> <span>-> в посольстві</span></li>
-            </ul>
-
-            <div class="note">
-                <p class="font-semibold">Зверніть увагу:</p>
-                <p>Прийменник `in` у поєднанні з іменником може позначати місцезнаходження ("всередині", "в середині").</p>
-            </div>
-
-            <h3>Дізнаємося місцезнаходження за допомогою питального слова `wo` (де):</h3>
-            <ul class="examples-list">
-                <li><span>Wo arbeitest du?</span> <span>-> Де ти працюєш?</span></li>
-                <li><span>Ich arbeite in der Bank.</span> <span>-> Я працюю в банку.</span></li>
-            </ul>
-
-            <h3>Нові слова: Питальні слова</h3>
-            <ul class="vocabulary-list">
-                <li>
-                    <strong>wer</strong> <span>[ве́р]</span> <span>-> хто</span>
-                    <button class="audio-button" data-audio-text="wer" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>woher</strong> <span>[во́хе́р]</span> <span>-> звідки</span>
-                    <button class="audio-button" data-audio-text="woher" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-
-            <h3>Прочитайте вголос німецькі речення, звертаючи увагу на їх вимову та значення:</h3>
-            <ul class="examples-list">
-                <li><span>Woher kommt Herr Kurz?</span> <span>-> Звідки пан Курц?</span></li>
-                <li><span>Woher kommen Sie?</span> <span>-> Звідки Ви родом?</span></li>
-                <li><span>Woher kommt sie?</span> <span>-> Звідки вона родом?</span></li>
-                <li><span>Woher kommst du?</span> <span>-> Звідки ти родом?</span></li>
-            </ul>
-
-            <h3>Перекладіть речення на німецьку мову, а потім прочитайте їх вголос:</h3>
-            <ul class="examples-list">
-                <li><span>Пан і пані Курц родом з Кракова.</span> <span>-> Herr und Frau Kurz kommen aus Krakau.</span></li>
-                <li><span>Я родом з Росії.</span> <span>-> Ich komme aus Russland.</span></li>
-                <li><span>Ти родом з Німеччини.</span> <span>-> Du kommst aus Deutschland.</span></li>
-                <li><span>Звідки вони родом?</span> <span>-> Woher kommen sie?</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина шоста: Займенники та прислівники</h2>
-            <h3>Використайте їх у реченнях, звертаючи увагу на переклад:</h3>
-            <ul class="examples-list">
-                <li><span>Ich arbeite jetzt.</span> <span>-> Я працюю зараз.</span></li>
-                <li><span>Wir lernen zu Hause.</span> <span>-> Ми вчимося вдома.</span></li>
-                <li><span>Er wohnt in Berlin.</span> <span>-> Він живе в Берліні.</span></li>
-                <li><span>Ich kenne Frau Schmidt.</span> <span>-> Я знаю пані Шмідт.</span></li>
-                <li><span>Er arbeitet viel.</span> <span>-> Він багато працює.</span></li>
-            </ul>
-
-            <h3>Перекладіть наступні речення на німецьку мову, звертаючи особливу увагу на правильну вимову:</h3>
-            <ul class="examples-list">
-                <li><span>Він живе зараз в Бонні.</span> <span>-> Er wohnt jetzt in Bonn.</span></li>
-                <li><span>Вона працює вдома.</span> <span>-> Sie arbeitet zu Hause.</span></li>
-                <li><span>Вони вчаться тут.</span> <span>-> Sie lernen hier.</span></li>
-                <li><span>Я знаю Вас.</span> <span>-> Ich kenne Sie.</span></li>
-                <li><span>Я Вас не знаю.</span> <span>-> Ich kenne Sie nicht.</span></li>
-                <li><span>Де ти живеш?</span> <span>-> Wo wohnst du?</span></li>
-                <li><span>Де Ви працюєте?</span> <span>-> Wo arbeiten Sie?</span></li>
-                <li><span>Він зараз не працює.</span> <span>-> Er arbeitet jetzt nicht.</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина сьома: Робота та місцезнаходження</h2>
-            <h3>Прочитайте вголос німецькі речення, звертаючи увагу на їх переклад:</h3>
-            <ul class="examples-list">
-                <li><span>Er arbeitet in der Schule.</span> <span>-> Він працює в школі.</span></li>
-                <li><span>Sie arbeitet im Geschäft.</span> <span>-> Вона працює в магазині.</span></li>
-                <li><span>Ich lerne zu Hause.</span> <span>-> Я вчуся вдома.</span></li>
-                <li><span>Er arbeitet in der Botschaft.</span> <span>-> Він працює в посольстві.</span></li>
-                <li><span>Er wohnt in Kiel.</span> <span>-> Він живе в Кілі.</span></li>
-                <li><span>Wir wohnen in Zürich.</span> <span>-> Ми живемо в Цюріху.</span></li>
-                <li><span>Ich kenne Frau Schmidt.</span> <span>-> Я знаю пані Шмідт.</span></li>
-                <li><span>Ich kenne Sie.</span> <span>-> Я знаю Вас.</span></li>
-            </ul>
-
-            <h3>Запам'ятайте переклад виразів:</h3>
-            <ul class="examples-list">
-                <li><span>in der Schule</span> <span>-> в школі</span></li>
-                <li><span>im Geschäft</span> <span>-> в магазині</span></li>
-                <li><span>in der Botschaft</span> <span>-> в посольстві</span></li>
-            </ul>
-
-            <h3>Переведіть, а потім прочитайте вголос німецькі речення, звертаючи увагу на вживання дієслова `sein` (бути). Перевірте себе, користуючись червоним фільтром (транскрипцією):</h3>
-            <ul class="examples-list">
-                <li><span>Господин Роде - учитель.</span> <span>-> Herr Rohde ist Lehrer.</span></li>
-                <li><span>Он работает в школе.</span> <span>-> Er arbeitet in der Schule.</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина восьма: Нові слова та прислівники</h2>
-            <h3>Вивчіть нові слова. Спочатку працюйте над їх вимовою:</h3>
-            <ul class="vocabulary-list">
-                <li>
-                    <strong>arbeiten</strong> <span>[арбайтн]</span> <span>-> працювати</span>
-                    <button class="audio-button" data-audio-text="arbeiten" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>lernen</strong> <span>[ле́рнен]</span> <span>-> вчитися</span>
-                    <button class="audio-button" data-audio-text="lernen" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>wohnen</strong> <span>[во́нен]</span> <span>-> проживати</span>
-                    <button class="audio-button" data-audio-text="wohnen" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>kennen</strong> <span>[ке́ннен]</span> <span>-> знати</span>
-                    <button class="audio-button" data-audio-text="kennen" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>in</strong> <span>[ін]</span> <span>-> в</span>
-                    <button class="audio-button" data-audio-text="in" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>jetzt</strong> <span>[єтст]</span> <span>-> зараз</span>
-                    <button class="audio-button" data-audio-text="jetzt" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>zu Hause</strong> <span>[цу хаузе]</span> <span>-> вдома</span>
-                    <button class="audio-button" data-audio-text="zu Hause" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>wer</strong> <span>[ве́р]</span> <span>-> хто</span>
-                    <button class="audio-button" data-audio-text="wer" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>woher</strong> <span>[во́хе́р]</span> <span>-> звідки</span>
-                    <button class="audio-button" data-audio-text="woher" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>in der Schule</strong> <span>[ін де́а шю́ле]</span> <span>-> в школі</span>
-                    <button class="audio-button" data-audio-text="in der Schule" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>im Geschäft</strong> <span>[ім геше́фт]</span> <span>-> в магазині</span>
-                    <button class="audio-button" data-audio-text="im Geschäft" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>in der Botschaft</strong> <span>[ін де́а бо́тшафт]</span> <span>-> в посольстві</span>
-                    <button class="audio-button" data-audio-text="in der Botschaft" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина дев'ята: Країни та міста</h2>
-            <h3>Назви деяких європейських країн:</h3>
-            <ul class="vocabulary-list">
-                <li>
-                    <strong>Deutschland</strong> <span>[до́йчланд]</span> <span>-> Німеччина</span>
-                    <button class="audio-button" data-audio-text="Deutschland" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>Polen</strong> <span>[по́лен]</span> <span>-> Польща</span>
-                    <button class="audio-button" data-audio-text="Polen" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>Frankreich</strong> <span>[франкрайх]</span> <span>-> Франція</span>
-                    <button class="audio-button" data-audio-text="Frankreich" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>Dänemark</strong> <span>[де́немарк]</span> <span>-> Данія</span>
-                    <button class="audio-button" data-audio-text="Dänemark" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>Russland</strong> <span>[ру́сланд]</span> <span>-> Росія</span>
-                    <button class="audio-button" data-audio-text="Russland" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>die Schweiz</strong> <span>[ді швайц]</span> <span>-> Швейцарія</span>
-                    <button class="audio-button" data-audio-text="die Schweiz" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-                <li>
-                    <strong>die Ukraine</strong> <span>[ді украі́не]</span> <span>-> Україна</span>
-                    <button class="audio-button" data-audio-text="die Ukraine" aria-label="Відтворити звук">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 3a9 9 0 00-9 9v3a1 1 0 001 1h2a1 1 0 001-1v-3a5 5 0 015-5c.53 0 1.04.09 1.52.26L18 6.5A9 9 0 0012 3zM12 19a7 7 0 007-7v-3a1 1 0 00-1-1h-2a1 1 0 00-1 1v3a3 3 0 01-3 3c-.53 0-1.04-.09-1.52-.26L6 17.5A7 7 0 0012 19z"/>
-                        </svg>
-                    </button>
-                </li>
-            </ul>
-
-            <h3>Тепер дайте відповіді на питання, в яких країнах знаходяться міста, перерахуйте їх вголос:</h3>
-            <ul class="examples-list">
-                <li><span>Wo liegt Bonn?</span> <span>-> Bonn liegt in Deutschland.</span></li>
-                <li><span>Wo liegt Kiel?</span> <span>-> Kiel liegt in Deutschland.</span></li>
-                <li><span>Wo liegen Warschau und Krakau?</span> <span>-> Sie liegen in Polen.</span></li>
-                <li><span>Wo liegt Paris?</span> <span>-> Paris liegt in Frankreich.</span></li>
-                <li><span>Wo liegt Zürich?</span> <span>-> Zürich liegt in der Schweiz.</span></li>
-                <li><span>Wo liegt Donezk?</span> <span>-> Donezk liegt in der Ukraine.</span></li>
-                <li><span>Wo liegt Kopenhagen?</span> <span>-> Kopenhagen liegt in Dänemark.</span></li>
-                <li><span>Wo liegt Berlin?</span> <span>-> Es liegt in Deutschland.</span></li>
-                <li><span>Wo liegt Moskau?</span> <span>-> Moskau liegt in Russland.</span></li>
-            </ul>
-
-            <div class="note">
-                <p class="font-semibold">Зверніть увагу:</p>
-                <p>Назви держав та міст, як правило, до середнього роду (`das Polen`, `das Warschau`) і не вимагають перед собою вживання артикля. Винятком є Швейцарія (`die Schweiz`), Україна (`die Ukraine`). Вони жіночого роду і вимагають обов'язкового вживання артикля.</p>
-            </div>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина десята: Представлення та професії</h2>
-            <h3>Запам'ятайте вираз: `Du bist` (Ти є) - ти єсть.</h3>
-            <h3>Запитайте про професію, будем вживати питальне слово `was` (що), яке в даному випадку переводиться як `хто`:</h3>
-            <ul class="examples-list">
-                <li><span>Was bist du?</span> <span>-> Хто ти?</span></li>
-                <li><span>Ich bin Schüler.</span> <span>-> Я школяр.</span></li>
-            </ul>
-
-            <h3>Попрацюйте з новим матеріалом. Виразно читайте німецькі речення, слідкуючи за перекладом:</h3>
-            <ul class="examples-list">
-                <li><span>Du bist hier.</span> <span>-> Ти тут.</span></li>
-                <li><span>Du bist Hausfrau.</span> <span>-> Ти домогосподарка.</span></li>
-                <li><span>Was bist du?</span> <span>-> Хто ти? (по професії)</span></li>
-                <li><span>Ich bin Schülerin.</span> <span>-> Я учениця.</span></li>
-                <li><span>Du bist dort drüben.</span> <span>-> Ти там, з тої сторони.</span></li>
-                <li><span>Wo bist du jetzt?</span> <span>-> Де ти зараз?</span></li>
-                <li><span>Ich bin zu Hause.</span> <span>-> Я вдома.</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина одинадцята: Питальні слова та зворотний порядок слів</h2>
-            <div class="note">
-                <p class="font-semibold">Важливо:</p>
-                <p>Після питальних слів `wer` (хто) та `woher` (звідки) у німецькій мові вживається зворотний порядок слів (присудок стоїть перед підметом).</p>
-                <ul class="examples-list mt-2">
-                    <li><span>Wer ist das?</span> <span>-> Хто це?</span></li>
-                    <li><span>Woher kommt er?</span> <span>-> Звідки він?</span></li>
-                </ul>
-            </div>
-
-            <h3>Питальні речення з `wer` (хто). Читайте, звертаючи увагу на вимову та переклад:</h3>
-            <ul class="examples-list">
-                <li><span>Wer kommt aus Krakau?</span> <span>-> Хто з Кракова?</span></li>
-                <li><span>Wer steht dort?</span> <span>-> Хто там стоїть?</span></li>
-                <li><span>Wer versteht das nicht?</span> <span>-> Хто цього не розуміє?</span></li>
-                <li><span>Wer liegt hier?</span> <span>-> Хто тут лежить?</span></li>
-                <li><span>Wer trinkt Bier?</span> <span>-> Хто п'є пиво?</span></li>
-            </ul>
-
-            <h3>Задайте питання з `wer` (хто) до наступних речень і переведіть питання на українську мову:</h3>
-            <ul class="examples-list">
-                <li><span>Herr Kurz wohnt jetzt in Bonn.</span> <span>-> Wer wohnt jetzt in Bonn? - Хто живе зараз в Бонні?</span></li>
-                <li><span>Frau Schmidt kommt aus Berlin.</span> <span>-> Wer kommt aus Berlin? - Хто родом з Берліна?</span></li>
-                <li><span>Eva lernt in der Schule.</span> <span>-> Wer lernt in der Schule? - Хто вчиться в школі?</span></li>
-                <li><span>Ich stehe dort drüben.</span> <span>-> Wer steht dort drüben? - Хто стоїть там, з тієї сторони?</span></li>
-                <li><span>Herr und Fräulein Rohde wohnen in Halle.</span> <span>-> Wer wohnt in Halle? - Хто живе в Галле?</span></li>
-                <li><span>Wir trinken Bier.</span> <span>-> Wer trinkt Bier? - Хто п'є пиво?</span></li>
-                <li><span>Ich verstehe das nicht.</span> <span>-> Wer versteht das nicht? - Хто цього не розуміє?</span></li>
-                <li><span>Du kommst aus Deutschland.</span> <span>-> Wer kommt aus Deutschland? - Хто родом з Німеччини?</span></li>
-                <li><span>Wir wohnen in Russland.</span> <span>-> Wer wohnt in Russland? - Хто живе в Росії?</span></li>
-                <li><span>Das ist Frau Schmidt.</span> <span>-> Wer ist das? - Хто це?</span></li>
-            </ul>
-        </section>
-
-        <section class="lesson-section">
-            <h2>Урок 2. Частина дванадцята: Фінальні переклади</h2>
-            <p>Якщо ви впоралися з цими завданнями без помилок, можете вважати новий матеріал засвоєним!</p>
-            <h3>Перекладіть речення на німецьку мову:</h3>
-            <ul class="examples-list">
-                <li><span>Господин Курц - дипломат.</span> <span>-> Herr Kurz ist Diplomat.</span></li>
-                <li><span>Кто он? (по профессии)</span> <span>-> Was ist er?</span></li>
-                <li><span>Кто (по профессии) госпожа Курц?</span> <span>-> Was ist Frau Kurz?</span></li>
-                <li><span>Она домохозяйка.</span> <span>-> Sie ist Hausfrau.</span></li>
-                <li><span>Господин Шварц физик?</span> <span>-> Ist Herr Schwarz Physiker?</span></li>
-                <li><span>Ты ученица.</span> <span>-> Du bist Schülerin.</span></li>
-                <li><span>А я учитель.</span> <span>-> Und ich bin Lehrer.</span></li>
-                <li><span>Кто сейчас (по профессии) госпожа Шмидт?</span> <span>-> Was ist jetzt Frau Schmidt?</span></li>
-                <li><span>Она продавщица.</span> <span>-> Sie ist Verkäuferin.</span></li>
-                <li><span>Кто ты?</span> <span>-> Was bist du?</span></li>
-                <li><span>Кто Вы?</span> <span>-> Was sind Sie?</span></li>
-                <li><span>Где ты сейчас?</span> <span>-> Wo bist du jetzt?</span></li>
-                <li><span>Господин и госпожа Курц родом из Кракова.</span> <span>-> Herr und Frau Kurz kommen aus Krakau.</span></li>
-                <li><span>Сейчас они живут в Бонне.</span> <span>-> Jetzt wohnen sie in Bonn.</span></li>
-                <li><span>Он дипломат и работает в посольстве.</span> <span>-> Er ist Diplomat und arbeitet in der Botschaft.</span></li>
-                <li><span>Она домохозяйка.</span> <span>-> Sie ist Hausfrau.</span></li>
-                <li><span>Господин Роде - учитель.</span> <span>-> Herr Rohde ist Lehrer.</span></li>
-                <li><span>Он работает в школе.</span> <span>-> Er arbeitet in der Schule.</span></li>
-                <li><span>Он из Галле.</span> <span>-> Er kommt aus Halle.</span></li>
-                <li><span>Галле находится в Германии.</span> <span>-> Halle liegt in Deutschland.</span></li>
-                <li><span>Я школьник.</span> <span>-> Ich bin Schüler.</span></li>
-                <li><span>Я учусь сейчас дома.</span> <span>-> Ich lerne jetzt zu Hause.</span></li>
-                <li><span>Я не работаю в школе.</span> <span>-> Ich arbeite in der Schule nicht.</span></li>
-                <li><span>Госпожа Шмидт - продавщица.</span> <span>-> Frau Schmidt ist Verkäuferin.</span></li>
-                <li><span>Она работает в магазине.</span> <span>-> Sie arbeitet im Geschäft.</span></li>
-                <li><span>Я знаю Еву.</span> <span>-> Ich kenne Eva.</span></li>
-                <li><span>Она школьница и родом из Галле.</span> <span>-> Sie ist Schülerin und kommt aus Halle.</span></li>
-                <li><span>Она хорошо учится.</span> <span>-> Sie lernt gut.</span></li>
-                <li><span>Где ты сейчас?</span> <span>-> Wo bist du jetzt?</span></li>
-            </ul>
-        </section>
-
         <div class="text-center mt-8">
             <a href="index.html" class="button-back">
                 &#x2190; Повернутися на головну
@@ -1089,7 +617,7 @@
     </div>
 
     <script>
-        // Дані для інтерактивної вправи "Перевір свою пам'ять"
+        // Дані для інтерактивної вправи "Перевір свою пам'ять" (лише слова з Уроку 1)
         const exerciseVocabulary = [
             { ukr: 'олівець', ger: 'Bleistift' },
             { ukr: 'хліб', ger: 'Brot' },
@@ -1100,38 +628,7 @@
             { ukr: 'суп', ger: 'Suppe' },
             { ukr: 'сумка', ger: 'Tasche' },
             { ukr: 'ковбаса', ger: 'Wurst' },
-            { ukr: 'дошка', ger: 'Tafel' },
-            { ukr: 'три', ger: 'drei' },
-            { ukr: 'десять', ger: 'zehn' },
-            { ukr: 'вісім', ger: 'acht' },
-            { ukr: 'не', ger: 'nicht' },
-            { ukr: 'один (ч.р., с.р.)', ger: 'ein' },
-            { ukr: 'одна (ж.р.)', ger: 'eine' },
-            { ukr: 'мій', ger: 'mein' },
-            { ukr: 'моя', ger: 'meine' },
-            { ukr: 'багато', ger: 'viel' },
-            { ukr: 'дещо, трохи', ger: 'etwas' },
-            { ukr: 'великий', ger: 'groß' },
-            { ukr: 'маленький', ger: 'klein' },
-            { ukr: 'дипломат', ger: 'Diplomat' },
-            { ukr: 'домогосподарка', ger: 'Hausfrau' },
-            { ukr: 'вчитель', ger: 'Lehrer' },
-            { ukr: 'фізик', ger: 'Physiker' },
-            { ukr: 'учень', ger: 'Schüler' },
-            { ukr: 'учениця', ger: 'Schülerin' },
-            { ukr: 'продавщиця', ger: 'Verkäuferin' },
-            { ukr: 'працювати', ger: 'arbeiten' },
-            { ukr: 'вчитися', ger: 'lernen' },
-            { ukr: 'проживати', ger: 'wohnen' },
-            { ukr: 'знати', ger: 'kennen' },
-            { ukr: 'в', ger: 'in' },
-            { ukr: 'зараз', ger: 'jetzt' },
-            { ukr: 'вдома', ger: 'zu Hause' },
-            { ukr: 'хто', ger: 'wer' },
-            { ukr: 'звідки', ger: 'woher' },
-            { ukr: 'в школі', ger: 'in der Schule' },
-            { ukr: 'в магазині', ger: 'im Geschäft' },
-            { ukr: 'в посольстві', ger: 'in der Botschaft' }
+            { ukr: 'дошка', ger: 'Tafel' }
         ];
 
         let currentExerciseWordIndex = 0;
@@ -1168,133 +665,6 @@
             }
         });
 
-        // Дані для вправи "Множинний вибір"
-        const multipleChoiceQuestions = [
-            {
-                question: "Хто ти? (професія)",
-                options: ["Was bist du?", "Wer bist du?", "Wo bist du?", "Wie bist du?"],
-                answer: "Was bist du?"
-            },
-            {
-                question: "Я школяр.",
-                options: ["Ich bin Lehrer.", "Ich bin Schüler.", "Ich bin Physiker.", "Ich bin Diplomat."],
-                answer: "Ich bin Schüler."
-            },
-            {
-                question: "Він працює в школі.",
-                options: ["Er wohnt in der Schule.", "Er lernt in der Schule.", "Er arbeitet in der Schule.", "Er ist in der Schule."],
-                answer: "Er arbeitet in der Schule."
-            },
-            {
-                question: "Звідки Ви родом?",
-                options: ["Wo wohnen Sie?", "Woher kommen Sie?", "Wer sind Sie?", "Was machen Sie?"],
-                answer: "Woher kommen Sie?"
-            },
-            {
-                question: "Я родом з Німеччини.",
-                options: ["Ich komme aus Polen.", "Ich komme aus Frankreich.", "Ich komme aus Deutschland.", "Ich komme aus Russland."],
-                answer: "Ich komme aus Deutschland."
-            },
-            {
-                question: "Де знаходиться Київ?",
-                options: ["Kyiv liegt in Deutschland.", "Kyiv liegt in der Ukraine.", "Kyiv liegt in Russland.", "Kyiv liegt in Polen."],
-                answer: "Kyiv liegt in der Ukraine."
-            },
-            {
-                question: "Вона домогосподарка.",
-                options: ["Sie ist Lehrerin.", "Sie ist Schülerin.", "Sie ist Hausfrau.", "Sie ist Verkäuferin."],
-                answer: "Sie ist Hausfrau."
-            },
-            {
-                question: "Ми вчимося вдома.",
-                options: ["Wir arbeiten zu Hause.", "Wir wohnen zu Hause.", "Wir lernen zu Hause.", "Wir essen zu Hause."],
-                answer: "Wir lernen zu Hause."
-            },
-            {
-                question: "Він багато працює.",
-                options: ["Er lernt viel.", "Er isst viel.", "Er arbeitet viel.", "Er trinkt viel."],
-                answer: "Er arbeitet viel."
-            },
-            {
-                question: "Я знаю пані Шмідт.",
-                options: ["Ich wohne Frau Schmidt.", "Ich lerne Frau Schmidt.", "Ich arbeite Frau Schmidt.", "Ich kenne Frau Schmidt."],
-                answer: "Ich kenne Frau Schmidt."
-            }
-        ];
-
-        let currentMultipleChoiceQuestionIndex = 0;
-        let selectedOptionButton = null;
-
-        const mcQuestionText = document.getElementById('mc-question-text');
-        const mcOptionsGrid = document.getElementById('mc-options-grid');
-        const mcFeedback = document.getElementById('mc-feedback');
-        const mcNextBtn = document.getElementById('mc-next-btn');
-
-        function loadNewMultipleChoiceQuestion() {
-            if (currentMultipleChoiceQuestionIndex >= multipleChoiceQuestions.length) {
-                mcQuestionText.textContent = "Ви відповіли на всі питання!";
-                mcOptionsGrid.innerHTML = '';
-                mcFeedback.textContent = '';
-                mcNextBtn.classList.add('hidden');
-                return;
-            }
-
-            const questionData = multipleChoiceQuestions[currentMultipleChoiceQuestionIndex];
-            mcQuestionText.textContent = questionData.question;
-            mcOptionsGrid.innerHTML = '';
-            mcFeedback.textContent = '';
-            mcFeedback.classList.remove('feedback-correct', 'feedback-incorrect');
-            mcNextBtn.classList.add('hidden');
-            selectedOptionButton = null;
-
-            questionData.options.forEach(option => {
-                const button = document.createElement('button');
-                button.className = 'option-button';
-                button.textContent = option;
-                button.addEventListener('click', () => selectOption(button, option, questionData.answer));
-                mcOptionsGrid.appendChild(button);
-            });
-        }
-
-        function selectOption(button, selectedAnswer, correctAnswer) {
-            // Remove selection from previously selected button
-            if (selectedOptionButton) {
-                selectedOptionButton.classList.remove('selected');
-            }
-            // Add selection to current button
-            button.classList.add('selected');
-            selectedOptionButton = button;
-
-            // Disable all options after selection
-            document.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
-
-            if (selectedAnswer === correctAnswer) {
-                mcFeedback.textContent = 'Правильно!';
-                mcFeedback.classList.remove('feedback-incorrect');
-                mcFeedback.classList.add('feedback-correct');
-                button.classList.add('correct');
-            } else {
-                mcFeedback.textContent = `Неправильно. Правильна відповідь: "${correctAnswer}"`;
-                mcFeedback.classList.remove('feedback-correct');
-                mcFeedback.classList.add('feedback-incorrect');
-                button.classList.add('incorrect');
-                // Highlight the correct answer
-                document.querySelectorAll('.option-button').forEach(btn => {
-                    if (btn.textContent === correctAnswer) {
-                        btn.classList.add('correct');
-                    }
-                });
-            }
-            mcNextBtn.classList.remove('hidden');
-        }
-
-        mcNextBtn.addEventListener('click', () => {
-            currentMultipleChoiceQuestionIndex++;
-            loadNewMultipleChoiceQuestion();
-            // Re-enable all options for the next question
-            document.querySelectorAll('.option-button').forEach(btn => btn.disabled = false);
-        });
-
         // Функція для відтворення синтезованого голосу
         function speakText(text) {
             if ('speechSynthesis' in window) {
@@ -1309,26 +679,18 @@
         // Обробник для кнопок аудіо
         document.querySelectorAll('.audio-button').forEach(button => {
             button.addEventListener('click', (event) => {
-                const audioSrc = event.currentTarget.dataset.audioSrc;
                 const audioText = event.currentTarget.dataset.audioText; // Текст для синтезу
-
-                if (audioSrc && audioSrc.startsWith('http')) { // Якщо є реальне посилання на аудіофайл
-                    const audio = new Audio(audioSrc);
-                    audio.play().catch(e => console.error("Error playing audio from URL:", e));
-                    console.log(`Відтворення аудіо з URL: ${audioSrc}`);
-                } else if (audioText) { // Якщо немає реального посилання, використовуємо синтез
+                if (audioText) {
                     speakText(audioText);
                     console.log(`Відтворення синтезованого аудіо для: ${audioText}`);
                 } else {
-                    alert('Немає аудіо для відтворення. Будь ласка, додайте реальні посилання на аудіофайли.');
+                    alert('Немає аудіо для відтворення.');
                 }
             });
         });
 
         // Завантажуємо перше слово для вправи "Перевір свою пам'ять" при завантаженні сторінки
         window.addEventListener('load', loadNewExerciseWord);
-        // Завантажуємо перше питання для вправи "Множинний вибір" при завантаженні сторінки
-        window.addEventListener('load', loadNewMultipleChoiceQuestion);
     </script>
 </body>
 </html>
