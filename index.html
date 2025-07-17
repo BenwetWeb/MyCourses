@@ -327,9 +327,13 @@
             let buttonClass = '';
             let cardContent = '';
 
+            // Check if the course is already activated
+            const isCourseActivated = localStorage.getItem(`course_${course.id}_activated`) === 'true';
+
             if (course.isTrial) {
-                buttonText = 'Спробувати безкоштовно';
-                buttonClass = 'toggle-trial-btn';
+                buttonText = isCourseActivated ? 'Перейти до уроку' : 'Спробувати безкоштовно';
+                buttonClass = isCourseActivated ? 'button-secondary' : 'button-primary toggle-trial-btn';
+                
                 // Окрема стилізація та розміщення для пробного курсу
                 card.className = `trial-course-card w-full max-w-md mx-auto flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
                 cardContent = `
@@ -339,12 +343,12 @@
                     <h3 class="text-2xl font-bold text-emerald-800 mb-2">${course.name}</h3>
                     <p class="text-stone-600 mb-6 flex-grow">${course.description}</p>
                     
-                    <button class="button-primary w-full mb-4 ${buttonClass}" data-course-id="${course.id}">
+                    <button class="${buttonClass} w-full mb-4" data-course-id="${course.id}" ${isCourseActivated ? `onclick="window.location.href='${course.lessonPageUrl}'"` : ''}>
                         ${buttonText}
                     </button>
 
                     <!-- Секція для введення email (для пробних) -->
-                    <div id="access-section-${course.id}" class="card-section w-full text-left">
+                    <div id="access-section-${course.id}" class="card-section w-full text-left ${isCourseActivated ? 'hidden' : ''}">
                         <p class="text-sm text-stone-700 mb-3">
                             Введіть ваш email, щоб отримати доступ до пробного уроку та інформацію про повні курси:
                         </p>
@@ -376,8 +380,8 @@
                 coursesGrid.appendChild(card); // Додаємо платні курси в основну сітку
             } 
             else { // Платні, доступні курси
-                buttonText = 'Придбати курс / Зв\'язатися';
-                buttonClass = 'toggle-contact-btn';
+                buttonText = isCourseActivated ? 'Перейти до моїх курсів' : 'Придбати курс / Зв\'язатися';
+                buttonClass = isCourseActivated ? 'button-secondary' : 'button-primary toggle-contact-btn';
                 cardContent = `
                     <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
                         <span class="card-image-text">${course.name}</span>
@@ -390,12 +394,12 @@
                             <p class="font-bold text-emerald-700">Ціна: ${course.fullPrice}</p>
                         </div>
 
-                        <button class="button-primary w-full mb-4 ${buttonClass}" data-course-id="${course.id}">
+                        <button class="${buttonClass} w-full mb-4" data-course-id="${course.id}" ${isCourseActivated ? `onclick="window.location.href='my_courses.html'"` : ''}>
                             ${buttonText}
                         </button>
 
                         <!-- Секція для контакту / введення коду (для платних) -->
-                        <div id="access-section-${course.id}" class="card-section w-full text-left">
+                        <div id="access-section-${course.id}" class="card-section w-full text-left ${isCourseActivated ? 'hidden' : ''}">
                             <p class="text-sm text-stone-700 mb-3">
                                 Щоб придбати курс, зв'яжіться з нами:
                             </p>
@@ -431,7 +435,9 @@
             button.addEventListener('click', (event) => {
                 const courseId = event.target.dataset.courseId;
                 const accessSection = document.getElementById(`access-section-${courseId}`);
-                // const downloadSection = document.getElementById(`download-section-${courseId}`); // Для платних
+                
+                // Якщо кнопка вже перенаправляє (курс активований), то не відкриваємо секцію
+                if (event.target.onclick) return;
 
                 // Закриваємо всі інші відкриті секції доступу
                 document.querySelectorAll('.card-section.active').forEach(section => {
@@ -441,10 +447,6 @@
                 });
                 
                 accessSection.classList.toggle('active');
-                // Приховуємо секцію завантаження, якщо вона була відкрита, коли відкриваємо форму
-                // if (downloadSection) { // Перевірка на існування downloadSection
-                //     downloadSection.classList.remove('active'); 
-                // }
             });
         });
 
@@ -455,7 +457,6 @@
                 const input = document.getElementById(`access-code-input-${courseId}`);
                 const message = document.getElementById(`code-message-${courseId}`);
                 const accessSection = document.getElementById(`access-section-${courseId}`);
-                // const downloadSection = document.getElementById(`download-section-${courseId}`); // Більше не використовуємо тут
                 const toggleButton = document.querySelector(`[data-course-id="${courseId}"]`);
                 const course = coursesData.find(c => c.id === courseId);
 
@@ -469,7 +470,14 @@
                     localStorage.setItem(`code_used_${courseId}`, 'true'); 
                     
                     accessSection.classList.remove('active'); // Приховуємо секцію доступу
-                    if (toggleButton) toggleButton.style.display = 'none'; // Приховуємо кнопку "Придбати/Спробувати"
+                    
+                    // Оновлюємо кнопку, щоб вона тепер перенаправляла на "Мої курси"
+                    if (toggleButton) {
+                        toggleButton.textContent = 'Перейти до моїх курсів';
+                        toggleButton.classList.remove('button-primary');
+                        toggleButton.classList.add('button-secondary');
+                        toggleButton.onclick = () => { window.location.href = 'my_courses.html'; };
+                    }
                     
                     // Перенаправляємо на сторінку "Мої курси"
                     setTimeout(() => {
@@ -480,7 +488,6 @@
                     // Змінено повідомлення про помилку
                     message.textContent = 'Невірний код. Спробуйте ще раз.';
                     message.className = 'text-sm mt-2 text-red-500';
-                    // downloadSection.classList.remove('active'); // Більше не використовуємо тут
                 }
             });
         });
@@ -503,6 +510,14 @@
                     
                     accessSection.classList.remove('active'); // Приховуємо секцію доступу
                     
+                    // Оновлюємо кнопку, щоб вона тепер перенаправляла на сторінку уроку
+                    if (toggleButton) {
+                        toggleButton.textContent = 'Перейти до уроку';
+                        toggleButton.classList.remove('button-primary');
+                        toggleButton.classList.add('button-secondary');
+                        toggleButton.onclick = () => { window.location.href = course.lessonPageUrl; };
+                    }
+
                     window.location.href = course.lessonPageUrl; // Перенаправлення на окрему сторінку уроку
 
                     // Тут мала б бути логіка відправки email на ваш сервер
@@ -538,27 +553,32 @@
 
             coursesData.forEach(course => {
                 const toggleButton = document.querySelector(`[data-course-id="${course.id}"]`);
-                // Якщо курс вже активований або код був використаний (для платних), приховуємо кнопку "Придбати/Спробувати"
-                if (localStorage.getItem(`course_${course.id}_activated`) === 'true' || (course.isTrial === false && localStorage.getItem(`code_used_${course.id}`) === 'true')) {
+                if (localStorage.getItem(`course_${course.id}_activated`) === 'true') {
                     if (course.isTrial) {
                         // Для активованих пробних курсів, змінюємо текст кнопки на "Перейти"
                         if (toggleButton) {
-                            toggleButton.textContent = 'Перейти';
+                            toggleButton.textContent = 'Перейти до уроку';
                             toggleButton.classList.remove('button-primary');
                             toggleButton.classList.add('button-secondary'); // Змінюємо стиль на вторинний
                             toggleButton.style.display = ''; // Переконаємось, що кнопка видима
                             // Додаємо обробник кліку, щоб кнопка "Перейти" перенаправляла на сторінку уроку
-                            toggleButton.addEventListener('click', () => {
-                                window.location.href = course.lessonPageUrl;
-                            });
+                            toggleButton.onclick = () => { window.location.href = course.lessonPageUrl; };
                         }
                     } else {
-                        // Для активованих платних курсів, приховуємо кнопку
+                        // Для активованих платних курсів, змінюємо текст кнопки на "Перейти до моїх курсів"
                         if (toggleButton) {
-                            toggleButton.style.display = 'none';
+                            toggleButton.textContent = 'Перейти до моїх курсів';
+                            toggleButton.classList.remove('button-primary');
+                            toggleButton.classList.add('button-secondary');
+                            toggleButton.style.display = ''; // Переконаємось, що кнопка видима
+                            toggleButton.onclick = () => { window.location.href = 'my_courses.html'; };
                         }
-                        // Для платних курсів, якщо активовано, можна показати посилання на "Мої курси"
-                        // Але тут ми просто приховуємо кнопку і очікуємо, що користувач перейде на my_courses.html
+                        // Приховуємо секцію доступу, якщо курс активований
+                        const accessSection = document.getElementById(`access-section-${course.id}`);
+                        if (accessSection) {
+                            accessSection.classList.add('hidden'); // Додаємо клас hidden, щоб приховати
+                            accessSection.classList.remove('active'); // Переконаємося, що вона не активна
+                        }
                     }
                 }
             });
