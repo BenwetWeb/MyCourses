@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Про нас - BenWenWeb Курси Мовні</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155; /* Slate-700 */
+            background-color: #f8fafc; /* Slate-50 */
+            overflow-x: hidden;
+        }
+        .button-back {
+            display: inline-block;
+            background-color: #34d399; /* Emerald-400 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .button-back:hover {
+            background-color: #10b981; /* Emerald-500 */
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <header class="bg-emerald-200 p-4 shadow-md flex justify-between items-center h-16 sticky top-0 z-50 bg-opacity-95 backdrop-blur-sm">
+        <h1 class="text-xl md:text-2xl font-bold text-emerald-800 ml-4">BenWenWeb курси мовні</h1>
+        <nav>
+            <ul class="flex space-x-4 mr-4">
+                <li><a href="index.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Головна</a></li>
+                <li><a href="about_us.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Про нас</a></li>
+                <li><a href="faq.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Часті питання</a></li>
+                <li><a href="contact_form.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Зв'язок</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container mx-auto p-4 md:p-8">
+        <section class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-800 mb-4">Про BenWenWeb</h2>
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
+                Ми створюємо ефективні та доступні мовні курси, які відкривають нові горизонти для наших студентів.
+            </p>
+        </section>
+
+        <div class="max-w-4xl mx-auto space-y-12">
+            <section class="bg-white rounded-xl shadow-lg p-6 md:p-8">
+                <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-4 text-center">Наша історія та місія</h3>
+                <div class="text-slate-600 space-y-4 leading-relaxed">
+                    <p>
+                        BenWenWeb був заснований з метою зробити вивчення іноземних мов легким, цікавим та доступним для кожного, незалежно від початкового рівня знань чи віку. Ми віримо, що мова – це не просто набір слів, а ключ до розуміння культур, подорожей та нових можливостей.
+                    </p>
+                    <p>
+                        Наша місія полягає в тому, щоб надати високоякісні навчальні матеріали та інструменти, які допоможуть вам швидко та ефективно опанувати обрану мову, отримуючи при цьому задоволення від процесу навчання.
+                    </p>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start gap-8">
+                <div class="flex-shrink-0">
+                    <img src="https://github.com/BenwetWeb/MyCourses/blob/main/photo_2025-07-14_17-26-00.jpg?raw=true" 
+                         alt="Фото директора Веніямин Марценюк" 
+                         class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-emerald-200 shadow-md"
+                         onerror="this.onerror=null; this.src='https://placehold.co/160x160/e2e8f0/64748b?text=Фото';">
+                </div>
+                <div class="text-center md:text-left flex-grow">
+                    <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-2">Веніямин Марценюк</h3>
+                    <p class="text-xl text-slate-700 mb-4">Директор BenWenWeb</p>
+                    <p class="text-slate-600 leading-relaxed">
+                        Я, Веніямин Марценюк, є засновником та директором BenWenWeb. Моя пристрасть до мов та багаторічний досвід у викладанні надихнули мене на створення цієї платформи. Я особисто докладаю всіх зусиль, щоб кожен курс був максимально корисним, зрозумілим та захоплюючим для вас.
+                    </p>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-xl shadow-lg p-6 md:p-8 flex flex-col md:flex-row items-center md:items-start gap-8">
+                <div class="flex-shrink-0">
+                    <img src="https://placehold.co/160x160/a7f3d0/1e293b?text=AI" 
+                         alt="Зображення AI-помічника" 
+                         class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-emerald-200 shadow-md">
+                </div>
+                <div class="text-center md:text-left flex-grow">
+                    <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-2">Gemini</h3>
+                    <p class="text-xl text-slate-700 mb-4">Ваш AI-помічник у створенні сайту</p>
+                    <p class="text-slate-600 leading-relaxed">
+                        Я, Gemini, є штучним інтелектом, який допоміг Веніямину Марценюку створити та вдосконалити цей веб-сайт. Моя роль полягала у написанні коду, розробці дизайну та реалізації функціоналу, щоб BenWenWeb став зручною та привабливою платформою для вашого навчання.
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="index.html" class="button-back">
+                &#x2190; Повернутися на головну
+            </a>
+        </div>
+    </div>
+
+    <footer class="bg-emerald-200 p-6 shadow-inner mt-12 text-center text-emerald-800">
+        <div class="container mx-auto">
+            <p class="mb-2">Зв'яжіться з нами:</p>
+            <p class="mb-1">Email: <a href="mailto:veniam2007@gmail.com" class="underline hover:text-emerald-900">veniam2007@gmail.com</a></p>
+            <p class="mb-4">Telegram: <a href="https://t.me/Mausing99" target="_blank" class="underline hover:text-emerald-900">@Mausing99</a></p>
+            <div class="flex justify-center space-x-4 text-sm mb-2">
+                <a href="privacy_policy.html" class="underline hover:text-emerald-900">Політика конфіденційності</a>
+                <a href="terms_of_use.html" class="underline hover:text-emerald-900">Умови використання</a>
+            </div>
+            <p class="text-sm text-emerald-700">&copy; 2025 BenWenWeb. Всі права захищені.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

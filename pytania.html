@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Часті питання - BenWenWeb Курси Мовні</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155; /* Slate-700 */
+            background-color: #f8fafc; /* Slate-50 */
+            overflow-x: hidden;
+        }
+        .button-back {
+            display: inline-block;
+            background-color: #34d399; /* Emerald-400 */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
+        }
+        .button-back:hover {
+            background-color: #10b981; /* Emerald-500 */
+            transform: translateY(-2px);
+        }
+        .faq-item {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e2e8f0; /* Slate-200 */
+        }
+        .faq-question {
+            padding: 1.25rem 1.5rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        .faq-question:hover {
+            background-color: #f1f5f9; /* Slate-100 */
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
+            padding: 0 1.5rem;
+            color: #475569; /* Slate-600 */
+            line-height: 1.6;
+        }
+        .faq-item.active .faq-answer {
+            padding: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        .faq-question svg {
+            transition: transform 0.3s ease-in-out;
+            flex-shrink: 0;
+            margin-left: 1rem;
+        }
+        .faq-item.active .faq-question svg {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <header class="bg-emerald-200 p-4 shadow-md flex justify-between items-center h-16 sticky top-0 z-50 bg-opacity-95 backdrop-blur-sm">
+        <h1 class="text-xl md:text-2xl font-bold text-emerald-800 ml-4">BenWenWeb курси мовні</h1>
+        <nav>
+            <ul class="flex space-x-4 mr-4">
+                <li><a href="index.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Головна</a></li>
+                <li><a href="about_us.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Про нас</a></li>
+                <li><a href="faq.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Часті питання</a></li>
+                <li><a href="contact_form.html" class="text-emerald-800 hover:text-emerald-900 font-semibold">Зв'язок</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container mx-auto p-4 md:p-8">
+        <section class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-800 mb-4">Часті питання</h2>
+            <p class="text-lg text-slate-600">
+                Знайдіть відповіді на найпоширеніші запитання про наші курси та послуги.
+            </p>
+        </section>
+
+        <section class="space-y-4 max-w-3xl mx-auto">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Як я можу придбати повний курс?</span>
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Для придбання повного курсу вам необхідно зв'язатися з нами через email або Telegram. Ми надамо вам всю необхідну інформацію щодо оплати та унікальний код доступу до курсу.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Чи можна оплатити курс частинами?</span>
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Так, повний курс Німецької мови можна розбити на 5 частин по 380 грн кожна. Після оплати кожної частини ви отримуєте доступ до відповідних матеріалів курсу.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Як я отримаю доступ до матеріалів після оплати?</span>
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Після підтвердження оплати ми надішлемо вам унікальний код доступу на вашу електронну пошту або в Telegram. Цей код потрібно буде ввести на головній сторінці сайту у картці відповідного курсу, щоб розблокувати матеріали в розділі "Ваші активовані курси".</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Який рівень мови потрібен для початку?</span>
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Наші курси розроблені як для початківців (з нуля), так і для тих, хто бажає вдосконалити вже існуючі навички. Детальний опис кожного курсу на головній сторінці допоможе вам обрати найбільш відповідний варіант.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Чи є підтримка під час навчання?</span>
+                    <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <div class="faq-answer">
+                    <p>Так, ми надаємо підтримку нашим студентам. Ви можете зв'язатися з нами через email або Telegram, і ми допоможемо вам з будь-якими питаннями, що виникнуть під час навчання.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="text-center mt-12">
+            <a href="index.html" class="button-back">
+                &#x2190; Повернутися на головну
+            </a>
+        </div>
+    </div>
+
+    <footer class="bg-emerald-200 p-6 shadow-inner mt-12 text-center text-emerald-800">
+        <div class="container mx-auto">
+            <p class="mb-2">Зв'яжіться з нами:</p>
+            <p class="mb-1">Email: <a href="mailto:veniam2007@gmail.com" class="underline hover:text-emerald-900">veniam2007@gmail.com</a></p>
+            <p class="mb-4">Telegram: <a href="https://t.me/Mausing99" target="_blank" class="underline hover:text-emerald-900">@Mausing99</a></p>
+            <div class="flex justify-center space-x-4 text-sm mb-2">
+                <a href="privacy_policy.html" class="underline hover:text-emerald-900">Політика конфіденційності</a>
+                <a href="terms_of_use.html" class="underline hover:text-emerald-900">Умови використання</a>
+            </div>
+            <p class="text-sm text-emerald-700">&copy; 2025 BenWenWeb. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+
+                question.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                            otherItem.querySelector('.faq-answer').style.maxHeight = null;
+                        }
+                    });
+
+                    // Toggle the clicked item
+                    if (!isActive) {
+                        item.classList.add('active');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                    } else {
+                        item.classList.remove('active');
+                        answer.style.maxHeight = null;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
