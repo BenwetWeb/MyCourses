@@ -5,16 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BenWenWeb Курси Мовні</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chosen Palette: Soft Mint, Soft Blue, Soft Grey, White/Stone -->
-    <!-- Application Structure Plan: The application features a fixed top header with essential navigation. A prominent "About Director" section is added below the main welcome message. The main content area is now divided into three distinct sections: a grid for paid courses (with updated pricing display), a separate visually distinct section for the trial course, and a new dedicated section for detailed payment and access information. Each course card uses a user-provided background image for visual appeal. Interactive elements (contact forms, code access, lesson content display in modal, and trial lesson redirection) are maintained. The background is a clean, static color. A comprehensive footer with contact information and legal links is included. Paid courses for English and Polish are marked as "coming soon". A new cookie consent banner appears on first visit. After a paid course is activated, its card remains visible with a "Куплено" button, and a new "Your Courses" section appears above payment info with a horizontal carousel of lesson blocks. -->
-    <!-- Visualization & Content Choices: Report Info: Personal branding, user's images for courses, distinct trial course, detailed payment info, clean background, full contact footer, "coming soon" status for some courses, streamlined navigation with cookie consent, and dynamic display of lesson blocks on the main page. -> Goal: Inform, Organize, Engage, Brand, Facilitate Access, Enhance Clarity, Provide Contact, Expand Information, Legal Compliance, Streamline Access. -> Viz/Presentation Method: Dedicated HTML section for director's info (user's photo, text). Course cards use user's background images with overlays. Trial course card is in a separate, styled section. A new, well-designed section for payment details is added. Footer for comprehensive contact info and legal links. Streamlined navigation links in header. Cookie consent banner as a fixed element. New "Your Courses" section with a horizontal slider for lesson blocks. Lesson content displayed in a modal. -> Interaction: Maintained interactive forms/buttons. Button text changes for activated trial courses/paid courses (to "Куплено"). Custom error message for incorrect codes. "Coming soon" courses have disabled buttons. Cookie banner disappears on acceptance and uses localStorage. Successful paid course activation reveals "Your Courses" section and updates its card in the main grid. Slider navigation for lesson blocks. Modal for lesson content. -> Justification: This design provides a professional, visually appealing, and user-friendly website. The dedicated payment section improves information clarity. Clear contact info and course status messages improve transparency and user experience. The cookie banner addresses legal requirements without cluttering the main navigation. The "Your Courses" section with integrated lessons improves user flow and content access directly on the main page. -> Library/Method: Vanilla JavaScript for all interactive logic (toggling visibility, handling code/email input, localStorage, redirection, button text/style change, slider logic, modal handling), Tailwind CSS for all styling and responsiveness. User-provided image URLs are directly embedded. No charts or complex visualizations are used. -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!--
+    Оновлення v3:
+    - Уроки німецької мови розділено з "1-2" на окремі "Урок 1", "Урок 2" і т.д.
+    - Видалено логіку модального вікна.
+    - Кнопка "Відкрити урок" тепер перенаправляє на окрему сторінку уроку.
+    - Код спрощено шляхом видалення невикористовуваних елементів модального вікна.
+    -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            color: #334155; /* Темно-сірий текст */
-            overflow-x: hidden; /* Запобігаємо горизонтальному скролу */
-            background-color: #f8fafc; /* Чистий, м'який сіро-білий фон */
+            color: #334155; /* Slate-700 */
+            overflow-x: hidden;
+            background-color: #f8fafc; /* Slate-50 */
         }
 
         .card-section {
@@ -24,11 +30,11 @@
             padding: 0 1.5rem;
         }
         .card-section.active {
-            max-height: 600px; /* Достатньо для вмісту */
+            max-height: 600px;
             padding: 1.5rem;
         }
         .button-primary {
-            background-color: #34d399; /* М'ятно-зелений */
+            background-color: #34d399; /* Emerald-400 */
             color: white;
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
@@ -36,26 +42,27 @@
             transition: background-color 0.3s ease-in-out, transform 0.1s ease-in-out;
         }
         .button-primary:hover {
-            background-color: #10b981; /* Темніший м'ятний */
-            transform: translateY(-1px);
+            background-color: #10b981; /* Emerald-500 */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
         }
         .button-secondary {
-            background-color: #cbd5e1; /* М'який сірий */
-            color: #475569;
+            background-color: #cbd5e1; /* Slate-300 */
+            color: #475569; /* Slate-600 */
             padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
             font-weight: 600;
             transition: background-color 0.3s ease-in-out;
         }
         .button-secondary:hover {
-            background-color: #94a3b8; /* Темніший сірий */
+            background-color: #94a3b8; /* Slate-400 */
         }
         input[type="text"], input[type="email"] {
             border: 1px solid #cbd5e1;
             border-radius: 0.5rem;
             padding: 0.75rem 1rem;
             width: 100%;
-            transition: border-color 0.3s ease-in-out;
+            transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
         input[type="text"]:focus, input[type="email"]:focus {
             outline: none;
@@ -63,28 +70,24 @@
             box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.3);
         }
 
-        /* Стиль для фонових зображень карток */
         .course-card-image {
             background-size: cover;
             background-position: center;
             position: relative;
-            height: 150px; /* Висота для зображення */
+            height: 150px;
             width: 100%;
-            border-radius: 0.75rem 0.75rem 0 0; /* Заокруглення тільки зверху */
+            border-radius: 0.75rem 0.75rem 0 0;
             overflow: hidden;
             display: flex;
-            align-items: flex-end; /* Вирівнювання тексту знизу */
+            align-items: flex-end;
             justify-content: center;
-            padding-bottom: 1rem; /* Відступ для тексту */
+            padding-bottom: 1rem;
         }
         .course-card-image::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%); /* Градієнт для читабельності тексту */
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
             z-index: 1;
         }
         .course-card-image .card-image-text {
@@ -95,22 +98,18 @@
             font-weight: bold;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
         }
-        /* Стиль для пробного курсу */
         .trial-course-card {
-            background-color: #e6fffa; /* Світло-м'ятний фон для пробного курсу */
-            border: 2px solid #4fd1c5; /* Обведення */
+            background-color: #f0fdfa; /* Emerald-50 */
+            border: 2px solid #6ee7b7; /* Emerald-300 */
             padding: 1.5rem;
             border-radius: 1.5rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
 
-        /* Стилі для банера згоди на файли cookie */
         #cookie-consent-banner {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #334155; /* Темно-сірий фон */
+            bottom: 0; left: 0; right: 0;
+            background-color: #334155; /* Slate-700 */
             color: white;
             padding: 1rem 1.5rem;
             display: flex;
@@ -118,25 +117,25 @@
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
-            z-index: 1000; /* Над усім іншим контентом */
+            z-index: 1000;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
             font-size: 0.9rem;
             text-align: center;
         }
         #cookie-consent-banner a {
-            color: #90cdf4; /* М'який блакитний для посилань */
+            color: #93c5fd; /* Blue-300 */
             text-decoration: underline;
             font-weight: 600;
         }
         #cookie-consent-banner button {
-            background-color: #34d399; /* М'ятно-зелений */
+            background-color: #34d399;
             color: white;
             padding: 0.5rem 1.25rem;
             border-radius: 0.5rem;
             font-weight: 600;
             transition: background-color 0.3s ease-in-out;
             cursor: pointer;
-            white-space: nowrap; /* Запобігає розриву тексту кнопки */
+            white-space: nowrap;
         }
         #cookie-consent-banner button:hover {
             background-color: #10b981;
@@ -154,108 +153,64 @@
             }
         }
 
-        /* Стилі для каруселі уроків */
         .lesson-carousel-container {
             position: relative;
             width: 100%;
             overflow: hidden;
-            padding: 1rem 0; /* Додаємо відступ для кнопок */
+            padding: 1rem 0;
         }
         .lesson-carousel-inner {
             display: flex;
             transition: transform 0.5s ease-in-out;
-            gap: 1.5rem; /* Відстань між картками */
+            gap: 1.5rem;
         }
         .lesson-card {
-            flex: 0 0 calc(33.333% - 1rem); /* 3 картки на десктопі, з урахуванням gap */
+            flex: 0 0 calc(33.333% - 1rem);
             background-color: #ffffff;
             border-radius: 0.75rem;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             padding: 1.5rem;
             text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-            min-width: 280px; /* Мінімальна ширина для мобільних */
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            min-width: 280px;
         }
         .lesson-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         .carousel-button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            padding: 0.75rem 0.5rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            width: 2.5rem;
+            height: 2.5rem;
             cursor: pointer;
             z-index: 10;
-            border-radius: 0.5rem;
-            transition: background-color 0.3s ease;
+            border-radius: 9999px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .carousel-button:hover {
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        .carousel-button.left {
-            left: 0.5rem;
-        }
-        .carousel-button.right {
-            right: 0.5rem;
-        }
+        .carousel-button.left { left: -0.5rem; }
+        .carousel-button.right { right: -0.5rem; }
         @media (max-width: 768px) {
-            .lesson-card {
-                flex: 0 0 90%; /* 1 картка на мобільних */
-            }
-            .lesson-carousel-inner {
-                justify-content: flex-start; /* Вирівнювання на мобільних */
-                padding: 0 1rem; /* Додатковий відступ для скролу */
-            }
-            .carousel-button {
-                padding: 0.5rem 0.3rem;
-            }
-        }
-
-        /* Стилі для модального вікна */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            overflow-y: auto; /* Дозволити скрол всередині модалки */
-            -webkit-overflow-scrolling: touch; /* Для плавного скролу на iOS */
-        }
-        .modal-content {
-            background-color: #fff;
-            padding: 2rem;
-            border-radius: 1rem;
-            max-width: 90%;
-            max-height: 90%;
-            overflow-y: auto; /* Скрол для вмісту модалки */
-            position: relative;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-        .modal-close-button {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: #475569;
-            z-index: 2001;
+            .lesson-card { flex: 0 0 90%; }
+            .lesson-carousel-inner { padding: 0 1rem; }
+            .carousel-button.left { left: 0.25rem; }
+            .carousel-button.right { right: 0.25rem; }
         }
     </style>
 </head>
-<body class="bg-stone-50">
+<body class="bg-slate-50">
 
-    <!-- Банер згоди на файли cookie -->
     <div id="cookie-consent-banner" class="hidden">
         <div>
             Цей сайт використовує файли cookie для покращення вашого досвіду. Продовжуючи використовувати сайт, ви погоджуєтеся з нашою
@@ -265,8 +220,7 @@
         <button id="accept-cookies-btn">Прийняти</button>
     </div>
 
-    <!-- Верхня горизонтальна смужка -->
-    <header class="bg-emerald-200 p-4 shadow-md flex justify-between items-center h-16">
+    <header class="bg-emerald-200 p-4 shadow-md flex justify-between items-center h-16 sticky top-0 z-50 bg-opacity-95 backdrop-blur-sm">
         <h1 class="text-xl md:text-2xl font-bold text-emerald-800 ml-4">BenWenWeb курси мовні</h1>
         <nav>
             <ul class="flex space-x-4 mr-4">
@@ -281,20 +235,22 @@
     <div class="container mx-auto p-4 md:p-8">
         <section class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-bold text-emerald-800 mb-4">Відкрийте Світ Мов з BenWenWeb!</h2>
-            <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto">
+            <p class="text-lg md:text-xl text-slate-600 max-w-3xl mx-auto">
                 Наші курси розроблені для легкого та ефективного вивчення мов. Завантажуйте уроки або спробуйте безкоштовні пробні версії.
             </p>
         </section>
 
-        <!-- Секція "Про директора" -->
         <section id="director-section" class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 flex flex-col md:flex-row items-center md:items-start gap-6">
             <div class="flex-shrink-0">
-                <img src="https://github.com/BenwetWeb/MyCourses/blob/main/photo_2025-07-14_17-26-00.jpg?raw=true" alt="Фото директора Веніямин Марценюк" class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-emerald-200 shadow-md">
+                <img src="https://github.com/BenwetWeb/MyCourses/blob/main/photo_2025-07-14_17-26-00.jpg?raw=true" 
+                     alt="Фото директора Веніямин Марценюк" 
+                     class="rounded-full w-32 h-32 md:w-40 md:h-40 object-cover border-4 border-emerald-200 shadow-md"
+                     onerror="this.onerror=null; this.src='https://placehold.co/160x160/e2e8f0/64748b?text=Фото';">
             </div>
             <div class="text-center md:text-left flex-grow">
                 <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-2">Веніямин Марценюк</h3>
-                <p class="text-xl text-stone-700 mb-4">Директор BenWenWeb</p>
-                <p class="text-stone-600 leading-relaxed">
+                <p class="text-xl text-slate-700 mb-4">Директор BenWenWeb</p>
+                <p class="text-slate-600 leading-relaxed">
                     Ласкаво просимо до BenWenWeb! Я, Веніямин Марценюк, радий представити вам курси, створені з пристрастю до мов та бажанням зробити навчання доступним та ефективним для кожного. Моя мета – надати вам не просто знання, а ключ до нових можливостей та культур. Приєднуйтесь до нашої спільноти та відкрийте для себе світ мов!
                 </p>
             </div>
@@ -306,27 +262,20 @@
         </main>
 
         <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-6 text-center">Спробуйте безкоштовно:</h3>
-        <!-- Секція для пробного курсу -->
         <section id="trial-course-section" class="flex justify-center mb-12">
             <!-- Картка пробного курсу буде додана за допомогою JavaScript -->
         </section>
 
-        <!-- Нова секція "Ваші активовані курси" -->
-        <section id="your-courses-section" class="hidden bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-blue-300">
-            <h3 class="text-2xl md:text-3xl font-bold text-blue-800 mb-6 text-center">Ваші активовані курси:</h3>
-            <div class="lesson-carousel-container">
-                <div id="lesson-carousel-inner" class="lesson-carousel-inner">
-                    <!-- Картки уроків будуть завантажені сюди за допомогою JavaScript -->
-                </div>
-                <button id="carousel-left-btn" class="carousel-button left hidden">&#10094;</button>
-                <button id="carousel-right-btn" class="carousel-button right hidden">&#10095;</button>
+        <section id="your-courses-section" class="hidden bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-blue-400">
+            <h3 class="text-2xl md:text-3xl font-bold text-blue-800 mb-6 text-center">Ваші активовані курси</h3>
+            <div id="activated-courses-container">
+                <!-- Контейнери для кожного активованого курсу будуть тут -->
             </div>
         </section>
 
-        <!-- Нова секція з інформацією про оплату та доступ -->
         <section class="bg-white rounded-xl shadow-lg p-6 md:p-8 mb-12 border-t-4 border-emerald-300">
             <h3 class="text-2xl md:text-3xl font-bold text-emerald-800 mb-4 text-center">Як працює оплата та доступ до курсів?</h3>
-            <div class="text-stone-600 space-y-4">
+            <div class="text-slate-600 space-y-4">
                 <p>
                     Ми пропонуємо гнучкі умови оплати для наших повних курсів. Наприклад, повний курс **Німецької мови** коштує <span class="font-bold text-emerald-700">1900 грн</span>.
                 </p>
@@ -357,414 +306,302 @@
         </div>
     </footer>
 
-    <!-- Модальне вікно для відображення уроків -->
-    <div id="lesson-modal" class="modal hidden">
-        <div class="modal-content">
-            <button class="modal-close-button">&times;</button>
-            <div id="modal-lesson-content">
-                <!-- Вміст уроку буде завантажено сюди -->
-            </div>
-        </div>
-    </div>
-
     <script>
-        const coursesData = [
-            {
-                id: 'german-paid',
-                name: 'Німецька мова',
-                description: 'Почніть свою подорож у світ німецької з нуля або вдоскональте свої навички. Детальні пояснення вимови та граматики.',
-                color: '#90cdf4', // М'який блакитний
-                accessCode: '84NDISJDNNNKX', // Код для активації всього курсу німецької
-                isTrial: false,
-                isComingSoon: false,
-                imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9.png?raw=true', // Посилання на ваше фото для німецької
-                imageAlt: 'Бранденбурзькі ворота',
-                fullPrice: '1900 грн',
-                partPrice: '380 грн',
-                partsCount: 5,
-                lessonBlocks: [ // Нова структура для уроків
-                    { title: 'Урок 1-2', url: 'german_lesson_1-2.html' /*, accessCode: 'L12GERMAN'*/ }, // Приклад індивідуального коду (не використовується зараз)
-                    { title: 'Урок 3-4', url: 'german_lesson_3-4.html' /*, accessCode: 'L34GERMAN'*/ },
-                    { title: 'Урок 5-6', url: 'german_lesson_5-6.html' /*, accessCode: 'L56GERMAN'*/ },
-                    { title: 'Урок 7-8', url: 'german_lesson_7-8.html' /*, accessCode: 'L78GERMAN'*/ },
-                    { title: 'Урок 9-10', url: 'german_lesson_9-10.html' /*, accessCode: 'L910GERMAN'*/ }
-                ]
-            },
-            {
-                id: 'english-paid',
-                name: 'Англійська мова',
-                description: 'Відкрийте для себе світ англійської! Курс для початківців з акцентом на розмовні фрази та базову граматику.',
-                color: '#d1d5db', // М'який сірий
-                accessCode: 'ENGLISH2025',
-                isTrial: false,
-                isComingSoon: true, // Mark as coming soon
-                imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(1).png?raw=true', // Посилання на ваше фото для англійської
-                imageAlt: 'Біг Бен та лондонський автобус'
-            },
-            {
-                id: 'polish-paid',
-                name: 'Польська мова',
-                description: 'Опануйте основи польської мови для подорожей та спілкування. Легкі уроки для швидкого старту.',
-                color: '#90cdf4', // М'який блакитний (зроблено схожим на німецький для консистентності)
-                accessCode: 'POLSKI2025',
-                isTrial: false,
-                isComingSoon: true, // Mark as coming soon
-                imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(2).png?raw=true', // Посилання на ваше фото для польської
-                imageAlt: 'Архітектура Гданська'
-            },
-            {
-                id: 'german-trial',
-                name: 'Німецька мова (пробний урок)',
-                description: 'Спробуйте перший урок німецької абсолютно безкоштовно! Дізнайтеся основи вимови та привітань.',
-                color: '#a7f3d0', // М'який зелений для пробного
-                isTrial: true,
-                isComingSoon: false, // Пробний курс завжди доступний
-                lessonPageUrl: 'german_trial_lesson.html' // Посилання на окрему сторінку пробного уроку
-            }
-        ];
-
-        const directorPhotoUrl = 'https://github.com/BenwetWeb/MyCourses/blob/main/photo_2025-07-14_17-26-00.jpg?raw=true'; // Ваше фото директора
-        const directorName = 'Веніямин Марценюк'; // Виправлено ім'я
-
-        const coursesGrid = document.getElementById('courses-grid');
-        const trialCourseSection = document.getElementById('trial-course-section');
-        const yourCoursesSection = document.getElementById('your-courses-section');
-        const lessonCarouselInner = document.getElementById('lesson-carousel-inner');
-        const carouselLeftBtn = document.getElementById('carousel-left-btn');
-        const carouselRightBtn = document.getElementById('carousel-right-btn');
-        const lessonModal = document.getElementById('lesson-modal');
-        const modalCloseButton = lessonModal.querySelector('.modal-close-button');
-        const modalLessonContent = document.getElementById('modal-lesson-content');
-
-        let currentCarouselIndex = 0;
-
-        // Функція для відображення уроку в модальному вікні
-        async function openLessonModal(lessonUrl) {
-            try {
-                const response = await fetch(lessonUrl);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Data for all courses
+            const coursesData = [
+                {
+                    id: 'german-paid',
+                    name: 'Німецька мова',
+                    description: 'Почніть свою подорож у світ німецької з нуля або вдоскональте свої навички. Детальні пояснення вимови та граматики.',
+                    accessCode: '84NDISJDNNNKX',
+                    isTrial: false,
+                    isComingSoon: false,
+                    imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9.png?raw=true',
+                    imageAlt: 'Бранденбурзькі ворота',
+                    fullPrice: '1900 грн',
+                    lessonBlocks: [
+                        { title: 'Урок 1', url: 'german_lesson_1.html' },
+                        { title: 'Урок 2', url: 'german_lesson_2.html' },
+                        { title: 'Урок 3', url: 'german_lesson_3.html' },
+                        { title: 'Урок 4', url: 'german_lesson_4.html' },
+                        { title: 'Урок 5', url: 'german_lesson_5.html' },
+                        { title: 'Урок 6', url: 'german_lesson_6.html' },
+                        { title: 'Урок 7', url: 'german_lesson_7.html' },
+                        { title: 'Урок 8', url: 'german_lesson_8.html' },
+                        { title: 'Урок 9', url: 'german_lesson_9.html' },
+                        { title: 'Урок 10', url: 'german_lesson_10.html' }
+                    ]
+                },
+                {
+                    id: 'english-paid',
+                    name: 'Англійська мова',
+                    description: 'Відкрийте для себе світ англійської! Курс для початківців з акцентом на розмовні фрази та базову граматику.',
+                    accessCode: 'ENGLISH2025',
+                    isTrial: false,
+                    isComingSoon: true,
+                    imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(1).png?raw=true',
+                    imageAlt: 'Біг Бен та лондонський автобус'
+                },
+                {
+                    id: 'polish-paid',
+                    name: 'Польська мова',
+                    description: 'Опануйте основи польської мови для подорожей та спілкування. Легкі уроки для швидкого старту.',
+                    accessCode: 'POLSKI2025',
+                    isTrial: false,
+                    isComingSoon: true,
+                    imageUrl: 'https://github.com/BenwetWeb/MyCourses/blob/main/Gemini_Generated_Image_dyf9ezdyf9ezdyf9(2).png?raw=true',
+                    imageAlt: 'Архітектура Гданська'
+                },
+                {
+                    id: 'german-trial',
+                    name: 'Німецька мова (пробний урок)',
+                    description: 'Спробуйте перший урок німецької абсолютно безкоштовно! Дізнайтеся основи вимови та привітань.',
+                    isTrial: true,
+                    isComingSoon: false,
+                    lessonPageUrl: 'german_trial_lesson.html'
                 }
-                const htmlContent = await response.text();
-                // Витягуємо лише вміст тіла або конкретного контейнера з уроком
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlContent, 'text/html');
-                const lessonBodyContent = doc.querySelector('.lesson-container').innerHTML; // Або інший селектор, якщо структура уроку зміниться
+            ];
+
+            // DOM Elements
+            const coursesGrid = document.getElementById('courses-grid');
+            const trialCourseSection = document.getElementById('trial-course-section');
+            const yourCoursesSection = document.getElementById('your-courses-section');
+            const activatedCoursesContainer = document.getElementById('activated-courses-container');
+
+            // --- Carousel Logic ---
+            function setupCarousel(carouselId) {
+                const container = document.getElementById(carouselId);
+                if (!container) return;
                 
-                modalLessonContent.innerHTML = lessonBodyContent;
-                lessonModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden'; // Заборонити прокрутку фону
-            } catch (error) {
-                console.error('Error loading lesson content:', error);
-                modalLessonContent.innerHTML = '<p class="text-red-500">Не вдалося завантажити урок. Будь ласка, спробуйте пізніше.</p>';
-                lessonModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        }
+                const inner = container.querySelector('.lesson-carousel-inner');
+                const leftBtn = container.querySelector('.carousel-button.left');
+                const rightBtn = container.querySelector('.carousel-button.right');
+                let currentIndex = 0;
 
-        // Функція для закриття модального вікна
-        function closeLessonModal() {
-            lessonModal.classList.add('hidden');
-            modalLessonContent.innerHTML = ''; // Очистити вміст
-            document.body.style.overflow = ''; // Дозволити прокрутку фону
-        }
-
-        // Обробник закриття модального вікна
-        modalCloseButton.addEventListener('click', closeLessonModal);
-        lessonModal.addEventListener('click', (event) => {
-            if (event.target === lessonModal) { // Закрити, якщо клік поза вмістом
-                closeLessonModal();
-            }
-        });
-
-        // Функція для оновлення видимості кнопок каруселі
-        function updateCarouselButtons() {
-            const totalItems = lessonCarouselInner.children.length;
-            if (totalItems === 0) {
-                carouselLeftBtn.classList.add('hidden');
-                carouselRightBtn.classList.add('hidden');
-                return;
-            }
-            
-            // Визначаємо кількість видимих елементів
-            // Залежить від CSS flex-basis та gap
-            let itemWidth = 0;
-            if (lessonCarouselInner.children.length > 0) {
-                itemWidth = lessonCarouselInner.children[0].offsetWidth + 24; // Ширина картки + gap (1.5rem = 24px)
-            }
-            
-            const containerWidth = lessonCarouselInner.offsetWidth;
-            const visibleItems = Math.floor(containerWidth / itemWidth);
-
-            carouselLeftBtn.classList.toggle('hidden', currentCarouselIndex === 0);
-            carouselRightBtn.classList.toggle('hidden', currentCarouselIndex >= totalItems - visibleItems);
-        }
-
-        // Функція для переміщення каруселі
-        function moveCarousel(direction) {
-            const itemWidth = lessonCarouselInner.children[0].offsetWidth + 24; // Ширина картки + gap
-            const totalItems = lessonCarouselInner.children.length;
-            const containerWidth = lessonCarouselInner.offsetWidth;
-            const visibleItems = Math.floor(containerWidth / itemWidth);
-
-            currentCarouselIndex += direction;
-
-            // Обмеження індексу
-            if (currentCarouselIndex < 0) {
-                currentCarouselIndex = 0;
-            }
-            if (currentCarouselIndex > totalItems - visibleItems) {
-                currentCarouselIndex = totalItems - visibleItems;
-            }
-
-            lessonCarouselInner.style.transform = `translateX(-${currentCarouselIndex * itemWidth}px)`;
-            updateCarouselButtons();
-        }
-
-        carouselLeftBtn.addEventListener('click', () => moveCarousel(-1));
-        carouselRightBtn.addEventListener('click', () => moveCarousel(1));
-
-        // Створення карток курсів та їх відображення
-        function renderCourses() {
-            coursesGrid.innerHTML = ''; // Очищаємо основну сітку курсів
-            trialCourseSection.innerHTML = ''; // Очищаємо секцію пробного курсу
-            lessonCarouselInner.innerHTML = ''; // Очищаємо карусель уроків
-            currentCarouselIndex = 0; // Скидаємо індекс каруселі при перерендері
-
-            let hasActivatedPaidCourse = false;
-
-            coursesData.forEach(course => {
-                const isCourseActivated = localStorage.getItem(`course_${course.id}_activated`) === 'true';
-
-                if (course.isTrial) {
-                    const card = document.createElement('div');
-                    card.className = `trial-course-card w-full max-w-md mx-auto flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
+                function updateButtons() {
+                    if (!inner || !leftBtn || !rightBtn || inner.children.length === 0) return;
                     
-                    const buttonText = isCourseActivated ? 'Перейти до уроку' : 'Спробувати безкоштовно';
-                    const buttonClass = isCourseActivated ? 'button-secondary' : 'button-primary toggle-trial-btn';
+                    const totalItems = inner.children.length;
+                    const itemWidth = inner.children[0].offsetWidth + 24; // width + gap
+                    const containerWidth = inner.offsetWidth;
+                    const visibleItems = Math.floor(containerWidth / itemWidth);
                     
-                    card.innerHTML = `
-                        <div class="w-24 h-24 rounded-full flex items-center justify-center mb-4" style="background-color: ${course.color};">
-                            <span class="text-4xl text-white">${course.name.charAt(0)}</span>
-                        </div>
-                        <h3 class="text-2xl font-bold text-emerald-800 mb-2">${course.name}</h3>
-                        <p class="text-stone-600 mb-6 flex-grow">${course.description}</p>
-                        
-                        <button class="${buttonClass} w-full mb-4" data-course-id="${course.id}" ${isCourseActivated ? `onclick="window.location.href='${course.lessonPageUrl}'"` : ''}>
-                            ${buttonText}
-                        </button>
-
-                        <div id="access-section-${course.id}" class="card-section w-full text-left hidden">
-                            <p class="text-sm text-stone-700 mb-3">
-                                Введіть ваш email, щоб отримати доступ до пробного уроку та інформацію про повні курси:
-                            </p>
-                            <div class="flex flex-col sm:flex-row gap-2">
-                                <input type="email" id="email-input-${course.id}" placeholder="Ваш email" class="flex-grow">
-                                <button class="button-primary submit-email-btn" data-course-id="${course.id}">
-                                    Підтвердити
-                                </button>
-                            </div>
-                            <p id="email-message-${course.id}" class="text-sm mt-2 text-red-500"></p>
-                        </div>
-                    `;
-                    trialCourseSection.appendChild(card);
-                } else { // Платні курси
-                    const card = document.createElement('div');
-                    card.className = `bg-white rounded-xl shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
-                    
-                    let buttonText = '';
-                    let buttonClass = '';
-                    let buttonAttributes = '';
-
-                    if (course.isComingSoon) {
-                        buttonText = 'Курс ще додається';
-                        buttonClass = 'button-secondary';
-                        buttonAttributes = 'disabled';
-                    } else if (isCourseActivated) {
-                        buttonText = 'Куплено';
-                        buttonClass = 'button-secondary';
-                        buttonAttributes = 'disabled'; // Кнопка неактивна
-                        hasActivatedPaidCourse = true; // Позначаємо, що є активований платний курс
-                        // Додаємо уроки до каруселі
-                        if (course.lessonBlocks) {
-                            course.lessonBlocks.forEach(lesson => {
-                                const lessonCard = document.createElement('div');
-                                lessonCard.className = 'lesson-card';
-                                lessonCard.innerHTML = `
-                                    <h4 class="text-xl font-semibold text-blue-700 mb-2">${lesson.title}</h4>
-                                    <p class="text-sm text-stone-600 mb-4">Натисніть, щоб відкрити урок</p>
-                                    <button class="button-primary open-lesson-btn" data-lesson-url="${lesson.url}">
-                                        Відкрити урок
-                                    </button>
-                                `;
-                                lessonCarouselInner.appendChild(lessonCard);
-                            });
-                        }
-                    } else {
-                        buttonText = 'Придбати курс / Зв\'язатися';
-                        buttonClass = 'button-primary toggle-contact-btn';
-                    }
-
-                    card.innerHTML = `
-                        <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
-                            <span class="card-image-text">${course.name}</span>
-                        </div>
-                        <div class="p-6 w-full flex flex-col items-center text-center">
-                            <p class="text-stone-600 mb-4 flex-grow">${course.description}</p>
-                            <div class="mb-4 text-lg">
-                                <p class="font-bold text-emerald-700">Ціна: ${course.fullPrice}</p>
-                            </div>
-                            <button class="${buttonClass} w-full mb-4" data-course-id="${course.id}" ${buttonAttributes}>
-                                ${buttonText}
-                            </button>
-                            <div id="access-section-${course.id}" class="card-section w-full text-left hidden">
-                                <p class="text-sm text-stone-700 mb-3">
-                                    Щоб придбати курс, зв'яжіться з нами:
-                                </p>
-                                <a href="mailto:veniam2007@gmail.com" class="block button-secondary w-full mb-3 text-center">
-                                    Написати на email
-                                </a>
-                                <a href="https://t.me/Mausing99" target="_blank" class="block button-secondary w-full mb-4 text-center">
-                                    Написати в Telegram
-                                </a>
-                                <p class="text-sm text-stone-700 mb-2">
-                                    Якщо у вас є код доступу, введіть його тут:
-                                </p>
-                                <div class="flex flex-col sm:flex-row gap-2">
-                                    <input type="text" id="access-code-input-${course.id}" placeholder="Введіть код" class="flex-grow">
-                                    <button class="button-primary activate-code-btn" data-course-id="${course.id}">
-                                        Активувати
-                                    </button>
-                                </div>
-                                <p id="code-message-${course.id}" class="text-sm mt-2 text-red-500"></p>
-                            </div>
-                        </div>
-                    `;
-                    coursesGrid.appendChild(card);
+                    leftBtn.classList.toggle('hidden', currentIndex === 0);
+                    rightBtn.classList.toggle('hidden', currentIndex >= totalItems - visibleItems);
                 }
-            });
 
-            // Показуємо/приховуємо секцію "Ваші активовані курси"
-            if (hasActivatedPaidCourse) {
-                yourCoursesSection.classList.remove('hidden');
-                updateCarouselButtons(); // Оновлюємо кнопки каруселі після завантаження уроків
-            } else {
-                yourCoursesSection.classList.add('hidden');
+                function moveCarousel(direction) {
+                    const itemWidth = inner.children[0].offsetWidth + 24; // width + gap
+                    currentIndex = Math.max(0, currentIndex + direction);
+                    inner.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+                    updateButtons();
+                }
+
+                leftBtn.addEventListener('click', () => moveCarousel(-1));
+                rightBtn.addEventListener('click', () => moveCarousel(1));
+                
+                // Initial setup and resize handling
+                updateButtons();
+                window.addEventListener('resize', updateButtons);
             }
 
-            // Додаємо обробники подій для кнопок "Придбати/Спробувати"
-            document.querySelectorAll('.toggle-contact-btn, .toggle-trial-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const courseId = event.target.dataset.courseId;
-                    const accessSection = document.getElementById(`access-section-${courseId}`);
-                    
-                    // Close all other active sections
-                    document.querySelectorAll('.card-section.active').forEach(section => {
-                        if (section.id !== accessSection.id) {
-                            section.classList.remove('active');
-                            section.classList.add('hidden'); 
+            // --- Main Render Function ---
+            function renderCourses() {
+                coursesGrid.innerHTML = '';
+                trialCourseSection.innerHTML = '';
+                activatedCoursesContainer.innerHTML = '';
+                let hasActivatedPaidCourse = false;
+
+                coursesData.forEach(course => {
+                    const isActivated = localStorage.getItem(`course_${course.id}_activated`) === 'true';
+
+                    if (course.isTrial) {
+                        renderTrialCourse(course, isActivated);
+                    } else {
+                        renderPaidCourse(course, isActivated);
+                        if (isActivated && !course.isComingSoon) {
+                            hasActivatedPaidCourse = true;
+                            renderActivatedCourseSection(course);
+                        }
+                    }
+                });
+
+                yourCoursesSection.classList.toggle('hidden', !hasActivatedPaidCourse);
+                
+                if(hasActivatedPaidCourse) {
+                    // Setup carousels for each activated course
+                    document.querySelectorAll('.lesson-carousel-container').forEach(carousel => {
+                        setupCarousel(carousel.id);
+                    });
+                }
+                
+                addEventListeners();
+            }
+
+            // --- Helper Render Functions ---
+            function renderTrialCourse(course, isActivated) {
+                const card = document.createElement('div');
+                card.className = `trial-course-card w-full max-w-md mx-auto flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300`;
+                const buttonText = isActivated ? 'Перейти до уроку' : 'Спробувати безкоштовно';
+                const buttonClass = isActivated ? 'button-secondary' : 'button-primary toggle-form-btn';
+                
+                card.innerHTML = `
+                    <h3 class="text-2xl font-bold text-emerald-800 mb-2">${course.name}</h3>
+                    <p class="text-slate-600 mb-6 flex-grow">${course.description}</p>
+                    <button class="${buttonClass}" data-course-id="${course.id}" ${isActivated ? `onclick="window.location.href='${course.lessonPageUrl}'"` : ''}>${buttonText}</button>
+                    <div id="access-section-${course.id}" class="card-section w-full text-left">
+                        <p class="text-sm text-slate-700 mb-3">Введіть ваш email, щоб отримати доступ:</p>
+                        <div class="flex flex-col sm:flex-row gap-2">
+                            <input type="email" id="email-input-${course.id}" placeholder="Ваш email" class="flex-grow">
+                            <button class="button-primary submit-email-btn" data-course-id="${course.id}">Підтвердити</button>
+                        </div>
+                        <p id="message-${course.id}" class="text-sm mt-2"></p>
+                    </div>
+                `;
+                trialCourseSection.appendChild(card);
+            }
+
+            function renderPaidCourse(course, isActivated) {
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-xl shadow-lg flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300 overflow-hidden`;
+                
+                let buttonHtml;
+                if (course.isComingSoon) {
+                    buttonHtml = `<button class="button-secondary w-full mb-4" disabled>Курс ще додається</button>`;
+                } else if (isActivated) {
+                    buttonHtml = `<button class="button-secondary w-full mb-4" disabled>Куплено</button>`;
+                } else {
+                    buttonHtml = `<button class="button-primary toggle-form-btn w-full mb-4" data-course-id="${course.id}">Придбати / Активувати</button>`;
+                }
+
+                card.innerHTML = `
+                    <div class="course-card-image" style="background-image: url('${course.imageUrl}');">
+                        <span class="card-image-text">${course.name}</span>
+                    </div>
+                    <div class="p-6 w-full flex flex-col items-center text-center">
+                        <p class="text-slate-600 mb-4 flex-grow">${course.description}</p>
+                        <div class="mb-4 text-lg">
+                            <p class="font-bold text-emerald-700">Ціна: ${course.fullPrice || 'Скоро'}</p>
+                        </div>
+                        ${buttonHtml}
+                        <div id="access-section-${course.id}" class="card-section w-full text-left">
+                            <p class="text-sm text-slate-700 mb-3">Щоб придбати курс, зв'яжіться з нами:</p>
+                            <a href="mailto:veniam2007@gmail.com" class="block button-secondary w-full mb-3 text-center">Написати на email</a>
+                            <a href="https://t.me/Mausing99" target="_blank" class="block button-secondary w-full mb-4 text-center">Написати в Telegram</a>
+                            <p class="text-sm text-slate-700 mb-2">Якщо у вас є код доступу, введіть його тут:</p>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <input type="text" id="access-code-input-${course.id}" placeholder="Введіть код" class="flex-grow">
+                                <button class="button-primary activate-code-btn" data-course-id="${course.id}">Активувати</button>
+                            </div>
+                            <p id="message-${course.id}" class="text-sm mt-2"></p>
+                        </div>
+                    </div>
+                `;
+                coursesGrid.appendChild(card);
+            }
+
+            function renderActivatedCourseSection(course) {
+                const courseContainer = document.createElement('div');
+                courseContainer.className = 'mb-8';
+                const carouselId = `carousel-${course.id}`;
+                
+                let lessonCardsHtml = '';
+                if (course.lessonBlocks) {
+                    lessonCardsHtml = course.lessonBlocks.map(lesson => `
+                        <div class="lesson-card">
+                            <h4 class="text-xl font-semibold text-blue-700 mb-2">${lesson.title}</h4>
+                            <p class="text-sm text-slate-600 mb-4">Натисніть, щоб перейти до уроку</p>
+                            <button class="button-primary open-lesson-btn" data-lesson-url="${lesson.url}">Відкрити урок</button>
+                        </div>
+                    `).join('');
+                }
+
+                courseContainer.innerHTML = `
+                    <h4 class="text-xl font-semibold text-blue-700 mb-4 border-b pb-2">${course.name}</h4>
+                    <div id="${carouselId}" class="lesson-carousel-container">
+                        <div class="lesson-carousel-inner">${lessonCardsHtml}</div>
+                        <button class="carousel-button left" aria-label="Попередній слайд">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <button class="carousel-button right" aria-label="Наступний слайд">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                    </div>
+                `;
+                activatedCoursesContainer.appendChild(courseContainer);
+            }
+
+            // --- Event Listeners ---
+            function addEventListeners() {
+                document.querySelectorAll('.toggle-form-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const courseId = event.target.dataset.courseId;
+                        const accessSection = document.getElementById(`access-section-${courseId}`);
+                        accessSection.classList.toggle('active');
+                    });
+                });
+
+                document.querySelectorAll('.open-lesson-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const lessonUrl = event.target.dataset.lessonUrl;
+                        window.location.href = lessonUrl; // Redirect to the lesson page
+                    });
+                });
+
+                document.querySelectorAll('.activate-code-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const courseId = event.target.dataset.courseId;
+                        const input = document.getElementById(`access-code-input-${courseId}`);
+                        const message = document.getElementById(`message-${courseId}`);
+                        const course = coursesData.find(c => c.id === courseId);
+
+                        if (input.value.trim().toUpperCase() === course.accessCode.toUpperCase()) {
+                            message.textContent = 'Код прийнято! Курс активовано.';
+                            message.className = 'text-sm mt-2 text-green-600';
+                            localStorage.setItem(`course_${courseId}_activated`, 'true');
+                            setTimeout(renderCourses, 1500);
+                        } else {
+                            message.textContent = 'Невірний код. Спробуйте ще раз.';
+                            message.className = 'text-sm mt-2 text-red-500';
                         }
                     });
-                    
-                    // Toggle the current section
-                    if (accessSection.classList.contains('active')) {
-                        // If currently active, hide it
-                        accessSection.classList.remove('active');
-                        accessSection.classList.add('hidden'); 
-                    } else {
-                        // If currently hidden, show it
-                        accessSection.classList.remove('hidden'); 
-                        accessSection.classList.add('active');
-                    }
                 });
-            });
 
-            // Додаємо обробники подій для кнопок "Відкрити урок"
-            document.querySelectorAll('.open-lesson-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const lessonUrl = event.target.dataset.lessonUrl;
-                    openLessonModal(lessonUrl);
+                document.querySelectorAll('.submit-email-btn').forEach(button => {
+                    button.addEventListener('click', (event) => {
+                        const courseId = event.target.dataset.courseId;
+                        const input = document.getElementById(`email-input-${courseId}`);
+                        const message = document.getElementById(`message-${courseId}`);
+                        const course = coursesData.find(c => c.id === courseId);
+
+                        if (input.value.trim() && input.value.includes('@')) {
+                            message.textContent = 'Дякуємо! Перенаправляємо на урок...';
+                            message.className = 'text-sm mt-2 text-green-600';
+                            localStorage.setItem(`course_${course.id}_activated`, 'true');
+                            setTimeout(() => window.location.href = course.lessonPageUrl, 1500);
+                        } else {
+                            message.textContent = 'Будь ласка, введіть коректний email.';
+                            message.className = 'text-sm mt-2 text-red-500';
+                        }
+                    });
                 });
-            });
-
-            // Додаємо обробники подій для активації курсів
-            document.querySelectorAll('.activate-code-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const courseId = event.target.dataset.courseId;
-                    const input = document.getElementById(`access-code-input-${courseId}`);
-                    const message = document.getElementById(`code-message-${courseId}`);
-                    const course = coursesData.find(c => c.id === courseId);
-
-                    if (input.value.trim().toUpperCase() === course.accessCode.toUpperCase()) {
-                        message.textContent = 'Код прийнято! Курс активовано.';
-                        message.className = 'text-sm mt-2 text-green-600';
-                        
-                        localStorage.setItem(`course_${courseId}_activated`, 'true');
-                        localStorage.setItem(`code_used_${courseId}`, 'true'); 
-                        
-                        // Перерендеримо курси, щоб оновити UI
-                        setTimeout(renderCourses, 1000); // Затримка для відображення повідомлення
-                    } else {
-                        message.textContent = 'Невірний код. Спробуйте ще раз.';
-                        message.className = 'text-sm mt-2 text-red-500';
-                    }
-                });
-            });
-
-            // Додаємо обробники подій для активації пробного курсу
-            document.querySelectorAll('.submit-email-btn').forEach(button => {
-                button.addEventListener('click', (event) => {
-                    const courseId = event.target.dataset.courseId;
-                    const input = document.getElementById(`email-input-${courseId}`);
-                    const message = document.getElementById(`email-message-${courseId}`);
-                    const course = coursesData.find(c => c.id === courseId);
-
-                    if (input.value.trim() && input.value.includes('@')) {
-                        message.textContent = 'Дякуємо! Перевірте вашу пошту. Вас перенаправлено на урок.';
-                        message.className = 'text-sm mt-2 text-green-600';
-                        
-                        localStorage.setItem(`course_${course.id}_activated`, 'true');
-                        
-                        // Перерендеримо курси, щоб оновити UI
-                        setTimeout(() => {
-                            renderCourses();
-                            window.location.href = course.lessonPageUrl; // Перенаправлення на окрему сторінку уроку
-                        }, 1000); // Затримка для відображення відображення повідомлення
-
-                        console.log(`Email для пробного курсу ${courseId}: ${input.value.trim()}`);
-                    } else {
-                        message.textContent = 'Будь ласка, введіть коректний email.';
-                        message.className = 'text-sm mt-2 text-red-500';
-                    }
-                });
-            });
-        }
-
-        // Перевіряємо localStorage при завантаженні сторінки та рендеримо курси
-        window.addEventListener('load', () => {
-            // Cookie Consent Logic
-            const cookieConsentBanner = document.getElementById('cookie-consent-banner');
-            const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
-
-            if (!localStorage.getItem('cookieConsentAccepted')) {
-                cookieConsentBanner.classList.remove('hidden');
-            } else {
-                cookieConsentBanner.classList.add('hidden');
             }
 
+            // --- Initial Load ---
+            // Cookie Consent
+            const cookieConsentBanner = document.getElementById('cookie-consent-banner');
+            const acceptCookiesBtn = document.getElementById('accept-cookies-btn');
+            if (!localStorage.getItem('cookieConsentAccepted')) {
+                cookieConsentBanner.classList.remove('hidden');
+            }
             acceptCookiesBtn.addEventListener('click', () => {
                 localStorage.setItem('cookieConsentAccepted', 'true');
                 cookieConsentBanner.classList.add('hidden');
             });
-
-            // Update director photo
-            const directorImg = document.querySelector('#director-section img');
-            if (directorImg) {
-                directorImg.src = directorPhotoUrl;
-            }
-
-            renderCourses(); // Початкове відображення курсів
-            window.addEventListener('resize', updateCarouselButtons); // Оновлення кнопок при зміні розміру вікна
+            
+            // Render everything
+            renderCourses();
         });
     </script>
 </body>
