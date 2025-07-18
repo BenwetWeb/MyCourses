@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Урок 1 - Німецька мова | BenWenWeb</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #334155; /* Slate-700 */
+            background-color: #f8fafc; /* Slate-50 */
+        }
+        .lesson-container h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #047857; /* Emerald-700 */
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #a7f3d0; /* Emerald-200 */
+        }
+        .info-box {
+            background-color: #e0f2fe; /* Sky-100 */
+            border-left: 4px solid #0ea5e9; /* Sky-500 */
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+        .vocab-table {
+            width: 100%;
+            margin: 1.5rem 0;
+            border-collapse: collapse;
+        }
+        .vocab-table th, .vocab-table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0; /* Slate-200 */
+        }
+        .vocab-table th {
+            background-color: #f1f5f9; /* Slate-100 */
+            font-weight: 600;
+        }
+        .transcription {
+            color: #059669; /* Emerald-600 */
+            font-family: monospace;
+            font-size: 1.1em;
+        }
+        .button-primary {
+            display: inline-block;
+            background-color: #34d399;
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .button-primary:hover {
+            background-color: #10b981;
+            transform: translateY(-2px);
+        }
+        .example-sentence {
+            padding: 1rem;
+            border-left: 3px solid #fbbf24; /* Amber-400 */
+            background-color: #fefce8; /* Yellow-50 */
+            margin: 0.5rem 0;
+            border-radius: 0.25rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <header class="bg-emerald-200 p-4 shadow-md flex justify-between items-center h-16 sticky top-0 z-50">
+        <h1 class="text-xl md:text-2xl font-bold text-emerald-800 ml-4">BenWenWeb курси мовні</h1>
+        <a href="index.html" class="button-primary text-sm md:text-base mr-4 !py-2 !px-4">На головну</a>
+    </header>
+
+    <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+        <div class="bg-white rounded-xl shadow-lg p-6 md:p-8 lesson-container">
+            <h2 class="text-3xl md:text-4xl font-bold text-emerald-800 mb-6 text-center">Урок 1: Нові слова та прості речення</h2>
+            
+            <section>
+                <h3 id="vocab">Нові слова</h3>
+                <p class="text-lg mb-4">Почнемо з нової лексики. Повторюйте, будь ласка, кожне слово вголос разом з його артиклем.</p>
+                <table class="vocab-table">
+                    <thead>
+                        <tr>
+                            <th>Слово німецькою</th>
+                            <th>Транскрипція</th>
+                            <th>Переклад</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>der Bleistift</td><td class="transcription">[дер бляйштіфт]</td><td>Олівець</td></tr>
+                        <tr><td>das Brot</td><td class="transcription">[дас бро:т]</td><td>Хліб</td></tr>
+                        <tr><td>das Buch</td><td class="transcription">[дас бу:х]</td><td>Книга</td></tr>
+                        <tr><td>das Heft</td><td class="transcription">[дас хефт]</td><td>Зошит</td></tr>
+                        <tr><td>der Kuli</td><td class="transcription">[дер ку:лі]</td><td>Ручка</td></tr>
+                        <tr><td>die Kartoffeln</td><td class="transcription">[ді: картофельн]</td><td>Картопля (мн.)</td></tr>
+                        <tr><td>die Suppe</td><td class="transcription">[ді: зуппе]</td><td>Суп</td></tr>
+                        <tr><td>die Tafel</td><td class="transcription">[ді: та:фель]</td><td>Дошка</td></tr>
+                        <tr><td>die Tasche</td><td class="transcription">[ді: таше]</td><td>Сумка, кишеня</td></tr>
+                        <tr><td>die Wurst</td><td class="transcription">[ді: вурст]</td><td>Ковбаса</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3 id="sentences">Вживання слів у реченнях</h3>
+                <p class="text-lg mb-4">Тепер давайте подивимось, як ці слова використовуються у простих реченнях. Зверніть увагу на порядок слів.</p>
+                
+                <div class="example-sentence">
+                    <p class="font-semibold text-lg">Das Buch und das Heft.</p>
+                    <p class="text-slate-600">Книга та зошит.</p>
+                </div>
+                <div class="example-sentence">
+                    <p class="font-semibold text-lg">Dort ist der Bleistift.</p>
+                    <p class="text-slate-600">Там олівець.</p>
+                </div>
+                <div class="example-sentence">
+                    <p class="font-semibold text-lg">Die Tasche ist hier.</p>
+                    <p class="text-slate-600">Сумка тут.</p>
+                </div>
+                <div class="example-sentence">
+                    <p class="font-semibold text-lg">Das Brot und die Wurst.</p>
+                    <p class="text-slate-600">Хліб та ковбаса.</p>
+                </div>
+                 <div class="example-sentence">
+                    <p class="font-semibold text-lg">Eine Suppe und Kartoffeln.</p>
+                    <p class="text-slate-600">Суп та картопля.</p>
+                </div>
+                 <div class="example-sentence">
+                    <p class="font-semibold text-lg">Das ist eine Tasche.</p>
+                    <p class="text-slate-600">Це сумка.</p>
+                </div>
+            </section>
+
+            <section>
+                <h3 id="grammar-neopren">Граматика: Неозначений артикль</h3>
+                <div class="info-box">
+                    <p class="text-lg">З попереднього уроку ми знаємо, що є означені артиклі (der, die, das). Вони вказують на конкретний, вже відомий предмет. Але коли ми говоримо про якийсь предмет вперше або в загальному сенсі, ми використовуємо <strong>неозначений артикль</strong>.</p>
+                </div>
+                <ul class="list-disc list-inside space-y-3 text-lg">
+                    <li>Для чоловічого роду (der) та середнього (das) використовується <strong>ein</strong>.</li>
+                    <li>Для жіночого роду (die) використовується <strong>eine</strong>.</li>
+                </ul>
+                <p class="mt-4 text-lg">Наприклад:</p>
+                <div class="example-sentence">
+                    <p class="font-semibold text-lg">Das ist <strong>ein</strong> Buch. <span class="text-slate-500 font-normal">(das Buch - середній рід)</span></p>
+                    <p class="text-slate-600">Це (якась) книга.</p>
+                </div>
+                <div class="example-sentence">
+                    <p class="font-semibold text-lg">Hier ist <strong>eine</strong> Tafel. <span class="text-slate-500 font-normal">(die Tafel - жіночий рід)</span></p>
+                    <p class="text-slate-600">Тут (якась) дошка.</p>
+                </div>
+                 <div class="info-box">
+                    <p class="text-lg"><strong>Важливо:</strong> У множині неозначений артикль не використовується! Наприклад, <span class="font-semibold">Bitte Zigaretten!</span> (Будь ласка, сигарети!), а не "eine Zigaretten".</p>
+                </div>
+            </section>
+
+            <section class="text-center mt-12">
+                <h3 class="!border-b-0">Кінець першого уроку!</h3>
+                <p class="text-xl text-slate-600 mt-4 mb-6">
+                    Ви чудово впоралися! Продовжуйте в тому ж дусі, і ви швидко помітите прогрес. Переходьте до наступного уроку, коли будете готові.
+                </p>
+                <a href="index.html#your-courses-section" class="button-primary">Повернутися до списку уроків</a>
+            </section>
+        </div>
+    </div>
+
+</body>
+</html>
